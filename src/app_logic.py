@@ -3,6 +3,7 @@ Core application logic/service layer, independent of UI (GUI or CLI).
 Handles interaction with automator, data loader, and command builder.
 """
 import time
+import logging
 
 # Need to access the shared automator instance and game_found status.
 # How to handle this? Pass them in? Use globals from app.py?
@@ -11,75 +12,103 @@ import time
 # A better approach would be dependency injection if complexity grew.
 import app 
 
-from src.data_loader import load_json_data, get_item_categories
-from src.command_builder import build_additem_command
+from src.data_loader import load_json_data, get_item_categories, add_battle_preset, save_json_data, FAVORITES_FILE
+from src.command_builder import build_additem_command, build_placeatme_command
 
 def check_game_status_logic():
     """Checks the current game status."""
-    # Access global state from app.py
+    logging.debug("Entering check_game_status_logic")
+    # Access global state from app.py - This is potentially stale!
+    # TODO: Refactor to call automator directly?
     status_msg = "Game Found" if app.game_found else "Game Not Found"
+    logging.info(f"Checked game status (using cached global): {status_msg}")
     return {"status": status_msg}
 
 def run_single_command_logic(command):
     """Handles validation and execution for a single command string."""
-    print(f"LOGIC: Executing single command: {command}")
-    if not app.game_found:
-        print("LOGIC: Game not found.")
-        return {"success": False, "message": "Game not found"}
+    logging.debug(f"Entering run_single_command_logic with command: \"{command}\"")
+    # Removed check for app.game_found - automator.execute_command handles it now.
+    # if not app.game_found:
+    #     logging.error("Cannot run single command: Game not found (checked global). Returning error.")
+    #     return {"success": False, "message": "Game not found"}
     if not command or not isinstance(command, str):
-         print("LOGIC: Invalid command.")
+         logging.warning(f"Invalid command received in logic: {command}")
          return {"success": False, "message": "Invalid command"}
 
     # Use the execute_command (full cycle) method from the shared automator
-    success = app.automator.execute_command(command.strip(), verbose=False) # GUI/API usually non-verbose
-    print(f"LOGIC: Single command execution result: {success}")
-    return {"success": success}
+    # This method now performs its own find_process_and_window check.
+    command_string = command.strip()
+    logging.info(f"Attempting to execute single command: {command_string}")
+    success = app.automator.execute_command(command_string, verbose=False) # GUI/API usually non-verbose
+    logging.info(f"Single command execution result: {success}")
+    result = {"success": success}
+    if not success:
+        # Try to provide a slightly more specific message if possible
+        result['message'] = f"Failed to execute command. Check log or ensure game is focused."
+    logging.debug(f"Exiting run_single_command_logic, result: {result}")
+    return result
 
 def get_presets_logic(preset_type="battle"):
     """Loads presets of a given type (e.g., 'battle')."""
+    logging.debug(f"Entering get_presets_logic for type: {preset_type}")
     filename = f"{preset_type}s.json" # Assumes plural naming convention
     print(f"LOGIC: Getting presets from {filename}...")
     preset_data = load_json_data(filename)
     if preset_data and isinstance(preset_data, dict):
         presets = list(preset_data.keys())
         print(f"LOGIC: Found presets: {presets}")
+        logging.debug(f"Exiting get_presets_logic, found {len(presets)} presets.")
         return {"presets": presets}
     else:
         print(f"LOGIC: No presets found or error loading {filename}.")
+        logging.debug(f"Exiting get_presets_logic, found 0 presets.")
         return {"presets": []}
 
 def run_command_sequence_logic(commands, sequence_name="sequence"):
      """Opens console, runs a list of commands, closes console."""
-     print(f"LOGIC: Running command {sequence_name} ({len(commands)} commands)...")
-     if not app.game_found:
-         print("LOGIC: Game not found.")
-         return {"success": False, "message": "Game not found"}
+     logging.debug(f"Entering run_command_sequence_logic: sequence='{sequence_name}', commands={len(commands)}")
+     # Removed app.game_found check - automator.open_console handles it now.
+     # if not app.game_found:
+     # ...
      if not commands or not isinstance(commands, list):
-          print("LOGIC: Invalid command list.")
+          logging.warning(f"Invalid command list for sequence '{sequence_name}'.")
           return {"success": False, "message": "Invalid command list"}
 
      all_succeeded = False
      # Use the shared automator instance
+     # open_console now performs the check
+     logging.info(f"Attempting to open console for sequence '{sequence_name}'")
      if app.automator.open_console(verbose=False): # Non-verbose from logic layer usually
+         logging.info(f"Console opened successfully for sequence '{sequence_name}'")
          all_succeeded = True
          for i, cmd in enumerate(commands):
-             print(f"LOGIC: Executing {sequence_name} step {i+1}: {cmd}")
+             logging.info(f"Executing {sequence_name} step {i+1}: {cmd}")
              success = app.automator.execute_command_in_console(cmd, verbose=False)
              if not success:
-                 print(f"LOGIC: Command '{cmd}' failed in {sequence_name}. Stopping.")
+                 logging.error(f"Command '{cmd}' failed in {sequence_name}. Stopping sequence.")
                  all_succeeded = False
                  break
              time.sleep(0.5) # Keep delay between commands
-         app.automator.close_console(verbose=False)
+         # Attempt to close console regardless of individual command success
+         logging.info(f"Attempting to close console after sequence '{sequence_name}'")
+         if not app.automator.close_console(verbose=False):
+             logging.warning(f"Failed to close console cleanly after sequence '{sequence_name}'.")
+             # Decide if this makes the whole sequence fail?
+             # For now, let all_succeeded reflect command execution status.
      else:
-         print(f"LOGIC: Failed to open console for {sequence_name} execution.")
+         logging.error(f"Failed to open console for {sequence_name} execution.")
          all_succeeded = False
          
-     print(f"LOGIC: {sequence_name} execution finished. Success: {all_succeeded}")
-     return {"success": all_succeeded}
+     logging.info(f"Sequence '{sequence_name}' execution finished. Overall success: {all_succeeded}")
+     result = {"success": all_succeeded}
+     if not all_succeeded:
+         result['message'] = f"One or more commands failed during {sequence_name} execution."
+     logging.debug(f"Exiting run_command_sequence_logic, result: {result}")
+     return result
 
 def run_preset_logic(preset_name, preset_type="battle"):
     """Loads a preset and runs its command sequence."""
+    logging.debug(f"Entering run_preset_logic: name='{preset_name}', type='{preset_type}'")
     filename = f"{preset_type}s.json"
     print(f"LOGIC: Running preset '{preset_name}' from {filename}...")
     preset_data = load_json_data(filename)
@@ -94,21 +123,26 @@ def run_preset_logic(preset_name, preset_type="battle"):
          return {"success": False, "message": f"Invalid commands for '{preset_name}'"}
          
     # Delegate to the sequence execution logic
+    logging.debug(f"Exiting run_preset_logic for '{preset_name}'")
     return run_command_sequence_logic(commands, sequence_name=f"preset '{preset_name}'")
 
 def get_item_categories_logic():
     """Loads and returns item category names and filenames."""
+    logging.debug("Entering get_item_categories_logic")
     print("LOGIC: Getting item categories...")
     categories = get_item_categories() # Returns dict {name: filename}
     if categories:
         print(f"LOGIC: Found categories: {list(categories.keys())}")
+        logging.debug(f"Exiting get_item_categories_logic, found {len(categories)} categories.")
         return {"categories": categories}
     else:
         print("LOGIC: No item categories found.")
+        logging.debug(f"Exiting get_item_categories_logic, found 0 categories.")
         return {"categories": {}}
 
 def get_items_in_category_logic(filename):
     """Loads items from a specific category file."""
+    logging.debug(f"Entering get_items_in_category_logic: filename='{filename}'")
     print(f"LOGIC: Getting items for category file: {filename}")
     if not filename or '..' in filename or filename.startswith('/') or filename.startswith('\\'):
         print("LOGIC: Invalid or potentially unsafe filename rejected.")
@@ -118,31 +152,199 @@ def get_items_in_category_logic(filename):
     if item_data and isinstance(item_data, dict):
         sorted_items = dict(sorted(item_data.items()))
         print(f"LOGIC: Found {len(sorted_items)} items.")
+        logging.debug(f"Exiting get_items_in_category_logic, found {len(sorted_items)} items.")
         return {"items": sorted_items}
     else:
         print(f"LOGIC: No items found or error loading '{filename}'.")
+        logging.debug(f"Exiting get_items_in_category_logic, found 0 items.")
         return {"items": {}}
 
 def add_item_logic(item_id, quantity):
     """Builds and executes the additem command."""
-    print(f"LOGIC: Adding item: ID={item_id}, Qty={quantity}")
-    if not app.game_found:
-        print("LOGIC: Game not found.")
-        return {"success": False, "message": "Game not found"}
+    logging.debug(f"Entering add_item_logic: ID={item_id}, Qty={quantity}")
+    # Removed app.game_found check - run_single_command_logic handles it.
+    # if not app.game_found:
+    # ...
     
     try:
         qty = int(quantity)
         if qty <= 0:
             raise ValueError("Quantity must be positive")
     except (ValueError, TypeError):
-        print(f"LOGIC: Invalid quantity received: {quantity}")
+        logging.warning(f"Invalid quantity received: {quantity}")
         return {"success": False, "message": "Invalid quantity"}
     if not item_id or not isinstance(item_id, str):
-        print(f"LOGIC: Invalid item ID received: {item_id}")
+        logging.warning(f"Invalid item ID received: {item_id}")
         return {"success": False, "message": "Invalid item ID"}
 
     command_string = build_additem_command(item_id, qty)
-    print(f"LOGIC: Built command: {command_string}")
+    logging.info(f"Built additem command: {command_string}")
     
     # Delegate to single command logic (which uses execute_command full cycle)
-    return run_single_command_logic(command_string) 
+    result = run_single_command_logic(command_string)
+    result['command'] = command_string # Add command string to the result for favorite saving
+    logging.debug(f"Exiting add_item_logic, result: {result}")
+    return result
+
+def get_npcs_logic():
+    """Loads NPC data for selection."""
+    filename = "npcs.json"
+    print(f"LOGIC: Getting NPCs from {filename}...")
+    npc_data = load_json_data(filename)
+    if npc_data and isinstance(npc_data, dict):
+        # Return dict {name: id} - GUI can sort if needed
+        print(f"LOGIC: Found {len(npc_data)} NPCs.")
+        return {"npcs": npc_data}
+    else:
+        print(f"LOGIC: No NPCs found or error loading {filename}.")
+        return {"npcs": {}}
+
+def save_battle_preset_logic(preset_name, command_list):
+    """Handles the logic for saving a battle preset."""
+    print(f"LOGIC: Attempting to save preset '{preset_name}'...")
+    # add_battle_preset returns "success", "exists", or "error"
+    status = add_battle_preset(preset_name, command_list)
+    message = ""
+    if status == "success":
+        message = f"Preset '{preset_name}' saved successfully."
+    elif status == "exists":
+        message = f"Preset name '{preset_name}' already exists. Please choose another."
+    else:
+        message = f"Failed to save preset '{preset_name}'. See console/log for details."
+    print(f"LOGIC: Save status: {status}, Message: {message}")
+    return {"status": status, "message": message}
+
+# --- Favorites Logic --- 
+
+def load_favorites_logic():
+    """Loads the list of favorites from the JSON file."""
+    print(f"LOGIC: Loading favorites from {FAVORITES_FILE}...")
+    favorites_data = load_json_data(FAVORITES_FILE)
+    
+    if favorites_data is None:
+        # Error during load (logged by load_json_data)
+        # Or file was just created as empty list, which is fine
+        favorites_data = [] 
+        
+    if not isinstance(favorites_data, list):
+        print(f"LOGIC: Favorites data is not a list. Resetting. Data: {favorites_data}")
+        logging.warning(f"Favorites file ({FAVORITES_FILE}) was not a list. Resetting to empty list.")
+        favorites_data = []
+        # Optionally attempt to save the empty list back
+        save_json_data(FAVORITES_FILE, favorites_data)
+
+    # Ensure required keys exist? Maybe too strict. Assume correct structure for now.
+    print(f"LOGIC: Found {len(favorites_data)} favorites.")
+    return {"success": True, "favorites": favorites_data} # Always return a list
+
+def save_favorite_logic(name, command, command_type):
+    """Adds a new favorite command to the list.
+
+    Args:
+        name (str): The user-defined name for the favorite.
+        command (str): The command string to save.
+        command_type (str): Type of command ('additem', 'single', etc.).
+
+    Returns:
+        dict: { "status": "success"|"exists"|"error", "message": str }
+    """
+    print(f"LOGIC: Saving favorite: Name='{name}', Type='{command_type}'")
+    if not name or not isinstance(name, str) or not name.strip():
+        return {"status": "error", "message": "Favorite name cannot be empty."}
+    if not command or not isinstance(command, str):
+        return {"status": "error", "message": "Invalid command string."}
+    if not command_type or not isinstance(command_type, str):
+        # Default type if needed, or enforce?
+        return {"status": "error", "message": "Invalid command type."}
+        
+    name = name.strip() # Clean whitespace
+    command = command.strip()
+
+    load_result = load_favorites_logic()
+    # load_favorites_logic should always return success: True and a list now
+    favorites = load_result['favorites']
+    
+    # Check for existing name (case-insensitive check? Let's do exact for now)
+    if any(fav['name'] == name for fav in favorites if isinstance(fav, dict) and 'name' in fav):
+        message = f"A favorite with the name '{name}' already exists." 
+        print(f"LOGIC: {message}")
+        return {"status": "exists", "message": message}
+
+    new_favorite = {
+        "name": name,
+        "command": command,
+        "type": command_type
+    }
+    favorites.append(new_favorite)
+
+    if save_json_data(FAVORITES_FILE, favorites):
+        message = f"Favorite '{name}' saved successfully."
+        print(f"LOGIC: {message}")
+        return {"status": "success", "message": message}
+    else:
+        message = f"Failed to save favorite '{name}' to file." # Error logged by save_json_data
+        print(f"LOGIC: {message}")
+        # Attempt to revert in-memory list? Maybe not necessary.
+        return {"status": "error", "message": message}
+
+def delete_favorite_logic(name):
+    """Deletes a favorite by its name."""
+    print(f"LOGIC: Deleting favorite: '{name}'...")
+    if not name:
+        return {"success": False, "message": "No favorite name provided."}
+        
+    load_result = load_favorites_logic()
+    favorites = load_result['favorites']
+    
+    initial_length = len(favorites)
+    # Filter out the favorite(s) with the matching name
+    updated_favorites = [fav for fav in favorites if not (isinstance(fav, dict) and fav.get('name') == name)]
+    
+    if len(updated_favorites) == initial_length:
+        message = f"Favorite '{name}' not found."
+        print(f"LOGIC: {message}")
+        return {"success": False, "message": message}
+        
+    if save_json_data(FAVORITES_FILE, updated_favorites):
+        message = f"Favorite '{name}' deleted successfully."
+        print(f"LOGIC: {message}")
+        return {"success": True, "message": message}
+    else:
+        message = f"Failed to save favorites file after deleting '{name}'."
+        print(f"LOGIC: {message}")
+        return {"success": False, "message": message}
+
+def run_favorite_logic(name):
+    """Finds a favorite by name and executes its command."""
+    logging.debug(f"Entering run_favorite_logic: name='{name}'")
+    print(f"LOGIC: Running favorite: '{name}'...")
+    if not name:
+        return {"success": False, "message": "No favorite name provided."}
+        
+    load_result = load_favorites_logic()
+    favorites = load_result['favorites']
+    
+    found_fav = None
+    for fav in favorites:
+        if isinstance(fav, dict) and fav.get('name') == name:
+            found_fav = fav
+            break
+            
+    if not found_fav:
+        message = f"Favorite '{name}' not found."
+        print(f"LOGIC: {message}")
+        return {"success": False, "message": message}
+        
+    command_to_run = found_fav.get('command')
+    if not command_to_run:
+         message = f"Favorite '{name}' has an invalid/missing command."
+         print(f"LOGIC: {message}")
+         return {"success": False, "message": message}
+         
+    # Delegate execution to the existing single command runner
+    logging.info(f"Running favorite '{name}' command: {command_to_run}")
+    result = run_single_command_logic(command_to_run)
+    # Add context that this was run from a favorite
+    result['message'] = f"Ran favorite '{name}': {command_to_run}. Result: {result.get('message', 'Success' if result.get('success') else 'Failure')}"
+    logging.debug(f"Exiting run_favorite_logic for '{name}', result: {result}")
+    return result 

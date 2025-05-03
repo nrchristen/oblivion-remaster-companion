@@ -1,49 +1,289 @@
-/* Add Oblivion-themed styles later */
+/* Elder Scrolls Inspired Theme */
+
+:root {
+    /* Palette: Parchment, Stone Grey, Dark Brown, Gold/Bronze, Dark Red */
+    --bg-color: #3a3a3a; /* Dark stone grey background */
+    --content-bg: #ece0c8; /* Parchment/light beige for content areas */
+    --text-color-dark: #333333; /* Dark text for light backgrounds */
+    --text-color-light: #e0e0e0; /* Light grey text for dark backgrounds */
+    --primary-color: #c89b4a; /* Gold/Bronze accent */
+    --secondary-color: #8b4513; /* Dark Brown accent (headings) */
+    --tertiary-color: #a03030; /* Dark Red accent (errors, maybe buttons?) */
+    --border-color: #505050; /* Medium-dark grey border */
+    --input-bg: #f5f0e1; /* Slightly lighter parchment for inputs */
+    --input-border: #a0947f; /* Parchment border */
+    --button-bg: var(--secondary-color); /* Dark brown buttons */
+    --button-text: var(--text-color-light);
+    --button-hover-bg: #a05a2c; /* Lighter brown hover */
+    --button-disabled-bg: #6e5f50;
+    --button-disabled-text: #a0a0a0;
+    --log-bg: #252525; /* Very dark grey for log */
+    --log-text: #c0c0c0; /* Silver/light grey log text */
+
+    --font-primary: 'Georgia', 'Times New Roman', Times, serif; /* More thematic font */
+    --font-code: 'Consolas', 'Monaco', monospace;
+    --border-radius: 3px; /* Slightly less rounded corners */
+    --padding-sm: 6px;
+    --padding-md: 12px;
+    --padding-lg: 18px;
+    --margin-sm: 6px;
+    --margin-md: 12px;
+    --margin-lg: 18px;
+
+    --label-min-width: 80px; /* Consistent label width */
+}
+
 html, body {
-    height: 100%; /* Allow body to expand */
+    height: 100%;
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
-    display: flex; /* Make body a flex container */
-    flex-direction: column; /* Stack children vertically */
-    overflow: hidden; /* Prevent body scrollbars */
+    font-family: var(--font-primary);
+    background-color: var(--bg-color);
+    color: var(--text-color-light); /* Default text is light on dark background */
+    font-size: 15px; /* Slightly larger base font */
+    display: flex;
+    flex-direction: column;
 }
 
-.content {
-    padding: 10px; /* Add padding to a content wrapper */
-    overflow-y: auto; /* Allow content area to scroll if needed */
-    /* Do not set flex-grow here, let log area take space */
+body {
+    padding: var(--padding-lg);
+    box-sizing: border-box;
 }
 
-hr {
-    margin: 15px 0;
-    border: 0;
-    border-top: 1px solid #ccc;
+h1 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: var(--margin-lg);
+    font-weight: normal; /* Less bold for serif */
+    font-size: 2em; /* Larger title */
 }
 
-label {
-    margin-right: 5px;
+h2 {
+    color: var(--secondary-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: var(--padding-sm);
+    margin-top: 0;
+    font-weight: bold;
+    font-size: 1.4em;
 }
+
+/* Titles within content boxes need dark text */
+.column > div h2 {
+    color: var(--secondary-color); /* Keep brown */
+    border-bottom-color: var(--input-border);
+    margin-bottom: var(--margin-md); /* Add space below section titles */
+}
+
+/* General H2 (Column Titles) need light text */
+.column > h2 {
+    color: var(--text-color-light); /* Light text for top-level column titles */
+    border-bottom-color: var(--border-color);
+    margin-bottom: 0; /* Align with top of content boxes */
+}
+
+h4 {
+    margin-top: var(--margin-md);
+    margin-bottom: var(--margin-sm);
+    color: var(--text-color-dark); /* Dark text inside content boxes */
+    font-weight: bold;
+}
+
+/* --- Form Alignment --- */
+.form-row {
+    display: flex;
+    align-items: center; /* Vertically center items */
+    gap: var(--margin-sm);
+    margin-bottom: var(--margin-md); /* Space between rows */
+}
+
+.form-row label {
+    min-width: var(--label-min-width);
+    text-align: right;
+    margin-bottom: 0; /* Remove bottom margin as .form-row handles spacing */
+    color: var(--text-color-dark); /* Dark text inside content boxes */
+    flex-shrink: 0; /* Prevent label from shrinking */
+}
+
+.form-row input[type="text"],
+.form-row input[type="number"],
+.form-row select {
+    flex-grow: 1; /* Allow input/select to fill space */
+    /* Remove default right margin if gap is used */
+    margin-right: 0;
+}
+
+/* Specific input width adjustments */
+.form-row input[type="number"] {
+    width: 70px; /* Fixed width for quantity */
+    min-width: 60px;
+    flex-grow: 0; /* Don't allow quantity to grow */
+}
+
+/* Adjustments for favorite rows */
+.favorite-option input[type="checkbox"] {
+    flex-grow: 0;
+    width: auto; /* Let checkbox take its natural width */
+    margin-left: 5px; /* Align visually with other inputs */
+}
+
+.favorite-option input[type="text"] {
+    flex-grow: 1; /* Allow name input to take space */
+    margin-left: var(--margin-sm); /* Add space after checkbox */
+}
+
+.form-row button {
+    margin-left: 0; /* Remove default left margin if gap is used */
+    flex-shrink: 0; /* Prevent button shrinking */
+}
+
+/* Special case for status row (no label) */
+#status-section .form-row {
+    justify-content: space-between; /* Push button to the right */
+}
+
+/* Special case for button groups */
+.button-group {
+    justify-content: flex-end; /* Align buttons to the right */
+}
+/* --- End Form Alignment --- */
 
 button {
-    margin-left: 10px;
+    padding: var(--padding-sm) var(--padding-md);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    /* margin-left managed by .form-row gap */
+    font-family: var(--font-primary);
+    font-size: 0.95em;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 
-select, input {
-    margin-right: 5px;
+button:hover:not(:disabled) {
+    background-color: var(--button-hover-bg);
+    border-color: var(--primary-color);
+}
+
+button:disabled {
+    background-color: var(--button-disabled-bg);
+    color: var(--button-disabled-text);
+    border-color: var(--border-color);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    padding: var(--padding-sm);
+    border: 1px solid var(--input-border);
+    border-radius: var(--border-radius);
+    background-color: var(--input-bg);
+    color: var(--text-color-dark); /* Dark text for inputs */
+    font-family: var(--font-primary);
+    font-size: 0.95em;
+    /* margin-right managed by .form-row gap */
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(200, 155, 74, 0.4); /* Gold focus glow */
+}
+
+select {
+    min-width: 150px; /* Restore min-width for selects, allow growth */
+}
+
+/* Layout Styles */
+.main-container {
+    display: flex;
+    gap: 20px;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-bottom: var(--padding-md);
+}
+
+.column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--margin-lg);
+}
+
+.column > div {
+    border: 1px solid var(--secondary-color); /* Dark brown border for sections */
+    padding: var(--padding-md);
+    border-radius: var(--border-radius);
+    background-color: var(--content-bg); /* Parchment background */
+    color: var(--text-color-dark); /* Default text in sections is dark */
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Log Output */
+#log-output-container {
+    margin-top: var(--margin-lg);
+    border: 1px solid var(--secondary-color); /* Dark brown border like sections */
+    border-radius: var(--border-radius);
+    background-color: var(--content-bg); /* Parchment background like sections */
+    padding: var(--padding-md);
+    display: flex;
+    flex-direction: column;
+    max-height: 200px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+#log-output-container h2 {
+    margin-bottom: var(--margin-sm);
+    border: none;
+    color: var(--secondary-color); /* Dark Brown Title like other section titles */
 }
 
 #log-output {
-    /* Existing styles */
-    height: auto; /* Remove fixed height */
-    min-height: 50px; /* Optional: prevent it shrinking too much */
+    height: auto;
+    flex-grow: 1;
     overflow-y: scroll;
-    border: 1px solid #ccc;
-    background-color: #f0f0f0;
-    font-family: monospace;
+    border: none;
+    background-color: transparent; /* Inherit parchment background */
+    color: var(--text-color-dark); /* DARK text on parchment */
+    font-family: var(--font-code);
     font-size: 12px;
     white-space: pre-wrap;
-    margin: 10px; /* Add margin around log */
-    margin-top: auto; /* Push log to bottom initially? Or use flex-grow */
-    flex-grow: 1; /* Allow log area to expand */
+    padding: 0;
+    margin: 0;
+}
+
+/* Specific Element Adjustments */
+#current-battle-commands {
+    height: 100px;
+    overflow-y: scroll;
+    border: 1px solid var(--input-border);
+    background-color: var(--input-bg); /* Use input background (parchment) */
+    font-family: var(--font-code);
+    font-size: 11px;
+    white-space: pre;
+    padding: var(--padding-sm);
+    margin-bottom: var(--margin-md);
+    color: var(--text-color-dark); /* DARK text on parchment */
+    border-radius: var(--border-radius);
+    /* Add margin-top to separate from row above */
+    margin-top: var(--margin-md);
+}
+
+#status-section #status span { /* Target the span containing status text */
+    color: var(--text-color-dark); /* Ensure status text is dark */
+}
+
+hr {
+    display: none;
+}
+
+/* Utility for error messages in log */
+.log-error {
+    color: var(--tertiary-color); /* Dark red error text in log (should be visible on parchment) */
 } 

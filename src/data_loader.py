@@ -3,6 +3,7 @@
 import json
 import os
 import sys # Added
+import logging
 
 # Determine base path for data files (works for script and frozen exe)
 if getattr(sys, 'frozen', False):
@@ -14,22 +15,26 @@ else:
 
 DATA_DIR = os.path.join(BASE_DIR, 'data') # Adjusted path
 
+ITEM_CATEGORIES_FILE = "item_categories.json"
+BATTLES_FILE = "battles.json"
+FAVORITES_FILE = "favorites.json" # Added constant
+
 def load_json_data(filename):
     """Loads data from a JSON file in the data directory."""
     filepath = os.path.join(DATA_DIR, filename) # Uses the adjusted DATA_DIR
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
             data = json.load(f)
-            print(f"Successfully loaded {len(data)} entries from {filename}")
+            logging.debug(f"Successfully loaded data from {filename}")
             return data
     except FileNotFoundError:
-        print(f"Error: Data file not found at {filepath}")
+        logging.error(f"Data file not found at {filepath}")
         return None
     except json.JSONDecodeError:
-        print(f"Error: Could not decode JSON from {filepath}. Check for syntax errors.")
+        logging.error(f"Could not decode JSON from {filepath}. Check for syntax errors.")
         return None
     except Exception as e:
-        print(f"An unexpected error occurred loading {filename}: {e}")
+        logging.exception(f"An unexpected error occurred loading {filename}")
         return None
 
 def get_item_categories():
@@ -61,11 +66,11 @@ def get_item_categories():
     return categories 
 
 def save_json_data(filename, data):
-    """Saves the provided data dictionary to a JSON file in the data directory.
+    """Saves the provided Python object (dict/list) to a JSON file.
 
     Args:
-        filename (str): The name of the file (e.g., 'battles.json').
-        data (dict): The dictionary data to save.
+        filename (str): The name of the file (relative to DATA_DIR).
+        data: The Python object to serialize and save.
 
     Returns:
         bool: True if saving was successful, False otherwise.
@@ -74,16 +79,18 @@ def save_json_data(filename, data):
     try:
         with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=2) # Use indent for readability
+        logging.info(f"Successfully saved data to {filepath}")
         return True
     except IOError as e:
-        print(f"Error saving data to {filepath}: {e}")
-        return False
+        logging.error(f"Error saving data to {filepath}: {e}")
+        print(f"Error: Could not write to file {filepath}. Check permissions.")
     except TypeError as e:
-        print(f"Error serializing data for {filepath}: {e}")
-        return False
+        logging.error(f"Error serializing data for {filepath}: {e}")
+        print(f"Error: Could not serialize data for {filepath}.")
     except Exception as e:
-        print(f"An unexpected error occurred saving {filepath}: {e}")
-        return False
+        logging.exception(f"An unexpected error occurred saving {filepath}")
+        print(f"An unexpected error occurred saving {filepath}.")
+    return False
 
 def add_battle_preset(preset_name, command_list):
     """Adds a new battle preset to battles.json.
@@ -116,6 +123,7 @@ def add_battle_preset(preset_name, command_list):
     preset_name = preset_name.strip()
     if preset_name in presets:
         # print(f"Error: Preset name '{preset_name}' already exists.")
+        logging.warning(f"Preset name '{preset_name}' already exists.")
         return "exists" # Signal that the name exists
 
     # Add the new preset
@@ -123,8 +131,29 @@ def add_battle_preset(preset_name, command_list):
 
     # Save the updated dictionary
     if save_json_data(filename, presets):
-        print(f"Preset '{preset_name}' saved successfully to {filename}.")
+        # print(f"Preset '{preset_name}' saved successfully to {filename}.")
+        logging.info(f"Preset '{preset_name}' saved successfully to {filename}.")
         return "success"
     else:
         # save_json_data would have printed an error
         return "error" 
+
+# --- Initialization --- 
+def ensure_data_files_exist():
+    """Ensure essential data files exist, creating empty ones if needed."""
+    required_files = {
+        ITEM_CATEGORIES_FILE: {},
+        BATTLES_FILE: {},
+        FAVORITES_FILE: [] # Favorites should be a list
+    }
+    os.makedirs(DATA_DIR, exist_ok=True)
+    for filename, default_content in required_files.items():
+        filepath = os.path.join(DATA_DIR, filename)
+        if not os.path.exists(filepath):
+            logging.warning(f"Data file not found: {filepath}. Creating empty file.")
+            if not save_json_data(filename, default_content):
+                logging.error(f"Failed to create default data file: {filepath}")
+                # Decide if this is fatal? For now, just log error.
+
+# Call this on module load or explicitly from app startup
+ensure_data_files_exist() 

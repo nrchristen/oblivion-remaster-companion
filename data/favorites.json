@@ -1,0 +1,22 @@
+[
+  {
+    "name": "ghost",
+    "command": "ghost",
+    "type": "single"
+  },
+  {
+    "name": "walk",
+    "command": "walk",
+    "type": "single"
+  },
+  {
+    "name": "CSG",
+    "command": "player.additem 00015B8B 1",
+    "type": "additem"
+  },
+  {
+    "name": "1 Gold",
+    "command": "player.additem F 1",
+    "type": "additem"
+  }
+]

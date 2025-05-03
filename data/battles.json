@@ -1,19 +1,19 @@
 {
-  "Imperial Legion vs. Bandits": [
-    "player.placeatme 0002F8F2 5",
-    "player.placeatme 000348A5 5"
-  ],
-  "Daedra Skirmish": [
-    "player.placeatme 00000DB6 3",
-    "player.placeatme 00000D9A 3",
-    "player.placeatme 00000DAE 1"
-  ],
-  "Undead Rising": [
-    "player.placeatme 0001CB84 6",
-    "player.placeatme 00018E6F 4"
-  ],
   "AzzTest": [
     "player.placeatme 00024166 1",
     "player.placeatme 00024166 1"
+  ],
+  "Cat & Gob": [
+    "player.placeatme 000479F5 2",
+    "player.placeatme 00031317 2"
+  ],
+  "Single Stranger": [
+    "player.placeatme 0000A2A5 1"
+  ],
+  "Stranger x4": [
+    "player.placeatme 0000A2A5 4"
+  ],
+  "Bandit Takeover": [
+    "player.placeatme 000055BD 20"
   ]
 }

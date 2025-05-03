@@ -30,7 +30,7 @@ jobs:
         run: python -m unittest discover tests
 
       - name: Build executable with PyInstaller
-        run: pyinstaller ES4Companion.spec --distpath ./dist --workpath ./build
+        run: pyinstaller ES4RCompanion.spec --distpath ./dist --workpath ./build
         # Run from root, point to spec file in root, define output dirs
 
       - name: Get Tag Name
@@ -41,7 +41,7 @@ jobs:
       - name: Archive executable
         # Zip the contents of the dist directory
         # The output structure from --onefile is just the .exe in dist/
-        run: Compress-Archive -Path dist\* -DestinationPath ES4Companion-${{ steps.get_tag.outputs.TAG_NAME }}.zip
+        run: Compress-Archive -Path dist\* -DestinationPath ES4RCompanion-${{ steps.get_tag.outputs.TAG_NAME }}.zip
         shell: pwsh
 
       - name: Create Release
@@ -61,6 +61,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./ES4Companion-${{ steps.get_tag.outputs.TAG_NAME }}.zip
-          asset_name: ES4Companion-${{ steps.get_tag.outputs.TAG_NAME }}.zip
+          asset_path: ./ES4RCompanion-${{ steps.get_tag.outputs.TAG_NAME }}.zip
+          asset_name: ES4RCompanion-${{ steps.get_tag.outputs.TAG_NAME }}.zip
           asset_content_type: application/zip

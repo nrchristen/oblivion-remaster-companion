@@ -4,139 +4,387 @@ Handles the Command Line Interface (CLI) user interactions and flow.
 import sys
 import os
 import time
-import pick
-import itertools
-import win32gui
-import win32api
-import win32console
 import colorama
 from colorama import Fore, Back, Style
 
-# Assuming app_logic uses the global automator from app.py
-# Need to import app_logic functions
-from src import app_logic 
-# Need UI functions originally from src.ui (we'll assume they exist here for now)
-# Ideally, these would be imported from src.ui or moved here if purely console
-from src.ui import get_command_from_user, handle_battle_mode_entry, clear_screen
+# Ensure correct import path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-# Use colorama constants defined in app.py or redefine?
-# Let's redefine for isolation, though constants file is better.
+# Import necessary components from main application/logic
+import app # To access automator/game_found status
+from src import app_logic # Import the logic layer
+from src.command_builder import build_additem_command
+from src.data_loader import get_item_categories, load_json_data
+
+# --- CLI UI Constants & Helpers ---
+COLOR_MENU = Fore.CYAN
+COLOR_PROMPT = Fore.YELLOW
+COLOR_INFO = Fore.GREEN
+COLOR_WARN = Fore.MAGENTA
+COLOR_ERROR = Fore.RED
 COLOR_RESET = Style.RESET_ALL
 
-def display_loading_animation(stop_event):
-    """Displays a simple rotating spinner animation in the console."""
-    spinner = itertools.cycle(['-', '\\', '|', '/'])
-    while not stop_event.is_set():
-        try:
-            sys.stdout.write(f"\rSearching... {next(spinner)}")
-            sys.stdout.flush()
-            time.sleep(0.1)
-        except Exception:
-            break
-    sys.stdout.write('\r' + ' ' * 20 + '\r')
-    sys.stdout.flush()
+COMMAND_HISTORY = [] # Simple in-memory history for the session
 
-def refocus_companion(hwnd):
-    """Attempts to bring the companion console window to the foreground."""
-    if not hwnd:
-        return
-    try:
-        time.sleep(0.1)
-        win32gui.SetForegroundWindow(hwnd)
-        time.sleep(0.1)
-    except Exception as e:
-        pass
+def print_header(title):
+    print(f"\n{COLOR_MENU}{'=' * 10} {title} {'=' * 10}{COLOR_RESET}")
 
-def run_companion_cli():
-    """Main function for the console interface."""
-    original_title = "ES4Companion (CLI)"
-    os.system(f"title {original_title}")
-    companion_hwnd = win32console.GetConsoleWindow()
-    clear_screen()
-    print("--- Elder Scrolls IV: Oblivion Companion (CLI) ---")
-    print("Initializing...")
-    
-    # Check initial game status via logic layer
+def print_menu(options):
+    for key, value in options.items():
+        print(f"  {COLOR_MENU}{key}{COLOR_RESET}: {value}")
+    print(f"  {COLOR_MENU}q{COLOR_RESET}: Quit")
+
+def get_choice(prompt="Enter choice: "):
+    return input(f"{COLOR_PROMPT}{prompt}{COLOR_RESET}").strip().lower()
+
+def print_status():
     status_result = app_logic.check_game_status_logic()
-    if status_result["status"] != "Game Found":
-        print("Game process and window not found.")
-        print("Please ensure the game is running and restart the companion.")
-        input("Press Enter to exit.")
+    status_color = COLOR_INFO if "Found" in status_result["status"] else COLOR_WARN
+    print(f"\n{status_color}Game Status: {status_result['status']}{COLOR_RESET}")
+    return "Found" in status_result["status"]
+
+def confirm_action(prompt="Are you sure?"):
+    choice = input(f"{COLOR_WARN}{prompt} (y/N): {COLOR_RESET}").strip().lower()
+    return choice == 'y'
+
+# --- Core Action Functions (CLI versions) ---
+
+def cli_run_single_command():
+    print_header("Run Single Command")
+    if not print_status():
+        print(f"{COLOR_ERROR}Cannot run command, game not found.{COLOR_RESET}")
+        return
+
+    command = input(f"{COLOR_PROMPT}Enter command (or 'h' for history): {COLOR_RESET}").strip()
+    if command == 'h':
+        if not COMMAND_HISTORY:
+            print(f"{COLOR_INFO}Command history is empty.{COLOR_RESET}")
+            return
+        print("--- Command History ---")
+        for i, cmd in enumerate(reversed(COMMAND_HISTORY)): # Show most recent first
+            print(f"  {i+1}: {cmd}")
+        try:
+            choice = int(input(f"{COLOR_PROMPT}Enter history number to run: {COLOR_RESET}"))
+            if 1 <= choice <= len(COMMAND_HISTORY):
+                command = COMMAND_HISTORY[-choice] # Get command from reversed index
+                print(f"{COLOR_INFO}Selected from history: {command}{COLOR_RESET}")
+            else:
+                print(f"{COLOR_ERROR}Invalid history number.{COLOR_RESET}")
+                return
+        except ValueError:
+            print(f"{COLOR_ERROR}Invalid input.{COLOR_RESET}")
+            return
+            
+    if not command:
+        print(f"{COLOR_WARN}Command cannot be empty.{COLOR_RESET}")
+        return
+
+    print(f"{COLOR_INFO}Executing: {command}...{COLOR_RESET}")
+    COMMAND_HISTORY.append(command)
+    result = app_logic.run_single_command_logic(command)
+    if result["success"]:
+        print(f"{COLOR_INFO}Command executed successfully.{COLOR_RESET}")
+        # Ask to save favorite
+        if confirm_action("Save this command as a favorite?"):
+            fav_name = input(f"{COLOR_PROMPT}Enter a name for this favorite: {COLOR_RESET}").strip()
+            save_result = app_logic.save_favorite_logic(fav_name, command, 'single')
+            if save_result['status'] == 'success':
+                print(f"{COLOR_INFO}{save_result['message']}{COLOR_RESET}")
+            else:
+                print(f"{COLOR_ERROR}{save_result['message']}{COLOR_RESET}")
+                
+    else:
+        print(f"{COLOR_ERROR}Command failed: {result.get('message', 'Unknown error')}{COLOR_RESET}")
+
+def cli_run_preset_battle():
+    print_header("Run Preset Battle")
+    if not print_status():
+        print(f"{COLOR_ERROR}Cannot run preset, game not found.{COLOR_RESET}")
         return
         
-    print("Game process and window located successfully.")
-    active_title = "ES4Companion (CLI) - Active (Connected to Game)"
-    os.system(f"title {active_title}")
+    presets_result = app_logic.get_presets_logic("battle")
+    presets = presets_result.get('presets', [])
+    if not presets:
+        print(f"{COLOR_WARN}No battle presets found.{COLOR_RESET}")
+        return
+        
+    print("Available Presets:")
+    for i, name in enumerate(presets):
+        print(f"  {i+1}: {name}")
+        
+    try:
+        choice_idx = int(get_choice("Select preset number: ")) - 1
+        if 0 <= choice_idx < len(presets):
+            preset_name = presets[choice_idx]
+            print(f"{COLOR_INFO}Running preset: {preset_name}...{COLOR_RESET}")
+            result = app_logic.run_preset_logic(preset_name, "battle")
+            if result["success"]:
+                print(f"{COLOR_INFO}Preset '{preset_name}' completed successfully.{COLOR_RESET}")
+            else:
+                print(f"{COLOR_ERROR}Preset '{preset_name}' failed: {result.get('message', 'Execution error')}{COLOR_RESET}")
+        else:
+            print(f"{COLOR_ERROR}Invalid preset number.{COLOR_RESET}")
+    except ValueError:
+        print(f"{COLOR_ERROR}Invalid input.{COLOR_RESET}")
+
+def cli_add_item():
+    print_header("Add Item")
+    if not print_status():
+        print(f"{COLOR_ERROR}Cannot add item, game not found.{COLOR_RESET}")
+        return
+
+    # 1. Select Category
+    categories_result = app_logic.get_item_categories_logic()
+    categories = categories_result.get("categories", {})
+    if not categories:
+         print(f"{COLOR_WARN}No item categories found.{COLOR_RESET}")
+         return
+    category_list = list(categories.items()) # List of (name, filename)
+    print("Item Categories:")
+    for i, (name, _) in enumerate(category_list):
+        print(f"  {i+1}: {name}")
+    try:
+        cat_choice_idx = int(get_choice("Select category number: ")) - 1
+        if not (0 <= cat_choice_idx < len(category_list)):
+            print(f"{COLOR_ERROR}Invalid category number.{COLOR_RESET}")
+            return
+        cat_name, cat_filename = category_list[cat_choice_idx]
+        print(f"{COLOR_INFO}Selected category: {cat_name}{COLOR_RESET}")
+    except ValueError:
+        print(f"{COLOR_ERROR}Invalid input.{COLOR_RESET}")
+        return
+
+    # 2. Select Item
+    items_result = app_logic.get_items_in_category_logic(cat_filename)
+    items = items_result.get("items", {})
+    if not items:
+         print(f"{COLOR_WARN}No items found in category '{cat_name}'.{COLOR_RESET}")
+         return
+    item_list = list(items.items()) # List of (name, id)
+    print(f"Items in {cat_name}:")
+    # Simple pagination or scrolling if list is long?
+    # For now, just list all. Might be too long.
+    # TODO: Add pagination if list exceeds ~20 items
+    for i, (name, item_id) in enumerate(item_list):
+        print(f"  {i+1}: {name} ({item_id})")
+    try:
+        item_choice_idx = int(get_choice("Select item number: ")) - 1
+        if not (0 <= item_choice_idx < len(item_list)):
+            print(f"{COLOR_ERROR}Invalid item number.{COLOR_RESET}")
+            return
+        item_name, item_id = item_list[item_choice_idx]
+        print(f"{COLOR_INFO}Selected item: {item_name} ({item_id}){COLOR_RESET}")
+    except ValueError:
+        print(f"{COLOR_ERROR}Invalid input.{COLOR_RESET}")
+        return
+        
+    # 3. Enter Quantity
+    try:
+        quantity = int(get_choice("Enter quantity: "))
+        if quantity <= 0:
+            print(f"{COLOR_ERROR}Quantity must be positive.{COLOR_RESET}")
+            return
+    except ValueError:
+        print(f"{COLOR_ERROR}Invalid quantity.{COLOR_RESET}")
+        return
+        
+    # 4. Execute
+    print(f"{COLOR_INFO}Adding {quantity} x {item_name}...{COLOR_RESET}")
+    result = app_logic.add_item_logic(item_id, quantity)
+    if result["success"]:
+        print(f"{COLOR_INFO}Item(s) added successfully.{COLOR_RESET}")
+        # Ask to save favorite
+        if confirm_action("Save this additem command as a favorite?"):
+            # Suggest a default name
+            default_fav_name = f"Add {quantity} {item_name}"
+            fav_name = input(f"{COLOR_PROMPT}Enter name for favorite (default: '{default_fav_name}'): {COLOR_RESET}").strip()
+            if not fav_name:
+                fav_name = default_fav_name
+                
+            command_str = result.get('command') # Get command from result dict
+            if command_str: 
+                save_result = app_logic.save_favorite_logic(fav_name, command_str, 'additem')
+                if save_result['status'] == 'success':
+                    print(f"{COLOR_INFO}{save_result['message']}{COLOR_RESET}")
+                else:
+                    print(f"{COLOR_ERROR}{save_result['message']}{COLOR_RESET}")
+            else:
+                 print(f"{COLOR_ERROR}Could not retrieve command string to save favorite.{COLOR_RESET}")
+                 
+    else:
+        print(f"{COLOR_ERROR}Failed to add item: {result.get('message', 'Unknown error')}{COLOR_RESET}")
+
+# --- Favorites Management (CLI) ---
+
+def cli_list_favorites():
+    print_header("List Favorites")
+    fav_result = app_logic.load_favorites_logic()
+    favorites = fav_result.get('favorites', [])
+    if not favorites:
+        print(f"{COLOR_INFO}You have no saved favorites.{COLOR_RESET}")
+        return
+        
+    print(f"{COLOR_INFO}Saved Favorites ({len(favorites)}):{COLOR_RESET}")
+    # Sort by name for display
+    favorites.sort(key=lambda x: x.get('name', ''))
+    for i, fav in enumerate(favorites):
+        name = fav.get('name', 'Unnamed')
+        cmd = fav.get('command', 'No Command')
+        typ = fav.get('type', 'unknown')
+        print(f"  {COLOR_MENU}{i+1}{COLOR_RESET}: {name} ({typ}) - `{cmd}`")
+        
+def cli_run_favorite():
+    print_header("Run Favorite")
+    if not print_status():
+        print(f"{COLOR_ERROR}Cannot run favorite, game not found.{COLOR_RESET}")
+        return
+        
+    fav_result = app_logic.load_favorites_logic()
+    favorites = fav_result.get('favorites', [])
+    if not favorites:
+        print(f"{COLOR_INFO}You have no saved favorites to run.{COLOR_RESET}")
+        return
+        
+    print("Select Favorite to Run:")
+    favorites.sort(key=lambda x: x.get('name', ''))
+    for i, fav in enumerate(favorites):
+         print(f"  {COLOR_MENU}{i+1}{COLOR_RESET}: {fav.get('name', 'Unnamed')}")
+         
+    try:
+        choice_idx = int(get_choice("Select favorite number: ")) - 1
+        if 0 <= choice_idx < len(favorites):
+            fav_name = favorites[choice_idx].get('name')
+            if not fav_name:
+                 print(f"{COLOR_ERROR}Selected favorite has no name.{COLOR_RESET}")
+                 return
+                 
+            print(f"{COLOR_INFO}Running favorite: {fav_name}...{COLOR_RESET}")
+            result = app_logic.run_favorite_logic(fav_name)
+            # Result message from logic layer already includes context
+            msg_color = COLOR_INFO if result['success'] else COLOR_ERROR
+            print(f"{msg_color}{result.get('message', 'Execution complete.')}{COLOR_RESET}")
+        else:
+            print(f"{COLOR_ERROR}Invalid favorite number.{COLOR_RESET}")
+    except ValueError:
+        print(f"{COLOR_ERROR}Invalid input.{COLOR_RESET}")
+        
+def cli_add_favorite():
+    print_header("Add Favorite Manually")
+    fav_name = input(f"{COLOR_PROMPT}Enter name for the new favorite: {COLOR_RESET}").strip()
+    fav_command = input(f"{COLOR_PROMPT}Enter the command string: {COLOR_RESET}").strip()
+    # For simplicity, mark manually added as 'single' type
+    fav_type = 'single' 
+    
+    if not fav_name or not fav_command:
+        print(f"{COLOR_ERROR}Favorite name and command cannot be empty.{COLOR_RESET}")
+        return
+        
+    save_result = app_logic.save_favorite_logic(fav_name, fav_command, fav_type)
+    msg_color = COLOR_INFO if save_result['status'] == 'success' else COLOR_ERROR
+    print(f"{msg_color}{save_result['message']}{COLOR_RESET}")
+
+def cli_delete_favorite():
+    print_header("Delete Favorite")
+    fav_result = app_logic.load_favorites_logic()
+    favorites = fav_result.get('favorites', [])
+    if not favorites:
+        print(f"{COLOR_INFO}You have no saved favorites to delete.{COLOR_RESET}")
+        return
+        
+    print("Select Favorite to Delete:")
+    favorites.sort(key=lambda x: x.get('name', ''))
+    for i, fav in enumerate(favorites):
+         print(f"  {COLOR_MENU}{i+1}{COLOR_RESET}: {fav.get('name', 'Unnamed')}")
+         
+    try:
+        choice_idx = int(get_choice("Select favorite number: ")) - 1
+        if 0 <= choice_idx < len(favorites):
+            fav_name = favorites[choice_idx].get('name')
+            if not fav_name:
+                 print(f"{COLOR_ERROR}Selected favorite has no name.{COLOR_RESET}")
+                 return
+
+            if confirm_action(f"Delete favorite '{fav_name}'?"):         
+                print(f"{COLOR_INFO}Deleting favorite: {fav_name}...{COLOR_RESET}")
+                result = app_logic.delete_favorite_logic(fav_name)
+                msg_color = COLOR_INFO if result['success'] else COLOR_ERROR
+                print(f"{msg_color}{result.get('message', 'Deletion attempt finished.')}{COLOR_RESET}")
+            else:
+                print(f"{COLOR_INFO}Deletion cancelled.{COLOR_RESET}")
+        else:
+            print(f"{COLOR_ERROR}Invalid favorite number.{COLOR_RESET}")
+    except ValueError:
+        print(f"{COLOR_ERROR}Invalid input.{COLOR_RESET}")
+
+def cli_manage_favorites():
+    """Handles the favorites sub-menu."""
+    while True:
+        print_header("Manage Favorites")
+        menu_options = {
+            'l': 'List Favorites',
+            'r': 'Run Favorite',
+            'a': 'Add Favorite Manually',
+            'd': 'Delete Favorite'
+        }
+        print_menu(menu_options)
+        choice = get_choice("Favorites menu choice: ")
+        
+        if choice == 'l':
+            cli_list_favorites()
+        elif choice == 'r':
+            cli_run_favorite()
+        elif choice == 'a':
+            cli_add_favorite()
+        elif choice == 'd':
+            cli_delete_favorite()
+        elif choice == 'q':
+            break
+        else:
+            print(f"{COLOR_ERROR}Invalid choice.{COLOR_RESET}")
+        input(f"\n{COLOR_INFO}Press Enter to return to Favorites Menu...{COLOR_RESET}")
+
+# --- Main CLI Loop ---
+
+def run_companion_cli():
+    """Main entry point for the CLI mode."""
+    colorama.init(autoreset=True)
+    print(f"{Style.BRIGHT}{Fore.YELLOW}--- Oblivion Remastered Companion (CLI Mode) ---{Style.RESET_ALL}")
+    print("Checking game status...")
+    print_status() # Initial status check
+
+    main_menu_options = {
+        's': 'Check Game Status',
+        'c': 'Run Single Command',
+        'p': 'Run Preset Battle',
+        'i': 'Add Item',
+        'f': 'Manage Favorites' # Added
+    }
 
     while True:
-        clear_screen()
-        title = "--- Select Mode (Use arrows, Enter to select) ---"
-        options = [
-            ("Run Single Command", "single"),
-            ("Build Command Chain", "chain"),
-            ("Battle Stage Setup", "battle"),
-            ("Exit", "exit"),
-        ]
-        try:
-            selected_option, index = pick.pick(
-                [option[0] for option in options],
-                title,
-                indicator='* '
-            )
-            mode = options[index][1]
-        except KeyboardInterrupt:
-            mode = "exit"
-        print(COLOR_RESET)
+        print_header("Main Menu")
+        print_menu(main_menu_options)
+        choice = get_choice()
 
-        if mode == "exit":
-            print("\nExiting.")
-            os.system(f"title {original_title} - Exited")
-            return
+        if choice == 's':
+            print_status()
+        elif choice == 'c':
+            cli_run_single_command()
+        elif choice == 'p':
+            cli_run_preset_battle()
+        elif choice == 'i':
+            cli_add_item()
+        elif choice == 'f':
+            cli_manage_favorites()
+        elif choice == 'q':
+            print(f"{COLOR_INFO}Exiting Companion CLI.{COLOR_RESET}")
+            break
+        else:
+            print(f"{COLOR_ERROR}Invalid choice.{COLOR_RESET}")
+            
+        # Pause before showing menu again
+        input(f"\n{COLOR_INFO}Press Enter to return to Main Menu...{COLOR_RESET}")
 
-        result = None
-        if mode == 'single':
-            command_string = get_command_from_user() # UI layer gets the command
-            if command_string:
-                result = app_logic.run_single_command_logic(command_string) # Logic layer executes
-                refocus_companion(companion_hwnd)
-            continue # Always loop back immediately after single mode
-
-        elif mode == 'chain':
-            print("\n--- Command Chain Mode ---")
-            command_chain = []
-            while True:
-                command_string = get_command_from_user()
-                if command_string:
-                    command_chain.append(command_string)
-                    print(f"\nCommand '{command_string}' added to chain ({len(command_chain)} total).")
-                    add_another = input("Add another command to the chain? (y/n): ").strip().lower()
-                    if add_another != 'y':
-                        break
-                else:
-                    print("Exiting command selection.")
-                    break
-            if not command_chain:
-                print("\nNo commands in the chain to execute.")
-            else:
-                # Execute the sequence using the logic layer
-                result = app_logic.run_command_sequence_logic(command_chain, "chain")
-                # Print success/failure based on result?
-                if result and result.get("success"): print("Chain finished successfully.")
-                else: print("Chain finished with errors or could not start.")
-
-            refocus_companion(companion_hwnd)
-            input("\nPress Enter to return to the main menu...")
-
-        elif mode == 'battle':
-            # Battle mode entry handles preset vs custom via UI
-            battle_commands = handle_battle_mode_entry()
-            if not battle_commands:
-                print("Battle setup cancelled or not implemented yet.")
-            else:
-                # Execute the sequence using the logic layer
-                result = app_logic.run_command_sequence_logic(battle_commands, "battle stage")
-                if result and result.get("success"): print("Battle stage finished successfully.")
-                else: print("Battle stage finished with errors or could not start.")
-                
-            refocus_companion(companion_hwnd)
-            input("\nPress Enter to return to the main menu...") 
+if __name__ == '__main__':
+    # This allows running the CLI directly for testing if needed
+    # Assumes the automator and other setup happens when app module is imported
+    run_companion_cli()
