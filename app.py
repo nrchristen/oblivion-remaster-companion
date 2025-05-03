@@ -222,7 +222,7 @@ if __name__ == '__main__':
                 height=1071,
                 resizable=True # Allow resizing
             )
-            webview.start(debug=True) # Enable debug for console messages
+            webview.start(debug=False) # Enable debug for console messages
         except Exception as e:
             logging.exception("Failed to start GUI")
             print(f"FATAL: Failed to start GUI: {e}")
