@@ -159,9 +159,7 @@ if __name__ == "__main__":
         # Add time import for chain delay
         print("INFO: Ensure this script is run with administrator privileges if the game requires them.")
         run_companion()
-        logging.info("Starting main loop.")
-        input("Press Enter to close the console window.")
-        logging.info("Main loop finished.")
+        logging.info("run_companion() finished.")
 
     except Exception as e:
         logging.error("An unhandled exception occurred:", exc_info=True) # Log the full traceback
