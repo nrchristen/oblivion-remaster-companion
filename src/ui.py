@@ -7,6 +7,14 @@ import platform
 # from inquirerpy import prompt # Remove inquirerpy import
 # from inquirerpy.base.control import Choice # Remove inquirerpy import
 import pick # Add pick import
+from colorama import Fore, Back, Style # Import colorama styles
+
+# Import colors from main or define them here?
+# For simplicity, let's duplicate/redefine. A shared constants file would be better.
+COLOR_RESET = Style.RESET_ALL
+COLOR_TEXT = Fore.YELLOW
+COLOR_BG = Back.RED
+COLOR_INDICATOR = Fore.LIGHTRED_EX
 
 def clear_screen():
     """Clears the terminal screen."""
@@ -71,24 +79,16 @@ def _select_from_list(items, prompt_prefix):
             options.append((str(item), item)) # Display item, store item
 
     try:
-        clear_screen() # Clear screen before showing the prompt
+        clear_screen()
         selected_option, index = pick.pick(
-            [option[0] for option in options], # Pass only the display names
+            [option[0] for option in options],
             title,
-            indicator='*'
+            indicator='* '
         )
-        # Get the corresponding stored value (GO_BACK or the item/tuple)
         selected_value = options[index][1]
-
-        # Optional: Print confirmation if not going back
-        if selected_value is not GO_BACK:
-            # selected_name = selected_option # The displayed name is already correct
-            # print(f"--> Selected: {selected_name}") # Commented out as requested
-            pass # Keep the if block structure, do nothing if not GO_BACK
         return selected_value
-
     except KeyboardInterrupt:
-        return GO_BACK # Treat Ctrl+C as Go Back
+        return GO_BACK
 
 def _get_quantity(prompt="Enter the quantity (or 0 to go back): "):
     """Gets a positive quantity from the user, allows 0 for 'Go Back'."""
@@ -332,24 +332,25 @@ def get_command_from_user():
     """Main menu logic using pick to get the command type for single/chain modes."""
     while True:
         clear_screen()
-        # This menu should NOT have Battle Stage - that's handled by main.py's initial mode selection
         title = "=============== Select Command Type (for Single/Chain) ==============="
         options = [
             ("Utility Commands", "utility"),
-            ("NPC Spawn", "npc"), # Single NPC spawn
+            ("NPC Spawn", "npc"),
             ("Add Items", "item"),
-            ("Go Back", "exit"), # Changed value to 'exit' to match return expectation
+            ("Go Back", "exit"),
         ]
 
         try:
             selected_option, index = pick.pick(
                 [option[0] for option in options],
                 title,
-                indicator='*'
+                indicator='* '
             )
             menu_choice = options[index][1]
         except KeyboardInterrupt:
             menu_choice = "exit"
+
+        print(Style.RESET_ALL)
 
         command_to_run = None
         if menu_choice == 'utility':
@@ -358,12 +359,10 @@ def get_command_from_user():
             command_to_run = handle_npc_spawn()
         elif menu_choice == 'item':
             command_to_run = handle_item_commands()
-        # Removed battle case - it's handled in main.py
         elif menu_choice == 'exit':
             print("\nReturning to mode selection...")
-            return None # Signal go back
+            return None
 
-        # This function now only returns a single command string or None
         if command_to_run:
             return command_to_run
         elif command_to_run is None and menu_choice != 'exit':

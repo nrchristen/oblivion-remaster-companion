@@ -2,4 +2,6 @@ psutil
 pywin32
 pyinstaller
 pygetwindow
-pick 
+pick
+colorama
+pywebview[winforms] 
