@@ -1,6 +1,12 @@
 import sys
 import os
 import time
+import tkinter as tk
+from tkinter import ttk, filedialog, messagebox
+import configparser
+import subprocess
+import logging # Add logging
+import traceback # Add traceback
 
 # Add src directory to Python path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
@@ -21,6 +27,31 @@ SWORD_ART = r"""
    \ //>=================>
     \/>
 """
+
+# --- Setup Logging Start ---
+log_file = 'companion_log.txt'
+try:
+    # Basic logging config - write to a file
+    logging.basicConfig(
+        level=logging.DEBUG, # Log everything from DEBUG level up
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        filename=log_file,
+        filemode='w' # Overwrite log file each time
+    )
+    logging.info("--- Application Starting ---")
+except Exception as log_setup_e:
+    # If logging setup fails, we can't log, try a message box
+    try:
+        import tkinter as tk_err
+        from tkinter import messagebox as messagebox_err
+        root_err = tk_err.Tk()
+        root_err.withdraw()
+        messagebox_err.showerror("Fatal Logging Error", f"Could not set up logging:\n{log_setup_e}")
+        root_err.destroy()
+    except Exception:
+        pass # No GUI possible if Tkinter itself fails
+    exit(1) # Exit if logging cannot be set up
+# --- Setup Logging End ---
 
 def run_companion():
     """Main function to run the ES4 Companion tool."""
@@ -123,7 +154,33 @@ def run_companion():
 
 
 if __name__ == "__main__":
-    # Add time import for chain delay
-    print("INFO: Ensure this script is run with administrator privileges if the game requires them.")
-    run_companion()
-    input("Press Enter to close the console window.")
+    try:
+        logging.info("Initializing main application.")
+        # Add time import for chain delay
+        print("INFO: Ensure this script is run with administrator privileges if the game requires them.")
+        run_companion()
+        logging.info("Starting main loop.")
+        input("Press Enter to close the console window.")
+        logging.info("Main loop finished.")
+
+    except Exception as e:
+        logging.error("An unhandled exception occurred:", exc_info=True) # Log the full traceback
+        # Try to show an error message box
+        try:
+            root_err = tk.Tk()
+            root_err.withdraw() # Hide the blank Tk window
+            traceback_str = traceback.format_exc()
+            error_message = f"A critical error occurred:\n\n{e}\n\nSee {log_file} for detailed traceback."
+            # Limit message length for messagebox
+            if len(traceback_str) > 1000:
+                error_message = f"A critical error occurred:\n\n{e}\n\nTraceback (see {log_file} for full details):\n{traceback_str[:1000]}..."
+            messagebox.showerror("Application Error", error_message)
+            root_err.destroy()
+        except Exception as inner_e:
+            logging.error(f"Could not display error message box: {inner_e}")
+        finally:
+            logging.info("--- Application Terminating Due to Error ---")
+            exit(1) # Exit with an error code
+    finally:
+        # This runs whether there was an exception or not (on normal exit)
+        logging.info("--- Application Exiting Normally ---")

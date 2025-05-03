@@ -32,7 +32,7 @@ jobs:
 
       - name: Get Tag Name
         id: get_tag
-        run: echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Archive executable
