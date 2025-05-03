@@ -1,0 +1,61 @@
+name: Build Executable and Create Release
+
+on:
+  push:
+    tags:
+      - "v*" # Trigger on tags like v1.0, v2.1.3, etc.
+
+jobs:
+  build:
+    runs-on: windows-latest # Use a Windows runner for .exe
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11" # Choose your desired Python version
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ES4Companion/requirements.txt
+        # Note: Assumes requirements.txt and spec file are in ES4Companion subdir
+
+      - name: Build executable with PyInstaller
+        run: pyinstaller ES4Companion/ES4Companion.spec --distpath ./dist --workpath ./build
+        # Run from root, point to spec file, define output dirs
+
+      - name: Get Tag Name
+        id: get_tag
+        run: echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
+        shell: bash
+
+      - name: Archive executable
+        # Zip the contents of the dist directory
+        # The output structure from --onefile is just the .exe in dist/
+        run: Compress-Archive -Path dist\* -DestinationPath ES4Companion-${{ steps.get_tag.outputs.TAG_NAME }}.zip
+        shell: pwsh
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./ES4Companion-${{ steps.get_tag.outputs.TAG_NAME }}.zip
+          asset_name: ES4Companion-${{ steps.get_tag.outputs.TAG_NAME }}.zip
+          asset_content_type: application/zip

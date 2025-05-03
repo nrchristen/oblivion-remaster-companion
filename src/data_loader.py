@@ -2,12 +2,21 @@
 
 import json
 import os
+import sys # Added
 
-DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
+# Determine base path for data files (works for script and frozen exe)
+if getattr(sys, 'frozen', False):
+    # Running as a bundled executable (PyInstaller)
+    BASE_DIR = sys._MEIPASS
+else:
+    # Running as a normal script
+    BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+DATA_DIR = os.path.join(BASE_DIR, 'data') # Adjusted path
 
 def load_json_data(filename):
     """Loads data from a JSON file in the data directory."""
-    filepath = os.path.join(DATA_DIR, filename)
+    filepath = os.path.join(DATA_DIR, filename) # Uses the adjusted DATA_DIR
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
             data = json.load(f)
