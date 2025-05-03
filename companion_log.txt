@@ -1,0 +1,4 @@
+2025-05-02 23:25:58,778 - INFO - --- Application Starting ---
+2025-05-02 23:25:58,778 - INFO - Initializing main application.
+2025-05-02 23:26:13,554 - INFO - run_companion() finished.
+2025-05-02 23:26:13,554 - INFO - --- Application Exiting Normally ---

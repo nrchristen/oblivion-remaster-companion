@@ -1,3 +1,5 @@
 psutil
 pywin32
-pyinstaller 
+pyinstaller
+pygetwindow
+pick 

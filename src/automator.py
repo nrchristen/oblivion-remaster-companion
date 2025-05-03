@@ -26,9 +26,9 @@ class WindowAutomator:
         """Simulates pressing and releasing a keyboard key."""
         try:
             win32api.keybd_event(key_code, 0, 0, 0) # Press
-            time.sleep(0.05)
+            time.sleep(0.03)
             win32api.keybd_event(key_code, 0, win32con.KEYEVENTF_KEYUP, 0) # Release
-            time.sleep(0.05)
+            time.sleep(0.03)
         except Exception as e:
             print(f"Error pressing key ({hex(key_code)}): {e}")
 
@@ -36,13 +36,13 @@ class WindowAutomator:
         """Simulates pressing Ctrl+V."""
         try:
             win32api.keybd_event(VK_CONTROL, 0, 0, 0) # Press Ctrl
-            time.sleep(0.05)
+            time.sleep(0.03)
             win32api.keybd_event(VK_V, 0, 0, 0)      # Press V
-            time.sleep(0.05)
+            time.sleep(0.03)
             win32api.keybd_event(VK_V, 0, win32con.KEYEVENTF_KEYUP, 0) # Release V
-            time.sleep(0.05)
+            time.sleep(0.03)
             win32api.keybd_event(VK_CONTROL, 0, win32con.KEYEVENTF_KEYUP, 0) # Release Ctrl
-            time.sleep(0.05)
+            time.sleep(0.03)
         except Exception as e:
             print(f"Error during paste simulation: {e}")
 
@@ -141,49 +141,105 @@ class WindowAutomator:
         # print(f"Window found (HWND: {self.hwnd}).") # Silenced - main.py reports success
         return True
 
-    def execute_command(self, command_string):
-        """Brings window to front and executes the command via clipboard paste."""
+    def _check_hwnd(self, verbose=True):
+        """Checks if the window handle is valid."""
         if self.hwnd == 0:
-            print("Error: Window handle not found. Cannot execute command.")
+            if verbose:
+                print("Error: Window handle not found.")
+            return False
+        return True
+
+    def open_console(self, verbose=True):
+        """Brings window to front and opens the console."""
+        if not self._check_hwnd(verbose):
+            return False
+        try:
+            if verbose:
+                print("Bringing window to front...")
+            win32gui.SetForegroundWindow(self.hwnd)
+            time.sleep(0.25) # Wait for window to activate
+
+            if verbose:
+                print("Opening console ('`')...")
+            self._press_key(VK_OEM_3)
+            time.sleep(0.15) # Wait slightly longer for console to open fully
+            return True
+        except Exception as e:
+            if verbose:
+                print(f"Error opening console: {e}")
             return False
 
-        print(f"Executing command: '{command_string}'")
+    def close_console(self, verbose=True):
+        """Closes the console."""
+        # No HWND check needed here, just send the key press
         try:
-            # Bring window to front
-            print("Bringing window to front...")
-            win32gui.SetForegroundWindow(self.hwnd)
-            time.sleep(0.5) # Wait for window to activate
-
-            # Open console
-            print("Pressing '`' key...")
+            if verbose:
+                print("Closing console ('`')...")
             self._press_key(VK_OEM_3)
-            time.sleep(0.2) # Wait for console to open
+            time.sleep(0.05) # Small delay after closing
+            return True
+        except Exception as e:
+            if verbose:
+                print(f"Error closing console: {e}")
+            return False
+
+    def execute_command_in_console(self, command_string, verbose=True):
+        """Executes a command assuming the console is already open."""
+        if not self._check_hwnd(verbose):
+             return False
+        # Assumes window is focused and console is open
+        try:
+            if verbose:
+                print(f"  Executing: '{command_string}'") # Indented for clarity within sequence
 
             # Set clipboard and paste
-            print(f"Setting clipboard and pasting...")
+            if verbose:
+                print("    Setting clipboard and pasting...") # Indented
             if self._set_clipboard_text(command_string):
                 self._paste_clipboard()
-                time.sleep(0.2)
+                time.sleep(0.1)
             else:
-                print("Failed to set clipboard. Aborting paste.")
-                # Attempt to close console anyway?
-                self._press_key(VK_OEM_3)
-                return False
+                if verbose:
+                    print("    Failed to set clipboard. Skipping command execution.") # Indented
+                return False # Cannot proceed without clipboard
 
             # Execute command
-            time.sleep(0.1) # Delay before pressing Enter
-            print("Pressing Enter key...")
+            if verbose:
+                print("    Pressing Enter...") # Indented
             self._press_key(VK_RETURN)
-            time.sleep(0.2) # Give time for command to execute
-
-            # Close console
-            print("Pressing '`' key again to close console...")
-            self._press_key(VK_OEM_3)
-
-            print("Command execution sequence finished.")
+            time.sleep(0.15) # Give a bit more time for command to register/start
             return True
-
         except Exception as e:
-            print(f"An error occurred during command execution: {e}")
-            print("This might happen if the window cannot be brought to the foreground (e.g., requires admin rights) or other win32 issues.")
-            return False 
+            if verbose:
+                 print(f"    Error executing command '{command_string}' in console: {e}") # Indented
+            return False
+
+    def execute_single_command(self, command_string, verbose=True):
+         """Opens console, executes a single command, and closes console."""
+         # This keeps the original full cycle logic for single commands
+         if not self._check_hwnd(verbose): return False
+
+         if verbose:
+             print(f"Executing single command cycle: '{command_string}'")
+
+         opened = self.open_console(verbose)
+         executed = False
+         if opened:
+             # Use the new method assuming console is open
+             executed = self.execute_command_in_console(command_string, verbose)
+         
+         # Always try to close if opened, even if execution failed
+         closed = False
+         if opened:
+             closed = self.close_console(verbose)
+
+         if verbose:
+             print("Single command cycle finished.")
+
+         # Return True only if open, execute, and close were successful
+         return opened and executed and closed
+
+    # Keep execute_command as an alias for the full cycle method
+    def execute_command(self, command_string, verbose=True):
+        """Alias for execute_single_command for backward compatibility / single use case."""
+        return self.execute_single_command(command_string, verbose=verbose) 

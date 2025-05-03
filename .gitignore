@@ -1,3 +1,16 @@
 # Build output
 dist/
-build/ 
+build/
+
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# OS-specific files
+.DS_Store
+Thumbs.db 

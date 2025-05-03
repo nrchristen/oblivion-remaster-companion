@@ -26,6 +26,9 @@ jobs:
           pip install -r requirements.txt
         # Note: Assumes requirements.txt and spec file are in the root directory now
 
+      - name: Run Unit Tests
+        run: python -m unittest discover tests
+
       - name: Build executable with PyInstaller
         run: pyinstaller ES4Companion.spec --distpath ./dist --workpath ./build
         # Run from root, point to spec file in root, define output dirs
