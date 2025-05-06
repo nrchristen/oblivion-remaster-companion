@@ -27,28 +27,15 @@
    git clone https://github.com/yourusername/oblivion-remaster-companion.git
    cd oblivion-remaster-companion
    ```
-2. Create and activate a virtual environment:
-   ```bash
-   python -m venv .venv
-   .venv\Scripts\activate  # Windows
-   ```
-3. Install dependencies:
+2. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
 ### Running the Application
 
-#### GUI Mode
-
 ```bash
 python app.py
-```
-
-#### CLI Mode
-
-```bash
-python app.py --cli
 ```
 
 ### Running Tests
@@ -86,10 +73,6 @@ python -m unittest discover tests
   - Walk mode toggle
   - Custom command execution
 
-- **Dual Interface**
-  - Modern GUI interface
-  - Command-line interface (CLI) for advanced users
-
 ### Object ID Sources
 
 - **For versions past `v0.1.2`**  
@@ -105,4 +88,3 @@ python -m unittest discover tests
 - Windows 10/11
 - Python 3.8+ (for source installation)
 - Microsoft WebView2 Runtime (for GUI mode)
-- Oblivion Remastered running
