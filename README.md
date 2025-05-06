@@ -1,5 +1,5 @@
 # oblivion-remaster-companion
-ES4 console companion
+ES4 console automation tool
 
 I have zero knowledge in modding any bethesda titles or modifying any UE5 games.
 I wanted a simple console automation tool that can live independently from directly messing with the game files.
