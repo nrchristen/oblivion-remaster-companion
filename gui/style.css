@@ -53,7 +53,7 @@ html, body {
     display: flex;
     flex-direction: column;
     box-sizing: border-box; /* Apply box-sizing globally */
-    padding-top: 45px; /* Slightly reduced top padding */
+    padding-top: 10px; /* Reduced from 45px to 10px */
     position: relative; /* Needed for absolute positioning of children */
     padding-bottom: 70px; /* Added for bottom command bar */
 }
@@ -67,16 +67,36 @@ body {
 }
 
 h1 {
-    font-family: var(--font-primary); /* Use thematic font for main title */
+    font-family: var(--font-primary), 'Segoe UI', Arial, sans-serif;
     color: var(--primary-color);
     text-align: center;
     margin-bottom: var(--margin-lg);
-    font-weight: 500; /* Slightly less bold */
-    font-size: 2.3em; /* Slightly larger title */
-    border-bottom: 2px solid var(--secondary-color); /* Thicker, brown border */
-    padding-bottom: var(--padding-md);
-    letter-spacing: 1.5px; /* Add some letter spacing */
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.4); /* Subtle shadow */
+    font-weight: 700;
+    font-size: 2.3em;
+    border-bottom: none;
+    padding-bottom: 0;
+    letter-spacing: 2px;
+    text-shadow:
+        0 2px 8px rgba(212, 172, 110, 0.25), /* gold glow */
+        0 1px 0 #fff, /* subtle highlight */
+        0 4px 12px rgba(0,0,0,0.25); /* soft shadow */
+    background: linear-gradient(90deg, #eec98a 0%, #d4ac6e 50%, #b8893a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+/* Add a thin gold line below for accent */
+h1::after {
+    content: '';
+    display: block;
+    margin: 18px auto 0 auto;
+    width: 220px;
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #eec98a 0%, #d4ac6e 50%, #b8893a 100%);
+    opacity: 0.85;
 }
 
 h2 {
@@ -464,7 +484,7 @@ hr {
 
 .collapsible-content.visible {
     /* Visible state */
-    max-height: 1000px; /* Large enough height for content */
+    max-height: 5000px; /* Large enough height for content */
     opacity: 1;
     margin-top: 0 !important; /* Reset margin */
     margin-bottom: 0 !important; /* Reset margin */
@@ -514,16 +534,37 @@ hr {
 
 /* Update H2 selector if needed */
 .collapsible-container > h2 {
-    color: var(--secondary-color); /* Keep brown */
-    border-bottom-color: var(--input-border);
-    margin-bottom: var(--margin-lg); /* More space below section titles */
-    /* Add styles for toggle behavior */
-    display: flex; 
-    justify-content: space-between;
+    font-family: var(--font-primary);
+    font-size: 1.7em;
+    font-weight: 800;
+    color: var(--secondary-color);
+    text-shadow: 0 2px 8px rgba(212, 172, 110, 0.10), 0 1px 0 #fff, 0 2px 6px rgba(0,0,0,0.10);
+    border-bottom: none;
+    margin-bottom: 0; /* Remove margin for better alignment */
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    cursor: pointer; 
-    margin-top: 0; /* Ensure no top margin */
-    padding-top: 0; /* Ensure no top padding */
+    justify-content: space-between;
+    gap: 0;
+    padding-bottom: 0;
+}
+
+/* Accent bar: only show when section is open */
+.collapsible-container > h2 .section-accent-bar {
+    display: none;
+}
+.collapsible-container .collapsible-content.visible ~ .section-accent-bar {
+    display: block;
+    margin: 10px 0 0 0;
+    width: 60px;
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #eec98a 0%, #d4ac6e 50%, #b8893a 100%);
+    opacity: 0.7;
+    position: relative;
+    left: 0;
 }
 
 /* Remove the old selector if it's now redundant */
@@ -549,7 +590,7 @@ hr {
 /* Adjust collapsible content if needed */
 .collapsible-content.visible {
     /* Visible state */
-    max-height: 1000px; /* Large enough height for content */
+    max-height: 5000px; /* Large enough height for content */
     opacity: 1;
     /* Remove display:flex and gap from generic */
     /* display: flex; 
@@ -570,12 +611,12 @@ hr {
 /* Status Indicator */
 #status-display {
     position: absolute;
-    top: 20px; /* Adjust as needed */
-    left: 20px; /* Adjust as needed */
+    top: 10px; /* Reduced from 20px to 10px */
+    left: 20px;
     display: flex;
     align-items: center;
-    gap: 8px; /* Space between sphere and text */
-    z-index: 10; /* Ensure it's above other elements */
+    gap: 8px;
+    z-index: 10;
 }
 
 #status-indicator {
@@ -657,17 +698,34 @@ hr {
 }
 
 #toggle-favorites-btn {
-    /* Style similar to other buttons but maybe slightly different */
-    background-color: var(--bg-color); 
-    color: var(--primary-color);
-    border: 1px solid var(--primary-color);
-    box-shadow: none;
+    background: linear-gradient(90deg, #eec98a 0%, #d4ac6e 60%, #b8893a 100%);
+    color: var(--text-color-dark);
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(212, 172, 110, 0.10), 0 1px 2px rgba(0,0,0,0.08);
     padding: var(--padding-sm) var(--padding-lg);
+    font-weight: 700;
+    font-size: 1em;
+    letter-spacing: 1px;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
 #toggle-favorites-btn:hover:not(:disabled) {
-    background-color: #4e4e4e; /* Slightly lighter grey */
-    color: #eec98a; /* Brighter gold */
+    background: linear-gradient(90deg, #ffe3a3 0%, #eec98a 60%, #d4ac6e 100%);
+    color: var(--secondary-color);
+    box-shadow: 0 4px 16px rgba(212, 172, 110, 0.18), 0 2px 6px rgba(0,0,0,0.10);
+    transform: translateY(-2px) scale(1.03);
+}
+
+#toggle-favorites-btn:active:not(:disabled) {
+    background: linear-gradient(90deg, #d4ac6e 0%, #b8893a 100%);
+    color: var(--secondary-color);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+    transform: translateY(0) scale(0.98);
 }
 
 #favorites-dropdown {
@@ -710,16 +768,37 @@ hr {
 
 /* Update H2 selector if needed */
 .collapsible-container > h2 {
-    color: var(--secondary-color); /* Keep brown */
-    border-bottom-color: var(--input-border);
-    margin-bottom: var(--margin-lg); /* More space below section titles */
-    /* Add styles for toggle behavior */
-    display: flex; 
-    justify-content: space-between;
+    font-family: var(--font-primary);
+    font-size: 1.7em;
+    font-weight: 800;
+    color: var(--secondary-color);
+    text-shadow: 0 2px 8px rgba(212, 172, 110, 0.10), 0 1px 0 #fff, 0 2px 6px rgba(0,0,0,0.10);
+    border-bottom: none;
+    margin-bottom: 0; /* Remove margin for better alignment */
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    cursor: pointer; 
-    margin-top: 0; /* Ensure no top margin */
-    padding-top: 0; /* Ensure no top padding */
+    justify-content: space-between;
+    gap: 0;
+    padding-bottom: 0;
+}
+
+/* Accent bar: only show when section is open */
+.collapsible-container > h2 .section-accent-bar {
+    display: none;
+}
+.collapsible-container .collapsible-content.visible ~ .section-accent-bar {
+    display: block;
+    margin: 10px 0 0 0;
+    width: 60px;
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #eec98a 0%, #d4ac6e 50%, #b8893a 100%);
+    opacity: 0.7;
+    position: relative;
+    left: 0;
 }
 
 /* Remove the old selector if it's now redundant */
@@ -745,7 +824,7 @@ hr {
 /* Adjust collapsible content if needed */
 .collapsible-content.visible {
     /* Visible state */
-    max-height: 1000px; /* Large enough height for content */
+    max-height: 5000px; /* Large enough height for content */
     opacity: 1;
     /* Remove display:flex and gap from generic */
     /* display: flex; 
@@ -761,4 +840,321 @@ hr {
     display: flex;
     flex-direction: column;
     gap: var(--gap-lg);
+}
+
+/* Teleport Section Styling */
+#teleport-section {
+    border: 1px solid var(--secondary-color);
+    padding: var(--padding-lg);
+    border-radius: var(--border-radius);
+    background-color: var(--content-bg);
+    color: var(--text-color-dark);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+#teleport-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-lg);
+}
+
+#teleport-content.visible {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-lg);
+    border-top: none !important;
+    padding-top: 0 !important;
+}
+
+/* Status Indicator */
+#status-display {
+    position: absolute;
+    top: 10px; /* Reduced from 20px to 10px */
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 10;
+}
+
+#status-indicator {
+    width: 14px; /* Slightly smaller */
+    height: 14px;
+    background-color: var(--border-color); /* Default greyish state */
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.3);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.4), 0 1px 1px rgba(255,255,255,0.1);
+    transition: background-color 0.4s ease;
+    flex-shrink: 0; /* Prevent sphere from shrinking */
+}
+
+#status-indicator.disconnected {
+    background-color: var(--tertiary-color); /* Red */
+}
+
+#status-indicator.connected {
+    background-color: #66bb6a; /* Green */
+}
+
+#status-indicator.debug {
+    background-color: var(--primary-color); /* Gold/Orange */
+}
+
+#status-indicator-text {
+    font-size: 0.85em;
+    color: var(--text-color-light);
+    font-weight: 500;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.5); /* Add shadow for readability */
+}
+
+/* Restore any necessary #status-section styles if they were modified */
+#status-section #status span {
+    color: var(--text-color-dark);
+    font-weight: 600;
+}
+
+/* ... rest of styles ... */
+
+/* Bottom Command Bar */
+#bottom-command-bar {
+    position: fixed; /* Stick to bottom */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--bg-color); /* Match body background */
+    padding: var(--padding-md);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+    display: flex;
+    gap: var(--gap-md);
+    z-index: 20; /* Above status indicator */
+}
+
+#bottom-command-bar input[type="text"] {
+    flex-grow: 1; /* Take remaining space */
+    background-color: #444; /* Darker input background */
+    border-color: var(--border-color);
+    color: var(--text-color-light);
+}
+
+#bottom-command-bar input[type="text"]:focus {
+     background-color: #505050;
+     border-color: var(--primary-color);
+     box-shadow: none; /* No glow needed here */
+}
+
+#bottom-command-bar button {
+    flex-shrink: 0; /* Don't shrink button */
+    box-shadow: none; /* Less emphasis */
+}
+
+/* Top Favorites Dropdown */
+#top-favorites-container {
+    position: relative; /* Container for absolute dropdown */
+    margin-bottom: var(--margin-md); /* Reduced margin */
+    text-align: center; 
+}
+
+#toggle-favorites-btn {
+    background: linear-gradient(90deg, #eec98a 0%, #d4ac6e 60%, #b8893a 100%);
+    color: var(--text-color-dark);
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(212, 172, 110, 0.10), 0 1px 2px rgba(0,0,0,0.08);
+    padding: var(--padding-sm) var(--padding-lg);
+    font-weight: 700;
+    font-size: 1em;
+    letter-spacing: 1px;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#toggle-favorites-btn:hover:not(:disabled) {
+    background: linear-gradient(90deg, #ffe3a3 0%, #eec98a 60%, #d4ac6e 100%);
+    color: var(--secondary-color);
+    box-shadow: 0 4px 16px rgba(212, 172, 110, 0.18), 0 2px 6px rgba(0,0,0,0.10);
+    transform: translateY(-2px) scale(1.03);
+}
+
+#toggle-favorites-btn:active:not(:disabled) {
+    background: linear-gradient(90deg, #d4ac6e 0%, #b8893a 100%);
+    color: var(--secondary-color);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+    transform: translateY(0) scale(0.98);
+}
+
+#favorites-dropdown {
+    position: absolute; /* Position below the button */
+    top: 100%; 
+    left: 50%; /* Start at center */
+    transform: translateX(-50%); /* Center align */
+    width: 400px; /* Or adjust as needed */
+    max-width: 90%;
+    background-color: var(--content-bg);
+    border: 1px solid var(--secondary-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 30; /* Above command bar */
+    padding: var(--padding-md); /* Add padding when visible */
+    margin-top: 5px; /* Small gap below button */
+}
+
+/* Override generic collapsible styles slightly for dropdown */
+#favorites-dropdown.collapsible-content {
+    transition: max-height 0.4s ease-out, opacity 0.4s ease-out, 
+                transform 0.4s ease-out, padding 0.4s ease-out, 
+                margin 0.4s ease-out, border-width 0.4s ease-out;
+    /* Start slightly translated up when hidden */
+    transform: translateX(-50%) translateY(-10px);
+}
+
+#favorites-dropdown.collapsible-content.visible {
+    max-height: 500px; /* Enough height for content */
+    padding: var(--padding-md); /* Ensure padding */
+    transform: translateX(-50%) translateY(0); /* Slide down */
+}
+
+/* Styles for content within dropdown */
+#favorites-dropdown .form-row label {
+    min-width: 60px; /* Smaller label */
+}
+
+/* ... existing styles ... */
+
+/* Update H2 selector if needed */
+.collapsible-container > h2 {
+    font-family: var(--font-primary);
+    font-size: 1.7em;
+    font-weight: 800;
+    color: var(--secondary-color);
+    text-shadow: 0 2px 8px rgba(212, 172, 110, 0.10), 0 1px 0 #fff, 0 2px 6px rgba(0,0,0,0.10);
+    border-bottom: none;
+    margin-bottom: 0; /* Remove margin for better alignment */
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+    padding-bottom: 0;
+}
+
+/* Accent bar: only show when section is open */
+.collapsible-container > h2 .section-accent-bar {
+    display: none;
+}
+.collapsible-container .collapsible-content.visible ~ .section-accent-bar {
+    display: block;
+    margin: 10px 0 0 0;
+    width: 60px;
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #eec98a 0%, #d4ac6e 50%, #b8893a 100%);
+    opacity: 0.7;
+    position: relative;
+    left: 0;
+}
+
+/* Remove the old selector if it's now redundant */
+/* .column > div h2 { ... } */
+
+/* General H2 (Column Titles) need light text */
+.column > h2 {
+    color: var(--text-color-light); /* Light text for top-level column titles */
+    border-bottom-color: var(--border-color);
+    padding-bottom: var(--padding-sm); /* Keep bottom padding */
+    padding-top: 0; /* Explicitly set top padding to 0 */
+    margin-bottom: var(--gap-md); /* Space before first content box */
+    margin-top: 0; /* Ensure no top margin for alignment */
+    /* Add styles for toggle behavior */
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer; 
+}
+
+/* ... rest of the styles ... */
+
+/* Adjust collapsible content if needed */
+.collapsible-content.visible {
+    /* Visible state */
+    max-height: 5000px; /* Large enough height for content */
+    opacity: 1;
+    /* Remove display:flex and gap from generic */
+    /* display: flex; 
+    flex-direction: column;
+    gap: var(--gap-lg); */
+    margin-top: 0; /* Remove margin-top for content inside boxes */
+    border-top: 1px solid var(--input-border); /* Add separator line */
+    padding-top: var(--padding-lg); /* Add padding when visible */
+}
+
+/* Add specific gap for sections within collapsible battle stage */
+#battle-stage-content.visible {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-lg);
+}
+
+.collapsible-container {
+    background: linear-gradient(180deg, #f7f1e3 0%, #f1e9d9 80%, #e7dbc2 100%); /* parchment gradient */
+    border: 2px solid var(--primary-color); /* gold/bronze border */
+    border-radius: 10px; /* more modern, card-like */
+    box-shadow: 0 6px 24px rgba(139, 90, 43, 0.10), 0 1.5px 6px rgba(0,0,0,0.10);
+    padding: var(--padding-lg);
+    color: var(--text-color-dark);
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+.collapsible-container::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 18px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 100%);
+    pointer-events: none;
+    border-radius: 10px 10px 0 0;
+    z-index: 1;
+}
+.collapsible-container:hover {
+    box-shadow: 0 10px 32px rgba(212, 172, 110, 0.13), 0 2px 8px rgba(0,0,0,0.13);
+    border-color: #eec98a;
+}
+.collapsible-container > h2 {
+    font-family: var(--font-primary);
+    font-size: 1.7em;
+    font-weight: 800;
+    color: var(--secondary-color);
+    text-shadow: 0 2px 8px rgba(212, 172, 110, 0.10), 0 1px 0 #fff, 0 2px 6px rgba(0,0,0,0.10);
+    border-bottom: none;
+    margin-bottom: 0; /* Remove margin for better alignment */
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+    padding-bottom: 0;
+}
+
+/* Accent bar: only show when section is open */
+.collapsible-container > h2 .section-accent-bar {
+    display: none;
+}
+.collapsible-container .collapsible-content.visible ~ .section-accent-bar {
+    display: block;
+    margin: 10px 0 0 0;
+    width: 60px;
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #eec98a 0%, #d4ac6e 50%, #b8893a 100%);
+    opacity: 0.7;
+    position: relative;
+    left: 0;
 } 
