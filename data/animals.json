@@ -1,0 +1,304 @@
+{
+  "Black Bear": {
+    "id": "00097A15",
+    "level": 9,
+    "health": 150,
+    "attack": 22,
+    "soul": "Common",
+    "resist_frost": 20,
+    "notes": "10% chance Yellow Tick disease."
+  },
+  "Boar": {
+    "id": "00097A17",
+    "level": 7,
+    "health": 100,
+    "attack": 24,
+    "soul": "Lesser",
+    "resist_frost": 20,
+    "notes": "10% chance Chanthrax Blight disease. Not found in ruins/caves."
+  },
+  "Brown Bear": {
+    "id": "00097A16",
+    "level": 16,
+    "health": 330,
+    "attack": 44,
+    "soul": "Greater",
+    "resist_frost": 20,
+    "notes": "10% chance Yellow Tick disease."
+  },
+  "Deer (Buck)": {
+    "id": "0003154F",
+    "level": 1,
+    "health": 23,
+    "attack": 10,
+    "soul": "Petty",
+    "notes": "Non-Aggressive. 10% chance Dampworm disease."
+  },
+  "Deer (Doe)": {
+    "id": "00031550",
+    "level": 1,
+    "health": 12,
+    "attack": 4,
+    "soul": "Petty",
+    "notes": "Non-Aggressive. 10% chance Dampworm disease."
+  },
+  "Dog": {
+    "id": "0001E5F5",
+    "level": 1,
+    "health": 20,
+    "attack": 8,
+    "soul": "Petty",
+    "notes": "10% chance Witbane disease. (Hostile variant)"
+  },
+  "Dog (Charlotte)": {
+    "id": "000D399A",
+    "level": 1,
+    "health": "5×lvl",
+    "attack": "2+(lvl/2)",
+    "soul": "Leveled",
+    "notes": "NPC dog in Mages Guild and Imperial City Factions."
+  },
+  "Dog (Clancy)": {
+    "id": "00071F52",
+    "level": 1,
+    "health": "5×lvl",
+    "attack": "2+(lvl/2)",
+    "soul": "Leveled",
+    "notes": "Member of Fighters Guild Faction."
+  },
+  "Dog (Duke)": {
+    "id": "0007329F",
+    "level": 1,
+    "health": "5×lvl",
+    "attack": "2+(lvl/2)",
+    "soul": "Leveled",
+    "notes": "Member of Knights of the Thorn Faction."
+  },
+  "Dog (Mut)": {
+    "id": "00037669",
+    "level": 1,
+    "health": 100,
+    "attack": 50,
+    "soul": "Common",
+    "notes": "Special dog variant."
+  },
+  "Dog (Steel Fang)": {
+    "id": "0008FF94",
+    "level": 1,
+    "health": 20,
+    "attack": 8,
+    "soul": "Petty",
+    "notes": "Not a member of Blackwood Company Faction."
+  },
+  "Dog (Steel Fang Blackwood)": {
+    "id": "000ACF9C",
+    "level": 1,
+    "health": 20,
+    "attack": 8,
+    "soul": "Petty",
+    "notes": "Member of Blackwood Company Faction."
+  },
+  "Mountain Lion": {
+    "id": "0001E5FA",
+    "level": 12,
+    "health": 160,
+    "attack": 32,
+    "soul": "Common",
+    "resist_frost": 20,
+    "notes": "10% chance Yellow Tick disease."
+  },
+  "Mud Crab": {
+    "id": "00000B7F",
+    "level": 1,
+    "health": 10,
+    "attack": 8,
+    "soul": "Petty",
+    "notes": "15% chance Swamp Fever disease."
+  },
+  "Rat": {
+    "id": "00025314",
+    "level": 1,
+    "health": 4,
+    "attack": 2,
+    "soul": "Petty",
+    "notes": "25% chance of various diseases (Blood lung, Bone Break Fever, BrainRot, etc.)."
+  },
+  "Rat (Arena)": {
+    "id": "0003D793",
+    "level": 1,
+    "health": 4,
+    "attack": 2,
+    "soul": "Petty",
+    "notes": "Part of unused 'ArenaMonsters1' leveled list."
+  },
+  "Rat (Variant)": {
+    "id": "0008DFE9",
+    "level": 1,
+    "health": 4,
+    "attack": 2,
+    "soul": "Petty",
+    "notes": "Alternative rat variant."
+  },
+  "Rat (Strong)": {
+    "id": "000282F8",
+    "level": 1,
+    "health": 20,
+    "attack": 3,
+    "soul": "Common",
+    "notes": "Stronger rat variant."
+  },
+  "Rat (Very Strong)": {
+    "id": "00028CA2",
+    "level": 1,
+    "health": 2500,
+    "attack": 3,
+    "soul": "Common",
+    "notes": "Very high health rat variant."
+  },
+  "Rat (Invincible)": {
+    "id": "000023CF",
+    "level": 1,
+    "health": 10000,
+    "attack": 3,
+    "soul": "Common",
+    "notes": "Nearly invincible rat variant."
+  },
+  "Sheep": {
+    "id": "000151DD",
+    "level": 1,
+    "health": 13,
+    "attack": 3,
+    "soul": "Petty",
+    "notes": "Non-Aggressive (Ewe variant may not fight back). 10% chance Droops disease."
+  },
+  "Sheep (Ram)": {
+    "id": "0005D558",
+    "level": 1,
+    "health": 13,
+    "attack": 3,
+    "soul": "Petty",
+    "notes": "Non-Aggressive (Power Attack only?). 10% chance Droops disease."
+  },
+  "Sheep (Wabbajack)": {
+    "id": "00026D68",
+    "level": 1,
+    "health": 25,
+    "attack": 3,
+    "soul": "Petty",
+    "notes": "Template for all creatures created by Wabbajack."
+  },
+  "Sheep (Sanguine Rose)": {
+    "id": "0007BABC",
+    "level": 1,
+    "health": 25,
+    "attack": 3,
+    "soul": "Petty",
+    "notes": "Template for all creatures created by Sanguine Rose."
+  },
+  "Sheep (Special)": {
+    "id": "0002500E",
+    "level": 1,
+    "health": 50,
+    "attack": 0,
+    "soul": "Petty",
+    "notes": "Special sheep variant."
+  },
+  "Sheep (Tod)": {
+    "id": "00025740",
+    "level": 1,
+    "health": 50,
+    "attack": 0,
+    "soul": "Petty",
+    "notes": "Special named sheep variant."
+  },
+  "Slaughterfish": {
+    "id": "0001FF21",
+    "level": 1,
+    "health": 13,
+    "attack": 15,
+    "soul": "Petty",
+    "notes": "10% chance Greenspore disease."
+  },
+  "Timber Wolf": {
+    "id": "0001E5F6",
+    "level": 6,
+    "health": 60,
+    "attack": 14,
+    "soul": "Lesser",
+    "resist_frost": 20,
+    "notes": "10% chance Helljoint disease."
+  },
+  "Wolf": {
+    "id": "0006E912",
+    "level": 1,
+    "health": 20,
+    "attack": 5,
+    "soul": "Petty",
+    "resist_frost": 20,
+    "notes": "10% chance Helljoint disease."
+  },
+  "Bay Horse": {
+    "id": "000538A5",
+    "level": 1,
+    "health": 250,
+    "attack": 10,
+    "soul": "Lesser",
+    "notes": "Horse variant."
+  },
+  "Black Horse": {
+    "id": "000538A6",
+    "level": 1,
+    "health": 225,
+    "attack": 15,
+    "soul": "Lesser",
+    "notes": "Horse variant."
+  },
+  "Black Horse (E3 Demo)": {
+    "id": "00097FC8",
+    "level": 1,
+    "health": 225,
+    "attack": 2,
+    "soul": "Lesser",
+    "notes": "E3 Demo variant."
+  },
+  "Chestnut Horse": {
+    "id": "000538A7",
+    "level": 1,
+    "health": 200,
+    "attack": 10,
+    "soul": "Lesser",
+    "notes": "Horse variant."
+  },
+  "Horse": {
+    "id": "0003D6DE",
+    "level": 1,
+    "health": 50,
+    "attack": 0,
+    "soul": "Common",
+    "notes": "Generic horse."
+  },
+  "Paint Horse": {
+    "id": "000914D3",
+    "level": 1,
+    "health": 300,
+    "attack": 10,
+    "soul": "Lesser",
+    "notes": "Horse variant."
+  },
+  "Paint Horse (Alt)": {
+    "id": "000538A8",
+    "level": 1,
+    "health": 300,
+    "attack": 10,
+    "soul": "Lesser",
+    "notes": "Alternative Paint Horse variant."
+  },
+  "White Horse": {
+    "id": "000538A9",
+    "level": 1,
+    "health": 400,
+    "attack": 12,
+    "soul": "Lesser",
+    "notes": "Horse variant."
+  }
+} 
