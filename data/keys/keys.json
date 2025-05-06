@@ -1,0 +1,5 @@
+{
+  "Abandoned Mine Key": {"id": "000355A3", "name": "Abandoned Mine Key", "weight": 0.0, "value": 0, "notes": "Opens the locked door in the Abandoned Mine near the Imperial Bridge Inn."},
+  "Anvil Castle Key": {"id": "00037337", "name": "Anvil Castle Key", "weight": 0.0, "value": 0, "notes": "Opens various doors within Anvil Castle."},
+  "Arena Key": {"id": "00032A50", "name": "Arena Key", "weight": 0.0, "value": 0, "notes": "Opens doors in the Arena Bloodworks and Fighters Quarters."}
+} 

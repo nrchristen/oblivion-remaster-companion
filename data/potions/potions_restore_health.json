@@ -1,0 +1,5 @@
+{
+  "Potion of Healing (Weak)": {"id": "000084EE", "name": "Potion of Healing (Weak)", "weight": 0.5, "value": 14, "effect": "Restore Health 8pts for 7sec"},
+  "Potion of Healing (Standard)": {"id": "00008501", "name": "Potion of Healing (Standard)", "weight": 0.5, "value": 38, "effect": "Restore Health 16pts for 10sec"},
+  "Potion of Healing (Strong)": {"id": "00008503", "name": "Potion of Healing (Strong)", "weight": 0.5, "value": 59, "effect": "Restore Health 24pts for 13sec"}
+} 

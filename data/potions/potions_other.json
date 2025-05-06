@@ -1,0 +1,4 @@
+{
+  "Potion of Cure Disease": {"id": "0000918E", "name": "Potion of Cure Disease", "weight": 0.5, "value": 16, "effect": "Cure Disease"},
+  "Potion of Invisibility": {"id": "000091B6", "name": "Potion of Invisibility", "weight": 0.5, "value": 69, "effect": "Invisibility for 30sec"}
+} 

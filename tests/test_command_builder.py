@@ -9,7 +9,8 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..',
 from command_builder import (
     build_simple_command,
     build_placeatme_command,
-    build_additem_command
+    build_additem_command,
+    build_teleport_command
 )
 
 class TestCommandBuilder(unittest.TestCase):
@@ -40,6 +41,15 @@ class TestCommandBuilder(unittest.TestCase):
         self.assertIsNone(build_additem_command("54321", -5))
         self.assertIsNone(build_additem_command("54321", None))
         self.assertIsNone(build_additem_command(54321, 1))
+
+    def test_build_teleport_command(self):
+        """Tests the Center on Cell (coc) command builder."""
+        self.assertEqual(build_teleport_command("AnvilMagesGuild"), 'coc AnvilMagesGuild')
+        self.assertEqual(build_teleport_command("ICMarketDistrict"), 'coc ICMarketDistrict')
+        self.assertEqual(build_teleport_command("SomeTestLocationID123"), 'coc SomeTestLocationID123')
+        # Test with potential spaces (should ideally not happen, but test robustness)
+        # Assuming the builder doesn't modify the ID itself, just prepends 'coc '
+        self.assertEqual(build_teleport_command("Location With Spaces"), 'coc Location With Spaces')
 
 if __name__ == '__main__':
     unittest.main() 

@@ -1,0 +1,50 @@
+{
+  "Steel Boots": {
+    "id": "00036347",
+    "weight": 13.5,
+    "health": 300,
+    "value": 35,
+    "armor": 3.0,
+    "enchantment": null
+  },
+  "Steel Cuirass": {
+    "id": "00036349",
+    "weight": 33.75,
+    "health": 750,
+    "value": 140,
+    "armor": 10.0,
+    "enchantment": null
+  },
+  "Steel Gauntlets": {
+    "id": "00036346",
+    "weight": 6.75,
+    "health": 300,
+    "value": 35,
+    "armor": 3.0,
+    "enchantment": null
+  },
+  "Steel Greaves": {
+    "id": "00036348",
+    "weight": 20.25,
+    "health": 525,
+    "value": 70,
+    "armor": 6.0,
+    "enchantment": null
+  },
+  "Steel Helmet": {
+    "id": "00036345",
+    "weight": 6.75,
+    "health": 300,
+    "value": 35,
+    "armor": 3.0,
+    "enchantment": null
+  },
+  "Steel Shield": {
+    "id": "0003634A",
+    "weight": 13.5,
+    "health": 525,
+    "value": 70,
+    "armor": 6.0,
+    "enchantment": null
+  }
+} 

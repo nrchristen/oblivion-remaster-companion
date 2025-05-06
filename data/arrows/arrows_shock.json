@@ -1,0 +1,83 @@
+{
+  "Arrow of Sparks": {
+    "id": "0004BEFA",
+    "weight": 0.1,
+    "value": 5,
+    "damage": 8,
+    "damage_obr": 10,
+    "level": 3,
+    "enchantment": "Shock Damage 5 pts"
+  },
+  "Arrow of Jolts": {
+    "id": "0004BEFD",
+    "weight": 0.1,
+    "value": 6,
+    "damage": 9,
+    "damage_obr": 12,
+    "level": 4,
+    "enchantment": "Shock Damage 5 pts"
+  },
+  "Arrow of Shocking": {
+    "id": "0004BF03",
+    "weight": 0.1,
+    "value": 13,
+    "damage": 11,
+    "damage_obr": 14,
+    "level": 8,
+    "enchantment": "Shock Damage 10 pts"
+  },
+  "Arrow of Voltage": {
+    "id": "0004BF06",
+    "weight": 0.1,
+    "value": 20,
+    "damage": 12,
+    "damage_obr": 16,
+    "level": 11,
+    "enchantment": "Shock Damage 15 pts (Adds Soul Trap 5s if SI installed)"
+  },
+  "Arrow of the Dynamo": {
+    "id": "0004BF09",
+    "weight": 0.1,
+    "value": 24,
+    "damage": 13,
+    "damage_obr": 17,
+    "level": 14,
+    "enchantment": "Shock Damage 15 pts (Adds Soul Trap 5s if SI installed)"
+  },
+  "Arrow of Lightning": {
+    "id": "0004BF0C",
+    "weight": 0.2,
+    "value": 38,
+    "damage": 14,
+    "damage_obr": 18,
+    "level": 18,
+    "enchantment": "Shock Damage 20 pts"
+  },
+  "Arrow of Storms": {
+    "id": "0004BF0F",
+    "weight": 0.25,
+    "value": 53,
+    "damage": 15,
+    "damage_obr": 20,
+    "level": 22,
+    "enchantment": "Shock Damage 20 pts"
+  },
+  "Stormcall Arrow": {
+    "id": "000CD541",
+    "weight": 0.1,
+    "value": 180,
+    "damage": 7,
+    "damage_obr": 10,
+    "level": 11,
+    "enchantment": "Shock Damage 30 pts in 10 ft for 2 secs"
+  },
+  "Arrow of Storm Strike": {
+    "id": "000CD543",
+    "weight": 0.2,
+    "value": 128,
+    "damage": 9,
+    "damage_obr": 12,
+    "level": 18,
+    "enchantment": "Shock Damage 40 pts in 10 ft for 2 secs"
+  }
+} 

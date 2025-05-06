@@ -1,0 +1,50 @@
+{
+  "Iron Boots": {
+    "id": "0001C6D4",
+    "weight": 12.0,
+    "health": 200,
+    "value": 15,
+    "armor": 2.0,
+    "enchantment": null
+  },
+  "Iron Cuirass": {
+    "id": "0001C6D6",
+    "weight": 30.0,
+    "health": 500,
+    "value": 60,
+    "armor": 7.5,
+    "enchantment": null
+  },
+  "Iron Gauntlets": {
+    "id": "0001C6D3",
+    "weight": 6.0,
+    "health": 200,
+    "value": 15,
+    "armor": 2.0,
+    "enchantment": null
+  },
+  "Iron Greaves": {
+    "id": "0001C6D5",
+    "weight": 18.0,
+    "health": 350,
+    "value": 30,
+    "armor": 4.5,
+    "enchantment": null
+  },
+  "Iron Helmet": {
+    "id": "0001C6D2",
+    "weight": 6.0,
+    "health": 200,
+    "value": 15,
+    "armor": 2.0,
+    "enchantment": null
+  },
+  "Iron Shield": {
+    "id": "0001C6D7",
+    "weight": 12.0,
+    "health": 350,
+    "value": 30,
+    "armor": 4.5,
+    "enchantment": null
+  }
+} 

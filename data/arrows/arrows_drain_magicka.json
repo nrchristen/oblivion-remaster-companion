@@ -1,0 +1,11 @@
+{
+  "Arrow of Drain Magicka": {
+    "id": "0004BF00",
+    "weight": 0.1,
+    "value": 22,
+    "damage": 10,
+    "damage_obr": 13,
+    "level": 6,
+    "enchantment": "Drain Magicka 30 pts for 10 secs"
+  }
+} 

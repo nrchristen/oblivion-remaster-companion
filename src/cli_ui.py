@@ -6,6 +6,7 @@ import os
 import time
 import colorama
 from colorama import Fore, Back, Style
+import logging
 
 # Ensure correct import path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -15,6 +16,7 @@ import app # To access automator/game_found status
 from src import app_logic # Import the logic layer
 from src.command_builder import build_additem_command
 from src.data_loader import get_item_categories, load_json_data
+from src.automator import WindowAutomator # Import for type hinting
 
 # --- CLI UI Constants & Helpers ---
 COLOR_MENU = Fore.CYAN
@@ -25,6 +27,9 @@ COLOR_ERROR = Fore.RED
 COLOR_RESET = Style.RESET_ALL
 
 COMMAND_HISTORY = [] # Simple in-memory history for the session
+
+# Global automator instance for the CLI session
+cli_automator: WindowAutomator = None
 
 def print_header(title):
     print(f"\n{COLOR_MENU}{'=' * 10} {title} {'=' * 10}{COLOR_RESET}")
@@ -38,10 +43,28 @@ def get_choice(prompt="Enter choice: "):
     return input(f"{COLOR_PROMPT}{prompt}{COLOR_RESET}").strip().lower()
 
 def print_status():
-    status_result = app_logic.check_game_status_logic()
-    status_color = COLOR_INFO if "Found" in status_result["status"] else COLOR_WARN
-    print(f"\n{status_color}Game Status: {status_result['status']}{COLOR_RESET}")
-    return "Found" in status_result["status"]
+    global cli_automator
+    if not cli_automator:
+        print(f"{COLOR_ERROR}Error: Automator not initialized for CLI.{COLOR_RESET}")
+        return False
+    # Use the logic layer function which now handles debug mode
+    status_result = app_logic.check_game_status_logic() # This uses app.automator, ensure consistency?
+    # Let's use the passed cli_automator instance instead for consistency
+    status_msg = ""
+    if cli_automator.is_in_debug_mode():
+        debug_file = os.path.basename(cli_automator.get_debug_filepath() or "debug.txt")
+        status_msg = f"Debug Mode Active ({debug_file})"
+    elif cli_automator.hwnd:
+        status_msg = "Game Found"
+    else:
+        status_msg = "Game Not Found"
+
+    status_color = COLOR_INFO if "Found" in status_msg else \
+                   (COLOR_WARN if "Debug" in status_msg else COLOR_ERROR)
+
+    print(f"\n{status_color}Game Status: {status_msg}{COLOR_RESET}")
+    # Return True if game is found OR if in debug mode (as commands can be logged)
+    return cli_automator.hwnd is not None or cli_automator.is_in_debug_mode()
 
 def confirm_action(prompt="Are you sure?"):
     choice = input(f"{COLOR_WARN}{prompt} (y/N): {COLOR_RESET}").strip().lower()
@@ -345,44 +368,109 @@ def cli_manage_favorites():
 
 # --- Main CLI Loop ---
 
-def run_companion_cli():
-    """Main entry point for the CLI mode."""
-    colorama.init(autoreset=True)
-    print(f"{Style.BRIGHT}{Fore.YELLOW}--- Oblivion Remastered Companion (CLI Mode) ---{Style.RESET_ALL}")
-    print("Checking game status...")
-    print_status() # Initial status check
+def run_companion_cli(automator_instance: WindowAutomator):
+    """Runs the main command-line interface loop."""
+    global cli_automator
+    cli_automator = automator_instance # Store the passed instance globally for this module
 
-    main_menu_options = {
-        's': 'Check Game Status',
-        'c': 'Run Single Command',
-        'p': 'Run Preset Battle',
-        'i': 'Add Item',
-        'f': 'Manage Favorites' # Added
-    }
+    print("=" * 30)
+    print(" ES4R Companion CLI ")
+    print("=" * 30)
+    print("Type 'help' for commands, 'exit' to quit.")
+
+    # Initial status check
+    print_status()
 
     while True:
-        print_header("Main Menu")
-        print_menu(main_menu_options)
-        choice = get_choice()
-
-        if choice == 's':
-            print_status()
-        elif choice == 'c':
-            cli_run_single_command()
-        elif choice == 'p':
-            cli_run_preset_battle()
-        elif choice == 'i':
-            cli_add_item()
-        elif choice == 'f':
-            cli_manage_favorites()
-        elif choice == 'q':
-            print(f"{COLOR_INFO}Exiting Companion CLI.{COLOR_RESET}")
+        try:
+            user_input = input("> ")
+            if not handle_input(user_input):
+                break
+        except EOFError:
+            print("\nExiting...")
             break
+        except KeyboardInterrupt:
+            print("\nExiting...")
+            break
+        except Exception as e:
+            print(f"{COLOR_ERROR}\nAn unexpected error occurred: {e}{COLOR_RESET}")
+            logging.exception("Unexpected CLI error")
+
+def handle_input(user_input):
+    """Processes user input from the CLI."""
+    global cli_automator # Needed to potentially re-check status
+    parts = user_input.lower().split()
+    if not parts:
+        return True # Continue loop
+
+    command = parts[0]
+
+    if command in ['exit', 'quit']:
+        print("Exiting ES4R Companion CLI.")
+        return False # Stop loop
+    elif command == 'help':
+        print_help()
+    elif command == 'status':
+        # Re-run the check and print
+        if cli_automator: # Check if automator exists
+             print("Re-checking game status...")
+             cli_automator.find_process_and_window() # Perform a fresh check
+        print_status()
+    elif command == 'exec':
+        if len(parts) > 1:
+            full_command = user_input[len("exec "):].strip()
+            execute_cli_command(full_command)
         else:
-            print(f"{COLOR_ERROR}Invalid choice.{COLOR_RESET}")
-            
-        # Pause before showing menu again
-        input(f"\n{COLOR_INFO}Press Enter to return to Main Menu...{COLOR_RESET}")
+            print(f"{COLOR_WARN}Usage: exec <full console command>{COLOR_RESET}")
+    elif command == 'additem':
+        # Simplified: expects 'additem <item_id> <quantity>'
+        if len(parts) == 3:
+            item_id = parts[1]
+            try:
+                quantity = int(parts[2])
+                # TODO: Validate item_id format?
+                built_command = app_logic.build_additem_command_logic(item_id, quantity)
+                if built_command['success']:
+                     execute_cli_command(built_command['command'])
+                else:
+                     print(f"{COLOR_ERROR}Error building command: {built_command['message']}{COLOR_RESET}")
+            except ValueError:
+                print(f"{COLOR_WARN}Invalid quantity: '{parts[2]}'. Must be a number.{COLOR_RESET}")
+        else:
+            print(f"{COLOR_WARN}Usage: additem <item_id> <quantity>{COLOR_RESET}")
+    # Add other specific commands (placeatme, presets, etc.) here as needed
+    # elif command == 'placeatme': ...
+    # elif command == 'preset': ...
+    else:
+        print(f"{COLOR_WARN}Unknown command: '{command}'. Type 'help' for options.{COLOR_RESET}")
+
+    return True # Continue loop
+
+def execute_cli_command(command_str):
+    global cli_automator
+    if not cli_automator:
+        print(f"{COLOR_ERROR}Error: Automator not initialized.{COLOR_RESET}")
+        return
+    if not command_str:
+        print(f"{COLOR_WARN}Please enter a command.{COLOR_RESET}")
+        return
+
+    print(f"{COLOR_INFO}Executing: {command_str}...{COLOR_RESET}")
+    # Use the passed automator instance directly
+    success = cli_automator.execute_command(command_str, verbose=True) # Use verbose for CLI
+
+    if success:
+        if cli_automator.is_in_debug_mode():
+             print(f"{COLOR_WARN}Success: Command logged to debug file.{COLOR_RESET}")
+        else:
+            print(f"{COLOR_SUCCESS}Success: Command executed in game.{COLOR_RESET}")
+    else:
+        # Automator execute_command handles internal logging of errors
+        if cli_automator.is_in_debug_mode():
+            # Failure in debug mode usually means setup failed
+            print(f"{COLOR_ERROR}Error: Failed to log command to debug file. Check logs.{COLOR_RESET}")
+        else:
+            print(f"{COLOR_ERROR}Error: Command execution failed. Check game console or logs.{COLOR_RESET}")
 
 if __name__ == '__main__':
     # This allows running the CLI directly for testing if needed

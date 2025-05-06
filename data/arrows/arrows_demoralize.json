@@ -1,0 +1,38 @@
+{
+  "Arrow of Fear": {
+    "id": "0003DFD8",
+    "weight": 0.1,
+    "value": 12,
+    "damage": 8,
+    "damage_obr": 10,
+    "level": 3,
+    "enchantment": "Demoralize 25 pts"
+  },
+  "Arrow of Qualms": {
+    "id": "0003DFDA",
+    "weight": 0.1,
+    "value": 12,
+    "damage": 8,
+    "damage_obr": 10,
+    "level": 3,
+    "enchantment": "Demoralize 25 pts"
+  },
+  "Arrow of Cowardice": {
+    "id": "0003DFDB",
+    "weight": 0.1,
+    "value": 13,
+    "damage": 9,
+    "damage_obr": 12,
+    "level": 4,
+    "enchantment": "Demoralize 25 pts"
+  },
+  "Arrow of Misery": {
+    "id": "0003DFD9",
+    "weight": 0.1,
+    "value": 13,
+    "damage": 9,
+    "damage_obr": 12,
+    "level": 4,
+    "enchantment": "Demoralize 25 pts"
+  }
+} 

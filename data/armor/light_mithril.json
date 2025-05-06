@@ -1,0 +1,50 @@
+{
+  "Mithril Boots": {
+    "id": "00023A8D",
+    "weight": 5.25,
+    "health": 400,
+    "value": 100,
+    "armor": 3.75,
+    "enchantment": null
+  },
+  "Mithril Cuirass": {
+    "id": "00023A8F",
+    "weight": 13.1,
+    "health": 800,
+    "value": 400,
+    "armor": 12.5,
+    "enchantment": null
+  },
+  "Mithril Gauntlets": {
+    "id": "00023A8C",
+    "weight": 2.6,
+    "health": 400,
+    "value": 100,
+    "armor": 3.75,
+    "enchantment": null
+  },
+  "Mithril Greaves": {
+    "id": "00023A8E",
+    "weight": 7.8,
+    "health": 600,
+    "value": 200,
+    "armor": 7.5,
+    "enchantment": null
+  },
+  "Mithril Helmet": {
+    "id": "00023A8B",
+    "weight": 2.6,
+    "health": 400,
+    "value": 100,
+    "armor": 3.75,
+    "enchantment": null
+  },
+  "Mithril Shield": {
+    "id": "00023A90",
+    "weight": 5.2,
+    "health": 600,
+    "value": 200,
+    "armor": 7.5,
+    "enchantment": null
+  }
+} 

@@ -1,0 +1,52 @@
+{
+  "Arrow of Extrication": {
+    "id": "00022DB5",
+    "weight": 0.2,
+    "value": 0,
+    "damage": 1,
+    "damage_obr": 1,
+    "level": 1,
+    "enchantment": null,
+    "notes": "Thieves Guild quest The Ultimate Heist"
+  },
+  "Dremora Field Arrow": {
+    "id": "000872A5",
+    "weight": 1.0,
+    "value": 1,
+    "damage": 8,
+    "damage_obr": 10,
+    "level": 1,
+    "enchantment": null,
+    "notes": "Used by Dremora archers"
+  },
+  "Dremora Broadhead Arrow": {
+    "id": "000872A6",
+    "weight": 1.5,
+    "value": 2,
+    "damage": 10,
+    "damage_obr": 13,
+    "level": 8,
+    "enchantment": null,
+    "notes": "Used by Dremora archers"
+  },
+  "Dremora Barbed Arrow": {
+    "id": "000872A7",
+    "weight": 2.0,
+    "value": 4,
+    "damage": 12,
+    "damage_obr": 15,
+    "level": 17,
+    "enchantment": null,
+    "notes": "Used by Dremora archers"
+  },
+  "Rose of Sithis": {
+    "id": "0003266D",
+    "weight": 0.1,
+    "value": 2,
+    "damage": 9,
+    "damage_obr": 12,
+    "level": 1,
+    "enchantment": "Kills Adamus Phillida if he is not wearing armor.",
+    "notes": "Dark Brotherhood quest: Permanent Retirement"
+  }
+} 

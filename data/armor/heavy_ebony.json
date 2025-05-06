@@ -1,0 +1,50 @@
+{
+  "Ebony Boots": {
+    "id": "00036353",
+    "weight": 15.75,
+    "health": 950,
+    "value": 550,
+    "armor": 6.0,
+    "enchantment": null
+  },
+  "Ebony Cuirass": {
+    "id": "0002AD85",
+    "weight": 52.5,
+    "health": 1900,
+    "value": 1900,
+    "armor": 15.0,
+    "enchantment": null
+  },
+  "Ebony Gauntlets": {
+    "id": "00036352",
+    "weight": 10.5,
+    "health": 950,
+    "value": 550,
+    "armor": 6.0,
+    "enchantment": null
+  },
+  "Ebony Greaves": {
+    "id": "00036354",
+    "weight": 31.5,
+    "health": 1425,
+    "value": 1000,
+    "armor": 9.0,
+    "enchantment": null
+  },
+  "Ebony Helmet": {
+    "id": "00036351",
+    "weight": 10.5,
+    "health": 950,
+    "value": 550,
+    "armor": 6.0,
+    "enchantment": null
+  },
+  "Ebony Shield": {
+    "id": "00036356",
+    "weight": 21.0,
+    "health": 1425,
+    "value": 1000,
+    "armor": 18.0,
+    "enchantment": null
+  }
+} 

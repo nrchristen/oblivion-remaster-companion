@@ -1,0 +1,50 @@
+{
+  "Chainmail Boots": {
+    "id": "00036333",
+    "weight": 6.0,
+    "health": 250,
+    "value": 25,
+    "armor": 2.5,
+    "enchantment": null
+  },
+  "Chainmail Cuirass": {
+    "id": "00036335",
+    "weight": 15.0,
+    "health": 600,
+    "value": 100,
+    "armor": 10.0,
+    "enchantment": null
+  },
+  "Chainmail Gauntlets": {
+    "id": "00036332",
+    "weight": 3.0,
+    "health": 250,
+    "value": 25,
+    "armor": 2.5,
+    "enchantment": null
+  },
+  "Chainmail Greaves": {
+    "id": "00036334",
+    "weight": 9.0,
+    "health": 450,
+    "value": 50,
+    "armor": 6.0,
+    "enchantment": null
+  },
+  "Chainmail Helmet": {
+    "id": "00036331",
+    "weight": 3.0,
+    "health": 250,
+    "value": 25,
+    "armor": 2.5,
+    "enchantment": null
+  },
+  "Chainmail Shield": {
+    "id": "00036336",
+    "weight": 6.0,
+    "health": 450,
+    "value": 50,
+    "armor": 6.0,
+    "enchantment": null
+  }
+} 

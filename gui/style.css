@@ -1,209 +1,288 @@
-/* Elder Scrolls Inspired Theme */
+/* Elder Scrolls Inspired Theme - Modernized */
 
 :root {
     /* Palette: Parchment, Stone Grey, Dark Brown, Gold/Bronze, Dark Red */
     --bg-color: #3a3a3a; /* Dark stone grey background */
-    --content-bg: #ece0c8; /* Parchment/light beige for content areas */
-    --text-color-dark: #333333; /* Dark text for light backgrounds */
-    --text-color-light: #e0e0e0; /* Light grey text for dark backgrounds */
-    --primary-color: #c89b4a; /* Gold/Bronze accent */
-    --secondary-color: #8b4513; /* Dark Brown accent (headings) */
-    --tertiary-color: #a03030; /* Dark Red accent (errors, maybe buttons?) */
-    --border-color: #505050; /* Medium-dark grey border */
-    --input-bg: #f5f0e1; /* Slightly lighter parchment for inputs */
-    --input-border: #a0947f; /* Parchment border */
+    --content-bg: #f1e9d9; /* Slightly warmer Parchment/light beige */
+    --text-color-dark: #4a4a4a; /* Softer dark text */
+    --text-color-light: #e8e8e8; /* Softer light grey text */
+    --primary-color: #d4ac6e; /* Slightly softer Gold/Bronze accent */
+    --secondary-color: #8b5a2b; /* Slightly warmer Dark Brown accent */
+    --tertiary-color: #b54a4a; /* Slightly softer Dark Red accent */
+    --border-color: #5a5a5a; /* Slightly softer Medium-dark grey border */
+    --input-bg: #fdf9f0; /* Brighter parchment for inputs */
+    --input-border: #c0b49f; /* Softer Parchment border */
     --button-bg: var(--secondary-color); /* Dark brown buttons */
     --button-text: var(--text-color-light);
-    --button-hover-bg: #a05a2c; /* Lighter brown hover */
-    --button-disabled-bg: #6e5f50;
-    --button-disabled-text: #a0a0a0;
-    --log-bg: #252525; /* Very dark grey for log */
-    --log-text: #c0c0c0; /* Silver/light grey log text */
+    --button-hover-bg: #a06b3f; /* Lighter brown hover */
+    --button-disabled-bg: #7a6f60;
+    --button-disabled-text: #b0b0b0;
+    --log-bg: #282828; /* Darker grey for log */
+    --log-text: #d0d0d0; /* Brighter silver/light grey log text */
 
-    --font-primary: 'Georgia', 'Times New Roman', Times, serif; /* More thematic font */
+    /* Fonts */
+    --font-primary: 'Georgia', 'Times New Roman', Times, serif; /* Thematic font */
+    --font-secondary: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Cleaner UI font */
     --font-code: 'Consolas', 'Monaco', monospace;
-    --border-radius: 3px; /* Slightly less rounded corners */
-    --padding-sm: 6px;
-    --padding-md: 12px;
-    --padding-lg: 18px;
-    --margin-sm: 6px;
-    --margin-md: 12px;
-    --margin-lg: 18px;
 
-    --label-min-width: 80px; /* Consistent label width */
+    /* Sizing & Spacing */
+    --border-radius: 4px; /* Slightly more rounded corners */
+    --padding-sm: 8px;
+    --padding-md: 14px;
+    --padding-lg: 20px;
+    --margin-sm: 8px;
+    --margin-md: 14px;
+    --margin-lg: 20px;
+    --gap-sm: 8px;
+    --gap-md: 14px;
+    --gap-lg: 20px;
+
+    --label-min-width: 90px; /* Increased label width slightly */
 }
 
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    font-family: var(--font-primary);
-    background-color: var(--bg-color);
+    font-family: var(--font-secondary); /* Default to cleaner UI font */
+    background-color: var(--bg-color); /* Fallback */
+    /* Subtle vertical gradient */
+    background-image: linear-gradient(to bottom, var(--bg-color), #2f2f2f); /* Darker shade */
     color: var(--text-color-light); /* Default text is light on dark background */
-    font-size: 15px; /* Slightly larger base font */
+    font-size: 15px;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box; /* Apply box-sizing globally */
+    padding-top: 45px; /* Slightly reduced top padding */
+    position: relative; /* Needed for absolute positioning of children */
+    padding-bottom: 70px; /* Added for bottom command bar */
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
 body {
     padding: var(--padding-lg);
-    box-sizing: border-box;
 }
 
 h1 {
+    font-family: var(--font-primary); /* Use thematic font for main title */
     color: var(--primary-color);
     text-align: center;
     margin-bottom: var(--margin-lg);
-    font-weight: normal; /* Less bold for serif */
-    font-size: 2em; /* Larger title */
+    font-weight: 500; /* Slightly less bold */
+    font-size: 2.3em; /* Slightly larger title */
+    border-bottom: 2px solid var(--secondary-color); /* Thicker, brown border */
+    padding-bottom: var(--padding-md);
+    letter-spacing: 1.5px; /* Add some letter spacing */
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.4); /* Subtle shadow */
 }
 
 h2 {
-    color: var(--secondary-color);
+    font-family: var(--font-primary); /* Thematic font */
     border-bottom: 1px solid var(--border-color);
     padding-bottom: var(--padding-sm);
     margin-top: 0;
-    font-weight: bold;
-    font-size: 1.4em;
+    font-weight: 600;
+    font-size: 1.5em;
+    margin-bottom: var(--margin-md);
 }
 
 /* Titles within content boxes need dark text */
-.column > div h2 {
+/* Also make these H2s act as toggle triggers */
+.column > div h2, 
+.collapsible-container > h2 {
     color: var(--secondary-color); /* Keep brown */
     border-bottom-color: var(--input-border);
-    margin-bottom: var(--margin-md); /* Add space below section titles */
+    margin-bottom: var(--margin-lg); /* More space below section titles */
+    /* Add styles for toggle behavior */
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer; 
 }
 
 /* General H2 (Column Titles) need light text */
 .column > h2 {
     color: var(--text-color-light); /* Light text for top-level column titles */
     border-bottom-color: var(--border-color);
-    margin-bottom: 0; /* Align with top of content boxes */
+    padding-bottom: var(--padding-sm); /* Keep bottom padding */
+    padding-top: 0; /* Explicitly set top padding to 0 */
+    margin-bottom: var(--gap-md); /* Space before first content box */
+    margin-top: 0; /* Ensure no top margin for alignment */
+    /* Add styles for toggle behavior */
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer; 
 }
 
 h4 {
-    margin-top: var(--margin-md);
+    margin-top: var(--margin-lg);
     margin-bottom: var(--margin-sm);
-    color: var(--text-color-dark); /* Dark text inside content boxes */
-    font-weight: bold;
+    color: var(--secondary-color); /* Use secondary brown color */
+    font-weight: 600;
+    font-family: var(--font-primary);
+    font-size: 1.1em;
 }
 
 /* --- Form Alignment --- */
 .form-row {
     display: flex;
     align-items: center; /* Vertically center items */
-    gap: var(--margin-sm);
+    gap: var(--gap-md);
     margin-bottom: var(--margin-md); /* Space between rows */
 }
 
 .form-row label {
     min-width: var(--label-min-width);
     text-align: right;
-    margin-bottom: 0; /* Remove bottom margin as .form-row handles spacing */
+    margin-bottom: 0; 
     color: var(--text-color-dark); /* Dark text inside content boxes */
-    flex-shrink: 0; /* Prevent label from shrinking */
+    flex-shrink: 0; 
+    font-weight: 600; /* Slightly bolder labels */
+    font-size: 0.95em;
 }
 
 .form-row input[type="text"],
 .form-row input[type="number"],
 .form-row select {
-    flex-grow: 1; /* Allow input/select to fill space */
-    /* Remove default right margin if gap is used */
+    flex-grow: 1; 
     margin-right: 0;
 }
 
-/* Specific input width adjustments */
 .form-row input[type="number"] {
-    width: 70px; /* Fixed width for quantity */
-    min-width: 60px;
-    flex-grow: 0; /* Don't allow quantity to grow */
+    max-width: 80px; /* Use max-width */
+    min-width: 70px;
+    flex-grow: 0; 
 }
 
 /* Adjustments for favorite rows */
-.favorite-option input[type="checkbox"] {
-    flex-grow: 0;
-    width: auto; /* Let checkbox take its natural width */
-    margin-left: 5px; /* Align visually with other inputs */
+.favorite-action {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    margin-left: auto; /* Push to the right */
 }
 
-.favorite-option input[type="text"] {
-    flex-grow: 1; /* Allow name input to take space */
-    margin-left: var(--margin-sm); /* Add space after checkbox */
+.favorite-action label {
+    min-width: auto; /* Allow label to shrink */
+    font-weight: normal; /* Normal weight for checkbox label */
+}
+
+.favorite-action input[type="checkbox"] {
+    margin: 0;
+}
+
+.favorite-action input[type="text"] {
+    flex-grow: 0; /* Don't grow */
+    width: 150px; /* Fixed width */
+    display: none; /* Hide by default */
+}
+
+.favorite-action input[type="checkbox"]:checked + label + input[type="text"] {
+    display: block; /* Show when checkbox is checked */
 }
 
 .form-row button {
-    margin-left: 0; /* Remove default left margin if gap is used */
-    flex-shrink: 0; /* Prevent button shrinking */
+    margin-left: 0; 
+    flex-shrink: 0; 
 }
 
 /* Special case for status row (no label) */
 #status-section .form-row {
-    justify-content: space-between; /* Push button to the right */
+    justify-content: space-between; 
 }
 
 /* Special case for button groups */
 .button-group {
-    justify-content: flex-end; /* Align buttons to the right */
+    justify-content: flex-end; 
+    gap: var(--gap-md);
 }
 /* --- End Form Alignment --- */
 
 button {
-    padding: var(--padding-sm) var(--padding-md);
-    border: 1px solid var(--border-color);
+    padding: 9px 16px; /* Adjust padding */
+    border: 1px solid transparent; /* Transparent border */
     border-radius: var(--border-radius);
     background-color: var(--button-bg);
+    /* Subtle gradient */
+    background-image: linear-gradient(to bottom, var(--secondary-color), #7a4f25);
     color: var(--button-text);
     cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
-    /* margin-left managed by .form-row gap */
-    font-family: var(--font-primary);
-    font-size: 0.95em;
-    box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+    font-family: var(--font-secondary); 
+    font-size: 0.9em; /* Slightly smaller */
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.1); /* Softer shadow */
+    font-weight: 600;
 }
 
 button:hover:not(:disabled) {
     background-color: var(--button-hover-bg);
-    border-color: var(--primary-color);
+    background-image: linear-gradient(to bottom, #a06b3f, #8b5a2b);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.15);
+    transform: translateY(-1px);
+}
+
+button:active:not(:disabled) {
+    transform: translateY(0px);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+    background-image: none; /* Flat color on press */
+    background-color: #7a4f25; /* Darker press */
 }
 
 button:disabled {
     background-color: var(--button-disabled-bg);
+    background-image: none;
     color: var(--button-disabled-text);
-    border-color: var(--border-color);
+    border-color: transparent;
     cursor: not-allowed;
     box-shadow: none;
+    opacity: 0.7; /* Dim disabled */
 }
 
 input[type="text"],
 input[type="number"],
 select {
-    padding: var(--padding-sm);
-    border: 1px solid var(--input-border);
+    padding: 9px 12px; /* Adjust padding */
+    border: 1px solid transparent; /* Transparent border */
     border-radius: var(--border-radius);
     background-color: var(--input-bg);
-    color: var(--text-color-dark); /* Dark text for inputs */
-    font-family: var(--font-primary);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); /* Inner shadow for depth */
+    color: var(--text-color-dark); 
+    font-family: var(--font-secondary); 
     font-size: 0.95em;
-    /* margin-right managed by .form-row gap */
     box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 input[type="text"]:focus,
 input[type="number"]:focus,
 select:focus {
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(200, 155, 74, 0.4); /* Gold focus glow */
+    background-color: #fff; /* Slightly brighter on focus */
+    border-color: var(--primary-color); /* Highlight border on focus */
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1); /* Keep inner shadow */
 }
 
 select {
-    min-width: 150px; /* Restore min-width for selects, allow growth */
+    min-width: 150px; 
+    /* Cleaner SVG Arrow (Chevron) */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%238b5a2b'%3E%3Cpath fill-rule='evenodd' d='M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z' clip-rule='evenodd' /%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px 16px; /* Control arrow size */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-right: 30px; /* Make space for arrow */
 }
 
 /* Layout Styles */
 .main-container {
     display: flex;
-    gap: 20px;
+    gap: var(--gap-lg);
     flex-grow: 1;
     overflow-y: auto;
     padding-bottom: var(--padding-md);
@@ -213,77 +292,473 @@ select {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: var(--margin-lg);
+    gap: var(--gap-lg);
 }
 
-.column > div {
-    border: 1px solid var(--secondary-color); /* Dark brown border for sections */
-    padding: var(--padding-md);
+.column > div.content-box, 
+#battle-stage-container, /* Apply styles directly too */
+#add-item-section /* Existing content sections */
+{
+    border: 1px solid var(--secondary-color);
+    padding: var(--padding-lg);
     border-radius: var(--border-radius);
-    background-color: var(--content-bg); /* Parchment background */
-    color: var(--text-color-dark); /* Default text in sections is dark */
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    background-color: var(--content-bg); 
+    color: var(--text-color-dark); 
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
 /* Log Output */
 #log-output-container {
-    margin-top: var(--margin-lg);
-    border: 1px solid var(--secondary-color); /* Dark brown border like sections */
-    border-radius: var(--border-radius);
-    background-color: var(--content-bg); /* Parchment background like sections */
-    padding: var(--padding-md);
-    display: flex;
-    flex-direction: column;
-    max-height: 200px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    margin-top: 20px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 0; /* Remove padding from container, apply to header */
 }
 
 #log-output-container h2 {
-    margin-bottom: var(--margin-sm);
+    margin: 0;
+    padding: 10px 15px;
+    background-color: var(--header-bg);
+    color: var(--text-color-darker);
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 5px 5px 0 0;
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Space between title and button */
+    align-items: center; /* Center items vertically */
+    cursor: pointer; /* Indicate it's clickable */
+}
+
+.toggle-btn {
+    background: none;
     border: none;
-    color: var(--secondary-color); /* Dark Brown Title like other section titles */
+    font-size: 1.2em;
+    color: var(--text-color-darker);
+    cursor: pointer;
+    padding: 0 5px;
 }
 
 #log-output {
-    height: auto;
-    flex-grow: 1;
-    overflow-y: scroll;
-    border: none;
-    background-color: transparent; /* Inherit parchment background */
-    color: var(--text-color-dark); /* DARK text on parchment */
-    font-family: var(--font-code);
-    font-size: 12px;
-    white-space: pre-wrap;
-    padding: 0;
-    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color-lighter);
+    padding: 0px 15px; /* Apply horizontal padding, vertical handled by max-height */
+    max-height: 0;
+    overflow-y: auto; /* Use auto for scrollbar when needed */
+    opacity: 0;
+    border-radius: 0 0 5px 5px;
+    transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out, opacity 0.5s ease-in-out; 
+}
+
+#log-output.visible {
+    max-height: 400px; /* Adjust as needed - max height when open */
+    opacity: 1;
+    padding: 15px; /* Restore full padding */
+    border-top: 1px solid var(--border-color); /* Add border when visible */
 }
 
 /* Specific Element Adjustments */
 #current-battle-commands {
-    height: 100px;
+    height: 120px;
     overflow-y: scroll;
     border: 1px solid var(--input-border);
-    background-color: var(--input-bg); /* Use input background (parchment) */
+    background-color: #ffffff; /* White background for readability */
     font-family: var(--font-code);
-    font-size: 11px;
+    font-size: 12px;
     white-space: pre;
     padding: var(--padding-sm);
     margin-bottom: var(--margin-md);
-    color: var(--text-color-dark); /* DARK text on parchment */
+    color: var(--text-color-dark); /* Dark text */
     border-radius: var(--border-radius);
-    /* Add margin-top to separate from row above */
     margin-top: var(--margin-md);
 }
 
-#status-section #status span { /* Target the span containing status text */
-    color: var(--text-color-dark); /* Ensure status text is dark */
+#status-section #status span { 
+    color: var(--text-color-dark); 
+    font-weight: 600;
 }
 
 hr {
     display: none;
 }
 
-/* Utility for error messages in log */
 .log-error {
-    color: var(--tertiary-color); /* Dark red error text in log (should be visible on parchment) */
+    color: #ff6b6b; /* Light red for errors */
+    font-weight: bold;
+}
+
+/* Styling for the item details display area */
+.item-details {
+  margin-top: var(--margin-md);
+  padding: var(--padding-md);
+  border: 1px solid var(--input-border); 
+  border-radius: var(--border-radius);
+  font-size: 0.9em;
+  min-height: 60px; /* Slightly taller */
+  background-color: var(--input-bg); 
+  color: var(--text-color-dark); 
+  line-height: 1.5;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* Subtle inset shadow */
+}
+
+.item-details strong {
+  color: var(--secondary-color); 
+  display: block; 
+  margin-bottom: var(--margin-sm);
+  font-family: var(--font-primary);
+  font-size: 1.1em;
+}
+
+.item-details code {
+  background-color: rgba(139, 90, 43, 0.1); /* Very faint brown background */
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-family: var(--font-code);
+  color: #8b5a2b; /* Dark brown code text */
+  border: 1px solid rgba(139, 90, 43, 0.2);
+  font-size: 0.95em;
+}
+
+/* Remove dark mode override if not needed */
+/* @media (prefers-color-scheme: dark) { */
+/* } */
+
+/* Scrollbar Styling (Optional, WebKit browsers) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--content-bg);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 4px;
+  border: 2px solid var(--content-bg); /* Creates padding around thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Collapsible Content Styling (Generic) */
+.collapsible-content {
+    /* Initial state: hidden */
+    max-height: 0;
+    overflow: hidden; /* Important to hide content */
+    opacity: 0;
+    margin: 0 !important; /* Remove margin when collapsed, use important if needed */
+    padding-top: 0 !important; /* Remove padding when collapsed */
+    padding-bottom: 0 !important; /* Remove padding when collapsed */
+    border-width: 0 !important; /* Collapse border */
+    box-shadow: none; /* Remove shadow when collapsed */
+    /* Add transition - ensure all animated properties are listed */
+    transition: max-height 0.4s ease-out, opacity 0.3s ease-in, 
+                padding-top 0.4s ease-out, padding-bottom 0.4s ease-out, 
+                margin-top 0.4s ease-out, margin-bottom 0.4s ease-out, 
+                border-width 0.4s ease-out; 
+}
+
+.collapsible-content.visible {
+    /* Visible state */
+    max-height: 1000px; /* Large enough height for content */
+    opacity: 1;
+    margin-top: 0 !important; /* Reset margin */
+    margin-bottom: 0 !important; /* Reset margin */
+    padding-top: var(--padding-lg) !important; /* Restore padding */
+    padding-bottom: var(--padding-lg) !important; /* Restore padding */
+    border-top: 1px solid var(--input-border) !important; /* Add separator line */
+    border-bottom-width: 0 !important; /* Keep other borders collapsed if needed */
+    border-left-width: 0 !important;
+    border-right-width: 0 !important;
+}
+
+/* Add specific gap for sections within collapsible battle stage */
+#battle-stage-content.visible {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-lg);
+    border-top: none !important; /* Remove the generic top border for this specific one */
+    padding-top: 0 !important; /* Remove the generic top padding */
+}
+
+/* Favorites dropdown uses slightly different transition */
+#favorites-dropdown.collapsible-content {
+    /* Reset margins/borders from generic rule if needed */
+    margin: 0 !important; 
+    border-width: 1px !important; /* Dropdown always has border */
+    border-color: var(--secondary-color);
+    /* Keep specific dropdown transition */
+    transition: max-height 0.4s ease-out, opacity 0.4s ease-out, 
+                transform 0.4s ease-out;
+    /* Start slightly translated up when hidden */
+    transform: translateX(-50%) translateY(-10px);
+}
+
+#favorites-dropdown.collapsible-content.visible {
+    max-height: 500px; /* Enough height for content */
+    padding: var(--padding-md) !important; /* Ensure padding */
+    transform: translateX(-50%) translateY(0); /* Slide down */
+    border-top-width: 1px !important; /* Ensure border visible */
+}
+
+/* Styles for content within dropdown */
+#favorites-dropdown .form-row label {
+    min-width: 60px; /* Smaller label */
+}
+
+/* ... existing styles ... */
+
+/* Update H2 selector if needed */
+.collapsible-container > h2 {
+    color: var(--secondary-color); /* Keep brown */
+    border-bottom-color: var(--input-border);
+    margin-bottom: var(--margin-lg); /* More space below section titles */
+    /* Add styles for toggle behavior */
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer; 
+    margin-top: 0; /* Ensure no top margin */
+    padding-top: 0; /* Ensure no top padding */
+}
+
+/* Remove the old selector if it's now redundant */
+/* .column > div h2 { ... } */
+
+/* General H2 (Column Titles) need light text */
+.column > h2 {
+    color: var(--text-color-light); /* Light text for top-level column titles */
+    border-bottom-color: var(--border-color);
+    padding-bottom: var(--padding-sm); /* Keep bottom padding */
+    padding-top: 0; /* Explicitly set top padding to 0 */
+    margin-bottom: var(--gap-md); /* Space before first content box */
+    margin-top: 0; /* Ensure no top margin for alignment */
+    /* Add styles for toggle behavior */
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer; 
+}
+
+/* ... rest of the styles ... */
+
+/* Adjust collapsible content if needed */
+.collapsible-content.visible {
+    /* Visible state */
+    max-height: 1000px; /* Large enough height for content */
+    opacity: 1;
+    /* Remove display:flex and gap from generic */
+    /* display: flex; 
+    flex-direction: column;
+    gap: var(--gap-lg); */
+    margin-top: 0; /* Remove margin-top for content inside boxes */
+    border-top: 1px solid var(--input-border); /* Add separator line */
+    padding-top: var(--padding-lg); /* Add padding when visible */
+}
+
+/* Add specific gap for sections within collapsible battle stage */
+#battle-stage-content.visible {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-lg);
+}
+
+/* Status Indicator */
+#status-display {
+    position: absolute;
+    top: 20px; /* Adjust as needed */
+    left: 20px; /* Adjust as needed */
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between sphere and text */
+    z-index: 10; /* Ensure it's above other elements */
+}
+
+#status-indicator {
+    width: 14px; /* Slightly smaller */
+    height: 14px;
+    background-color: var(--border-color); /* Default greyish state */
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.3);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.4), 0 1px 1px rgba(255,255,255,0.1);
+    transition: background-color 0.4s ease;
+    flex-shrink: 0; /* Prevent sphere from shrinking */
+}
+
+#status-indicator.disconnected {
+    background-color: var(--tertiary-color); /* Red */
+}
+
+#status-indicator.connected {
+    background-color: #66bb6a; /* Green */
+}
+
+#status-indicator.debug {
+    background-color: var(--primary-color); /* Gold/Orange */
+}
+
+#status-indicator-text {
+    font-size: 0.85em;
+    color: var(--text-color-light);
+    font-weight: 500;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.5); /* Add shadow for readability */
+}
+
+/* Restore any necessary #status-section styles if they were modified */
+#status-section #status span {
+    color: var(--text-color-dark);
+    font-weight: 600;
+}
+
+/* ... rest of styles ... */
+
+/* Bottom Command Bar */
+#bottom-command-bar {
+    position: fixed; /* Stick to bottom */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--bg-color); /* Match body background */
+    padding: var(--padding-md);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+    display: flex;
+    gap: var(--gap-md);
+    z-index: 20; /* Above status indicator */
+}
+
+#bottom-command-bar input[type="text"] {
+    flex-grow: 1; /* Take remaining space */
+    background-color: #444; /* Darker input background */
+    border-color: var(--border-color);
+    color: var(--text-color-light);
+}
+
+#bottom-command-bar input[type="text"]:focus {
+     background-color: #505050;
+     border-color: var(--primary-color);
+     box-shadow: none; /* No glow needed here */
+}
+
+#bottom-command-bar button {
+    flex-shrink: 0; /* Don't shrink button */
+    box-shadow: none; /* Less emphasis */
+}
+
+/* Top Favorites Dropdown */
+#top-favorites-container {
+    position: relative; /* Container for absolute dropdown */
+    margin-bottom: var(--margin-md); /* Reduced margin */
+    text-align: center; 
+}
+
+#toggle-favorites-btn {
+    /* Style similar to other buttons but maybe slightly different */
+    background-color: var(--bg-color); 
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    box-shadow: none;
+    padding: var(--padding-sm) var(--padding-lg);
+}
+
+#toggle-favorites-btn:hover:not(:disabled) {
+    background-color: #4e4e4e; /* Slightly lighter grey */
+    color: #eec98a; /* Brighter gold */
+}
+
+#favorites-dropdown {
+    position: absolute; /* Position below the button */
+    top: 100%; 
+    left: 50%; /* Start at center */
+    transform: translateX(-50%); /* Center align */
+    width: 400px; /* Or adjust as needed */
+    max-width: 90%;
+    background-color: var(--content-bg);
+    border: 1px solid var(--secondary-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 30; /* Above command bar */
+    padding: var(--padding-md); /* Add padding when visible */
+    margin-top: 5px; /* Small gap below button */
+}
+
+/* Override generic collapsible styles slightly for dropdown */
+#favorites-dropdown.collapsible-content {
+    transition: max-height 0.4s ease-out, opacity 0.4s ease-out, 
+                transform 0.4s ease-out, padding 0.4s ease-out, 
+                margin 0.4s ease-out, border-width 0.4s ease-out;
+    /* Start slightly translated up when hidden */
+    transform: translateX(-50%) translateY(-10px);
+}
+
+#favorites-dropdown.collapsible-content.visible {
+    max-height: 500px; /* Enough height for content */
+    padding: var(--padding-md); /* Ensure padding */
+    transform: translateX(-50%) translateY(0); /* Slide down */
+}
+
+/* Styles for content within dropdown */
+#favorites-dropdown .form-row label {
+    min-width: 60px; /* Smaller label */
+}
+
+/* ... existing styles ... */
+
+/* Update H2 selector if needed */
+.collapsible-container > h2 {
+    color: var(--secondary-color); /* Keep brown */
+    border-bottom-color: var(--input-border);
+    margin-bottom: var(--margin-lg); /* More space below section titles */
+    /* Add styles for toggle behavior */
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer; 
+    margin-top: 0; /* Ensure no top margin */
+    padding-top: 0; /* Ensure no top padding */
+}
+
+/* Remove the old selector if it's now redundant */
+/* .column > div h2 { ... } */
+
+/* General H2 (Column Titles) need light text */
+.column > h2 {
+    color: var(--text-color-light); /* Light text for top-level column titles */
+    border-bottom-color: var(--border-color);
+    padding-bottom: var(--padding-sm); /* Keep bottom padding */
+    padding-top: 0; /* Explicitly set top padding to 0 */
+    margin-bottom: var(--gap-md); /* Space before first content box */
+    margin-top: 0; /* Ensure no top margin for alignment */
+    /* Add styles for toggle behavior */
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer; 
+}
+
+/* ... rest of the styles ... */
+
+/* Adjust collapsible content if needed */
+.collapsible-content.visible {
+    /* Visible state */
+    max-height: 1000px; /* Large enough height for content */
+    opacity: 1;
+    /* Remove display:flex and gap from generic */
+    /* display: flex; 
+    flex-direction: column;
+    gap: var(--gap-lg); */
+    margin-top: 0; /* Remove margin-top for content inside boxes */
+    border-top: 1px solid var(--input-border); /* Add separator line */
+    padding-top: var(--padding-lg); /* Add padding when visible */
+}
+
+/* Add specific gap for sections within collapsible battle stage */
+#battle-stage-content.visible {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-lg);
 } 

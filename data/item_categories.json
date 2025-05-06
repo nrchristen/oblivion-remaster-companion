@@ -1,1 +1,71 @@
-{}
+{
+  "Alchemy Equipment": {
+    "Default": "alchemy_equipment.json"
+  },
+  "Armor": {
+    "Daedric (Heavy)": "armor/heavy_daedric.json",
+    "Dwarven (Heavy)": "armor/heavy_dwarven.json",
+    "Ebony (Heavy)": "armor/heavy_ebony.json",
+    "Iron (Heavy)": "armor/heavy_iron.json",
+    "Orcish (Heavy)": "armor/heavy_orcish.json",
+    "Steel (Heavy)": "armor/heavy_steel.json",
+    "Chainmail (Light)": "armor/light_chainmail.json",
+    "Elven (Light)": "armor/light_elven.json",
+    "Fur (Light)": "armor/light_fur.json",
+    "Glass (Light)": "armor/light_glass.json",
+    "Leather (Light)": "armor/light_leather.json",
+    "Mithril (Light)": "armor/light_mithril.json"
+  },
+  "Arrows": {
+    "Mundane": "arrows/arrows_mundane.json",
+    "Damage Attribute": "arrows/arrows_damage_attribute.json",
+    "Damage Fatigue": "arrows/arrows_damage_fatigue.json",
+    "Damage Health": "arrows/arrows_damage_health.json",
+    "Damage Magicka": "arrows/arrows_damage_magicka.json",
+    "Demoralize": "arrows/arrows_demoralize.json",
+    "Dispel": "arrows/arrows_dispel.json",
+    "Drain Magicka": "arrows/arrows_drain_magicka.json",
+    "Fire Damage": "arrows/arrows_fire.json",
+    "Frenzy": "arrows/arrows_frenzy.json",
+    "Frost Damage": "arrows/arrows_frost.json",
+    "Light": "arrows/arrows_light.json",
+    "Shock Damage": "arrows/arrows_shock.json",
+    "Silence": "arrows/arrows_silence.json",
+    "Soul Trap": "arrows/arrows_soul_trap.json",
+    "Special": "arrows/arrows_special.json"
+  },
+  "Books": {
+    "Skill Books": "books/books_skill.json",
+    "Marker Books": "books/books_marker.json",
+    "Normal Books": "books/books_normal.json"
+  },
+  "Clothing": {
+    "Outfits": "clothing/clothing_outfits.json",
+    "Shirts": "clothing/clothing_shirts.json",
+    "Pants": "clothing/clothing_pants.json",
+    "Shoes": "clothing/clothing_shoes.json",
+    "Hoods": "clothing/clothing_hoods.json" 
+  },
+  "Ingredients": {
+    "Common": "ingredients/ingredients_common.json",
+    "Rare": "ingredients/ingredients_rare.json" 
+  },
+  "Keys": {
+    "Default": "keys/keys.json"
+  },
+  "Magic Weapons": {
+    "Swords": "weapons_magic/magic_swords.json",
+    "Axes": "weapons_magic/magic_axes.json",
+    "Blunt": "weapons_magic/magic_blunt.json",
+    "Bows": "weapons_magic/magic_bows.json"
+  },
+  "Potions": {
+    "Restore Health": "potions/potions_restore_health.json",
+    "Restore Magicka": "potions/potions_restore_magicka.json",
+    "Restore Fatigue": "potions/potions_restore_fatigue.json",
+    "Fortify Attribute": "potions/potions_fortify_attribute.json",
+    "Fortify Skill": "potions/potions_fortify_skill.json",
+    "Shield": "potions/potions_shield.json",
+    "Other": "potions/potions_other.json" 
+  }
+}

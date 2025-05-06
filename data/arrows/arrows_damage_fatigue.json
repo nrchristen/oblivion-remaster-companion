@@ -1,0 +1,11 @@
+{
+  "Arrow of Fatigue": {
+    "id": "0003DFD6",
+    "weight": 0.1,
+    "value": 11,
+    "damage": 9,
+    "damage_obr": 12,
+    "level": 4,
+    "enchantment": "Damage Fatigue 20 pts"
+  }
+} 

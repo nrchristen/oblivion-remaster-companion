@@ -1,0 +1,83 @@
+{
+  "Arrow of Frost": {
+    "id": "0004BEF9",
+    "weight": 0.1,
+    "value": 4,
+    "damage": 8,
+    "damage_obr": 10,
+    "level": 3,
+    "enchantment": "Frost Damage 5 pts"
+  },
+  "Arrow of Numbing": {
+    "id": "0004BEFC",
+    "weight": 0.1,
+    "value": 5,
+    "damage": 9,
+    "damage_obr": 12,
+    "level": 4,
+    "enchantment": "Frost Damage 5 pts"
+  },
+  "Arrow of Cold": {
+    "id": "0004BF02",
+    "weight": 0.1,
+    "value": 12,
+    "damage": 11,
+    "damage_obr": 14,
+    "level": 8,
+    "enchantment": "Frost Damage 10 pts"
+  },
+  "Arrow of Freezing": {
+    "id": "0004BF05",
+    "weight": 0.1,
+    "value": 20,
+    "damage": 12,
+    "damage_obr": 16,
+    "level": 11,
+    "enchantment": "Frost Damage 15 pts"
+  },
+  "Arrow of the Glacier": {
+    "id": "0004BF08",
+    "weight": 0.1,
+    "value": 24,
+    "damage": 13,
+    "damage_obr": 17,
+    "level": 14,
+    "enchantment": "Frost Damage 15 pts"
+  },
+  "Arrow of Blizzards": {
+    "id": "0004BF0B",
+    "weight": 0.2,
+    "value": 37,
+    "damage": 14,
+    "damage_obr": 18,
+    "level": 18,
+    "enchantment": "Frost Damage 20 pts"
+  },
+  "Arrow of Winter": {
+    "id": "0004BF0E",
+    "weight": 0.25,
+    "value": 52,
+    "damage": 15,
+    "damage_obr": 20,
+    "level": 22,
+    "enchantment": "Frost Damage 20 pts"
+  },
+  "Arrow of Savage Frost": {
+    "id": "000CD540",
+    "weight": 0.1,
+    "value": 129,
+    "damage": 6,
+    "damage_obr": 8,
+    "level": 8,
+    "enchantment": "Frost Damage 40 pts in 10 ft for 2 secs"
+  },
+  "Arrow of the North Winds": {
+    "id": "000CD545",
+    "weight": 0.1,
+    "value": 191,
+    "damage": 7,
+    "damage_obr": 10,
+    "level": 11,
+    "enchantment": "Frost Damage 60 pts in 10 ft"
+  }
+} 

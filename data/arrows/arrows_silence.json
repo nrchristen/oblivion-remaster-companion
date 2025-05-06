@@ -1,0 +1,29 @@
+{
+  "Arrow of Silence": {
+    "id": "0003DFDC",
+    "weight": 0.1,
+    "value": 65,
+    "damage": 11,
+    "damage_obr": 14,
+    "level": 8,
+    "enchantment": "Silence for 15 secs"
+  },
+  "Arrow of Stillness": {
+    "id": "0003DFDD",
+    "weight": 0.1,
+    "value": 156,
+    "damage": 12,
+    "damage_obr": 16,
+    "level": 11,
+    "enchantment": "Silence for 20 secs"
+  },
+  "Magebane Arrow": {
+    "id": "000CD544",
+    "weight": 0.25,
+    "value": 147,
+    "damage": 10,
+    "damage_obr": 17,
+    "level": 18,
+    "enchantment": "Silence in 10 ft for 20 secs"
+  }
+} 

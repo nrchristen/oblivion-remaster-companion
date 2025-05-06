@@ -1,0 +1,11 @@
+{
+  "Arrow of Harm": {
+    "id": "0003DFD7",
+    "weight": 0.1,
+    "value": 238,
+    "damage": 12,
+    "damage_obr": 16,
+    "level": 11,
+    "enchantment": "Damage Health 8 pts"
+  }
+} 

@@ -1,0 +1,11 @@
+{
+  "Arrow of Dispel": {
+    "id": "0004BF11",
+    "weight": 0.1,
+    "value": 17,
+    "damage": 10,
+    "damage_obr": 13,
+    "level": 6,
+    "enchantment": "Dispel 25 pts"
+  }
+} 

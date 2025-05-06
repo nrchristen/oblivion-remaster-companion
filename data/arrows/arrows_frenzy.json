@@ -1,0 +1,11 @@
+{
+  "Arrow of Discord": {
+    "id": "0003BF67",
+    "weight": 0.1,
+    "value": 56,
+    "damage": 9,
+    "damage_obr": 12,
+    "level": 4,
+    "enchantment": "Frenzy up to level 10 (40 pts) in 10 ft for 15 secs"
+  }
+} 

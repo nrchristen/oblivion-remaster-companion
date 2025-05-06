@@ -1,0 +1,6 @@
+{
+  "Daedra Heart": {"id": "0001EC8F", "name": "Daedra Heart", "weight": 2.0, "value": 250, "effects": ["Restore Health", "Damage Magicka", "Shock Damage", "Silence"]},
+  "Fire Salts": {"id": "0001EC8E", "name": "Fire Salts", "weight": 0.1, "value": 20, "effects": ["Resist Fire", "Fire Damage", "Restore Magicka", "Fire Shield"]},
+  "Frost Salts": {"id": "0001EC92", "name": "Frost Salts", "weight": 0.1, "value": 25, "effects": ["Resist Frost", "Frost Damage", "Restore Magicka", "Frost Shield"]},
+  "Void Salts": {"id": "0001EC91", "name": "Void Salts", "weight": 0.1, "value": 100, "effects": ["Restore Magicka", "Dispel", "Damage Health", "Fortify Magicka"]}
+} 

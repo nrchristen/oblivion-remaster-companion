@@ -1,0 +1,50 @@
+{
+  "Elven Boots": {
+    "id": "0001C6CE",
+    "weight": 6.0,
+    "health": 550,
+    "value": 250,
+    "armor": 5.0,
+    "enchantment": null
+  },
+  "Elven Cuirass": {
+    "id": "0001C6D0",
+    "weight": 15.0,
+    "health": 1100,
+    "value": 1000,
+    "armor": 15.0,
+    "enchantment": null
+  },
+  "Elven Gauntlets": {
+    "id": "0001C6CD",
+    "weight": 3.0,
+    "health": 550,
+    "value": 250,
+    "armor": 5.0,
+    "enchantment": null
+  },
+  "Elven Greaves": {
+    "id": "0001C6CF",
+    "weight": 9.0,
+    "health": 825,
+    "value": 500,
+    "armor": 9.0,
+    "enchantment": null
+  },
+  "Elven Helmet": {
+    "id": "0001C6CC",
+    "weight": 3.0,
+    "health": 550,
+    "value": 250,
+    "armor": 5.0,
+    "enchantment": null
+  },
+  "Elven Shield": {
+    "id": "0001C6D1",
+    "weight": 6.0,
+    "health": 825,
+    "value": 500,
+    "armor": 10.0,
+    "enchantment": null
+  }
+} 

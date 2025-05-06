@@ -1,7 +1,5 @@
 import webview
 import argparse
-import threading
-import time
 import sys
 import os
 import platform
@@ -9,24 +7,41 @@ import logging
 import traceback
 import colorama
 from colorama import Fore, Back, Style
+import json
 
 # Ensure src is importable (adjust path if necessary)
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), 'src')))
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
 from src.automator import WindowAutomator
-from src.data_loader import load_json_data, get_item_categories
+from src.data_loader import (
+    load_json_data, 
+    get_item_categories, 
+    add_battle_preset,
+    load_items_for_category,
+    load_all_locations,
+    save_json_data, # Assuming save_json_data is needed for favorites
+    DATA_DIR,       # Assuming needed for favorites path
+    FAVORITES_FILE,  # Assuming needed for favorites
+    BATTLES_FILE
+)
 from src.command_builder import build_additem_command, build_placeatme_command
 # Import the new logic layer
 from src import app_logic 
 # Import the new CLI entry point
 from src.cli_ui import run_companion_cli
+# Import the setup_logging function
+from src.config import setup_logging
+# from src.game_connector import GameConnector # Commented out - file missing
 
 # --- Global Variables (Careful with state if making multi-threaded later) ---
 TARGET_EXECUTABLE = "OblivionRemastered-WinGDK-Shipping.exe" # Or load from config
 automator = WindowAutomator(TARGET_EXECUTABLE)
-game_found = False
-log_file = 'companion_log.txt'
+# game_found = False # Removed global - use automator state
+# log_file = 'companion_log.txt' # Moved to config.py
+window = None # Global reference to the pywebview window
+# Removed stop_event
+# stop_event = threading.Event() 
 
 # Colorama Setup
 COLOR_TEXT = Fore.YELLOW
@@ -35,65 +50,63 @@ COLOR_INDICATOR = Fore.LIGHTRED_EX
 COLOR_RESET = Style.RESET_ALL
 colorama.init(autoreset=True)
 
-# --- Logging Setup (Explicit Configuration) ---
-log_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(name)s:%(lineno)d - %(message)s')
-logger = logging.getLogger() # Get the root logger
-logger.setLevel(logging.DEBUG) # Set the lowest level for the logger
+# --- Logging Setup ---
+# Call the setup function from the config module
+setup_logging()
 
-# Clear existing handlers (important if this runs multiple times or other libs configure logging)
-if logger.hasHandlers():
-    logger.handlers.clear()
+# Initialize logging (ensure this is done early)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# File Handler (always log DEBUG level to file)
-try:
-    file_handler = logging.FileHandler(log_file, mode='w', encoding='utf-8')
-    file_handler.setLevel(logging.DEBUG)
-    file_handler.setFormatter(log_formatter)
-    logger.addHandler(file_handler)
-    logging.info("--- File logging configured ---") # Use logging directly now
-except Exception as log_setup_e:
-    # If file logging fails, we can't log to file, print critical error
-    print(f"FATAL: Could not set up file logging to {log_file}: {log_setup_e}")
-    exit(1)
-
-# Optional: Console Handler (show INFO level to console when running)
-console_handler = logging.StreamHandler(sys.stdout)
-console_handler.setLevel(logging.INFO) # Show INFO and above in console
-console_handler.setFormatter(log_formatter)
-logger.addHandler(console_handler)
-logging.info("--- Console logging configured ---")
+# Initialize Game Connector
+# game_connector = GameConnector() # Commented out - class missing
 
 # --- API Class for pywebview --- 
 class Api:
     def __init__(self):
-        # Maybe run initial check in background?
-        self._check_game_thread = threading.Thread(target=self._initial_game_check, daemon=True)
-        self._check_game_thread.start()
-        
-    def _initial_game_check(self):
-        global game_found, automator
-        logging.info("Starting initial game check (background thread)...")
-        game_found = automator.find_process_and_window() # Uses enhanced automator
-        logging.info(f"Initial game check complete. Found: {game_found}")
+        self.item_categories = get_item_categories()
+        self.all_locations = load_all_locations()
+        # Load favorites on init too
+        self.favorites = self._load_favorites_internal()
+
+    def _load_favorites_internal(self):
+        """Internal helper to load favorites."""
+        favs = load_json_data(FAVORITES_FILE) 
+        # Ensure it's a list, default to empty list if load fails or wrong type
+        return favs if isinstance(favs, list) else []
 
     def check_status(self):
-        """Checks if the game process/window is found."""
-        global game_found # Still uses the cached global here, for speed
+        """Checks if the game process/window is found or if in debug mode."""
         logging.info("API: check_status called.")
-        # Optionally re-check or just return cached status
-        # Re-checking could be slow, let's return cached for now
-        # game_found = automator.find_process_and_window() 
-        status_msg = "Game Found" if game_found else "Game Not Found"
-        logging.info(f"API: check_status returning cached status: {status_msg}")
-        return {"status": status_msg}
+        result = app_logic.check_game_status_logic() 
+        logging.info(f"API: check_status returning: {result}")
+        return result
 
     def run_single_command(self, command):
-        """Executes a single command via the automator."""
-        logging.info(f"API: run_single_command called with command: \"{command}\"")
-        # Delegate validation and execution to logic layer
-        result = app_logic.run_single_command_logic(command)
-        logging.info(f"API: run_single_command result: {result}")
-        return result
+        """Runs a single command using the automator."""
+        if not command or not isinstance(command, str):
+             logging.warning(f"Invalid command received: {command}")
+             return {"success": False, "message": "Invalid command format."}
+        
+        logging.info(f"Running command: {command}")
+        try:
+            # Use WindowAutomator's execute_command method (correct name)
+            # success, message = automator.run_command(command) # Old incorrect name
+            success = automator.execute_command(command) # Call the correct method
+            # The execute_command method now directly returns True/False 
+            # and handles logging/messaging internally including debug mode messages.
+            # We can simplify the API response based on this boolean.
+            if success:
+                 # Message is less important now as execute_command handles logging
+                 logging.info(f"Command '{command}' execution cycle reported success.")
+                 return {"success": True, "message": "Command sent (check game/log)."} 
+            else:
+                 # The reason for failure (game not found, exec failed, etc.) 
+                 # should be logged by execute_command or its sub-methods.
+                 logging.error(f"Command '{command}' execution cycle reported failure.")
+                 return {"success": False, "message": "Command failed (check game/log)."}
+        except Exception as e:
+            logging.exception(f"Exception running command '{command}': {e}")
+            return {"success": False, "message": f"Python error: {e}"}
 
     def get_battle_presets(self):
         """Loads and returns the list of battle preset names."""
@@ -194,35 +207,66 @@ class Api:
         logging.info(f"API: run_favorite result: {result}")
         return result
 
+    # --- Location API Methods ---
+
+    def get_location_categories_api(self):
+        """API endpoint to get location categories."""
+        logging.info("API: get_location_categories_api called.")
+        result = app_logic.get_location_categories_logic() # Delegate
+        logging.info(f"API: get_location_categories_api returning {len(result.get('categories',{}))} categories.")
+        return result
+
+    def get_locations_in_category_api(self, category_filename):
+        """API endpoint to get locations within a specific category file."""
+        logging.info(f"API: get_locations_in_category_api called for file: '{category_filename}'")
+        result = app_logic.get_locations_in_category_logic(category_filename) # Delegate
+        logging.info(f"API: get_locations_in_category_api returning {len(result.get('locations',{}))} locations.")
+        return result
+
+    def teleport_to_location_api(self, location_id):
+        """API endpoint to teleport the player to a location ID."""
+        logging.info(f"API: teleport_to_location_api called for ID: '{location_id}'")
+        result = app_logic.teleport_to_location_logic(location_id) # Delegate
+        logging.info(f"API: teleport_to_location_api result: {result}")
+        return result
+
 # --- Main Execution Logic --- 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="ES4R Companion - GUI or CLI")
     parser.add_argument("--cli", action="store_true", help="Run in Command Line Interface mode.")
     args = parser.parse_args()
 
-    # Create Api instance to trigger initial game check (background thread)
     api_instance = Api() 
-    # Small delay to allow the background check thread to start and potentially find the game
-    # especially important for CLI mode which checks status almost immediately.
-    time.sleep(0.5) 
 
     if args.cli:
         # Run the CLI version (defined in cli_ui.py)
         print("Starting CLI mode...")
-        run_companion_cli()
+        run_companion_cli(automator)
     else:
         # Start the pywebview GUI
         print("Starting GUI mode...")
         try:
-            webview.create_window(
+            # Create the pywebview window
+            window = webview.create_window(
                 'ES4R Companion',
                 'gui/index.html',
                 js_api=api_instance, 
-                width=900, 
+                width=1000, 
                 height=1071,
-                resizable=True # Allow resizing
+                resizable=True
             )
-            webview.start(debug=False) # Enable debug for console messages
+
+            # --- Threading Setup --- Removed section
+            # status_thread = threading.Thread(...)
+            # status_thread.start()
+
+            # --- Graceful Shutdown --- Removed section
+            # def on_closed():
+            #    ...
+            # window.events.closed += on_closed
+
+            # Start the event loop
+            webview.start(debug=False) # Keep debug=False for release maybe
         except Exception as e:
             logging.exception("Failed to start GUI")
             print(f"FATAL: Failed to start GUI: {e}")

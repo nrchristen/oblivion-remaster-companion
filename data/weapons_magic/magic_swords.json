@@ -1,0 +1,4 @@
+{
+  "Iron Sword of Burning": {"id": "0001FF49", "name": "Iron Sword of Burning", "weight": 28.0, "value": 88, "damage": 9, "health": 280, "enchantment": "Fire Damage 5pts", "charge": 400, "level": 1},
+  "Steel Longsword of Jolts": {"id": "0002C44C", "name": "Steel Longsword of Jolts", "weight": 34.0, "value": 283, "damage": 13, "health": 420, "enchantment": "Shock Damage 9pts", "charge": 680, "level": 3}
+} 

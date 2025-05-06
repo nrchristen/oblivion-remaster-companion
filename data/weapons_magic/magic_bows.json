@@ -1,0 +1,4 @@
+{
+  "Iron Bow of Frost": {"id": "0001FF61", "name": "Iron Bow of Frost", "weight": 10.0, "value": 63, "damage": 5, "health": 200, "enchantment": "Frost Damage 3pts", "charge": 160, "level": 1},
+  "Steel Bow of Burning": {"id": "0001FF64", "name": "Steel Bow of Burning", "weight": 12.0, "value": 170, "damage": 8, "health": 260, "enchantment": "Fire Damage 6pts", "charge": 280, "level": 2}
+} 

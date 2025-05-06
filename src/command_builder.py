@@ -21,4 +21,18 @@ def build_additem_command(item_id, quantity):
         return None
     if not isinstance(quantity, int) or quantity <= 0:
         return None
-    return f"player.additem {item_id.strip()} {quantity}" 
+    return f"player.additem {item_id.strip()} {int(quantity)}"
+
+def build_teleport_command(location_id):
+    """Builds the 'coc' (Center on Cell) command.
+
+    Args:
+        location_id (str): The target location ID (cell name).
+
+    Returns:
+        str: The formatted console command, or None if input is invalid.
+    """
+    if not location_id or not isinstance(location_id, str) or not location_id.strip():
+        return None
+    # No complex validation needed for location IDs usually, they are strings.
+    return f"coc {location_id.strip()}" 

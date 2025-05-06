@@ -1,0 +1,12 @@
+{
+  "Hatreds Soul Arrow": {
+    "id": "00014EB3",
+    "weight": 0.2,
+    "value": 138,
+    "damage": 20,
+    "damage_obr": 25,
+    "level": 1,
+    "enchantment": "Soul Trap for 15 secs",
+    "notes": "Only found in Oblivion World 2"
+  }
+} 

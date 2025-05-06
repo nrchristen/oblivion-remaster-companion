@@ -4,6 +4,7 @@ Handles interaction with automator, data loader, and command builder.
 """
 import time
 import logging
+import os
 
 # Need to access the shared automator instance and game_found status.
 # How to handle this? Pass them in? Use globals from app.py?
@@ -12,25 +13,40 @@ import logging
 # A better approach would be dependency injection if complexity grew.
 import app 
 
+from src import data_loader
+from src import command_builder
 from src.data_loader import load_json_data, get_item_categories, add_battle_preset, save_json_data, FAVORITES_FILE
-from src.command_builder import build_additem_command, build_placeatme_command
+from src.command_builder import build_additem_command, build_placeatme_command, build_teleport_command
 
 def check_game_status_logic():
-    """Checks the current game status."""
+    """Checks the current game status, including debug mode."""
     logging.debug("Entering check_game_status_logic")
-    # Access global state from app.py - This is potentially stale!
-    # TODO: Refactor to call automator directly?
-    status_msg = "Game Found" if app.game_found else "Game Not Found"
-    logging.info(f"Checked game status (using cached global): {status_msg}")
+    # Access global automator instance from app.py
+    automator = app.automator
+    
+    # Actively try to find the window *before* checking status
+    automator.find_process_and_window()
+
+    if automator.is_in_debug_mode():
+        debug_file = os.path.basename(automator.get_debug_filepath() or "debug.txt")
+        status_msg = f"Debug Mode Active ({debug_file})"
+        logging.info(f"Checked game status: {status_msg}")
+    elif automator.hwnd:
+        status_msg = "Game Found"
+        logging.info(f"Checked game status: {status_msg} (HWND: {automator.hwnd})")
+    else:
+        # This case might happen briefly during startup or if find fails unexpectedly
+        # without entering debug mode (though find_process_and_window tries to always enter debug on fail)
+        status_msg = "Game Not Found"
+        logging.warning("Checked game status: Game Not Found (and not in debug mode)")
+
     return {"status": status_msg}
 
 def run_single_command_logic(command):
     """Handles validation and execution for a single command string."""
     logging.debug(f"Entering run_single_command_logic with command: \"{command}\"")
-    # Removed check for app.game_found - automator.execute_command handles it now.
-    # if not app.game_found:
-    #     logging.error("Cannot run single command: Game not found (checked global). Returning error.")
-    #     return {"success": False, "message": "Game not found"}
+    # Removed check for app.game_found - automator.execute_command handles it now,
+    # including the debug mode logic.
     if not command or not isinstance(command, str):
          logging.warning(f"Invalid command received in logic: {command}")
          return {"success": False, "message": "Invalid command"}
@@ -43,8 +59,12 @@ def run_single_command_logic(command):
     logging.info(f"Single command execution result: {success}")
     result = {"success": success}
     if not success:
-        # Try to provide a slightly more specific message if possible
-        result['message'] = f"Failed to execute command. Check log or ensure game is focused."
+        # Provide a more specific message depending on mode
+        automator = app.automator # Get automator instance
+        if automator.is_in_debug_mode():
+            result['message'] = f"Command logged to debug file. Game not found."
+        else:
+            result['message'] = f"Failed to execute command. Check log or ensure game is focused."
     logging.debug(f"Exiting run_single_command_logic, result: {result}")
     return result
 
@@ -162,17 +182,18 @@ def get_items_in_category_logic(filename):
 def add_item_logic(item_id, quantity):
     """Builds and executes the additem command."""
     logging.debug(f"Entering add_item_logic: ID={item_id}, Qty={quantity}")
-    # Removed app.game_found check - run_single_command_logic handles it.
-    # if not app.game_found:
-    # ...
     
     try:
         qty = int(quantity)
-        if qty <= 0:
-            raise ValueError("Quantity must be positive")
     except (ValueError, TypeError):
-        logging.warning(f"Invalid quantity received: {quantity}")
+        logging.warning(f"Invalid quantity type received: {quantity}")
         return {"success": False, "message": "Invalid quantity"}
+
+    # Check for non-positive quantity *after* successful conversion
+    if qty <= 0:
+        logging.warning(f"Non-positive quantity received: {quantity}")
+        return {"success": False, "message": "Quantity must be positive"}
+        
     if not item_id or not isinstance(item_id, str):
         logging.warning(f"Invalid item ID received: {item_id}")
         return {"success": False, "message": "Invalid item ID"}
@@ -347,4 +368,77 @@ def run_favorite_logic(name):
     # Add context that this was run from a favorite
     result['message'] = f"Ran favorite '{name}': {command_to_run}. Result: {result.get('message', 'Success' if result.get('success') else 'Failure')}"
     logging.debug(f"Exiting run_favorite_logic for '{name}', result: {result}")
+    return result
+
+# --- Location Logic Functions ---
+
+def get_location_categories_logic():
+    """Gets location categories from the data loader.
+
+    Returns:
+        dict: { "categories": { category_name: category_file, ... } }
+              or { "categories": {} } on failure.
+    """
+    logging.debug("Entering get_location_categories_logic")
+    try:
+        categories = data_loader.get_location_categories()
+        logging.debug(f"Exiting get_location_categories_logic with {len(categories)} categories.")
+        return {"categories": categories}
+    except Exception as e:
+        logging.exception("Exception in get_location_categories_logic")
+        return {"categories": {}}
+
+def get_locations_in_category_logic(category_filename):
+    """Gets locations for a specific category file from the data loader.
+
+    Args:
+        category_filename (str): The relative path to the category file (e.g., "locations/cities.json").
+
+    Returns:
+        dict: { "locations": { location_name: location_id, ... } }
+              or { "locations": {} } on failure or invalid input.
+    """
+    logging.debug(f"Entering get_locations_in_category_logic for file: {category_filename}")
+    if not category_filename or not isinstance(category_filename, str) or not category_filename.strip():
+        logging.warning("Invalid category filename received in logic.")
+        return {"locations": {}}
+    try:
+        locations = data_loader.load_locations_for_category(category_filename)
+        logging.debug(f"Exiting get_locations_in_category_logic with {len(locations)} locations.")
+        return {"locations": locations}
+    except Exception as e:
+        logging.exception("Exception in get_locations_in_category_logic")
+        return {"locations": {}}
+
+def teleport_to_location_logic(location_id):
+    """Builds and executes a teleport command.
+
+    Args:
+        location_id (str): The target location ID (cell name).
+
+    Returns:
+        dict: { "success": bool, "message": str, "command": str or None }
+    """
+    logging.debug(f"Entering teleport_to_location_logic for ID: {location_id}")
+    if not location_id or not isinstance(location_id, str) or not location_id.strip():
+        logging.warning("Invalid location ID provided for teleport.")
+        return {"success": False, "message": "Invalid location ID provided."}
+
+    # Need to call it via the imported module
+    command = command_builder.build_teleport_command(location_id)
+
+    if not command:
+        logging.error(f"Failed to build teleport command for ID: {location_id}")
+        return {"success": False, "message": "Failed to build teleport command."}
+
+    logging.info(f"Built teleport command: {command}")
+    # Delegate to the single command execution logic
+    result = run_single_command_logic(command)
+    result['command'] = command # Add the command string to the result
+
+    # Adjust message for clarity if successful
+    if result['success']:
+        result['message'] = "Teleport command executed."
+        
+    logging.debug(f"Exiting teleport_to_location_logic, result: {result}")
     return result 

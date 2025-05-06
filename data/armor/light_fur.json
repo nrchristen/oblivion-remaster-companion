@@ -1,0 +1,50 @@
+{
+  "Fur Boots": {
+    "id": "00016C48",
+    "weight": 4.0,
+    "health": 100,
+    "value": 5,
+    "armor": 1.0,
+    "enchantment": null
+  },
+  "Fur Cuirass": {
+    "id": "00016C4A",
+    "weight": 10.0,
+    "health": 350,
+    "value": 20,
+    "armor": 5.0,
+    "enchantment": null
+  },
+  "Fur Gauntlets": {
+    "id": "00016C47",
+    "weight": 2.0,
+    "health": 100,
+    "value": 5,
+    "armor": 1.0,
+    "enchantment": null
+  },
+  "Fur Greaves": {
+    "id": "00016C49",
+    "weight": 6.0,
+    "health": 250,
+    "value": 10,
+    "armor": 3.0,
+    "enchantment": null
+  },
+  "Fur Helmet": {
+    "id": "00016C46",
+    "weight": 2.0,
+    "health": 100,
+    "value": 5,
+    "armor": 1.0,
+    "enchantment": null
+  },
+  "Fur Shield": {
+    "id": "00016C4B",
+    "weight": 4.0,
+    "health": 250,
+    "value": 10,
+    "armor": 3.0,
+    "enchantment": null
+  }
+} 

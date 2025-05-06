@@ -1,0 +1,74 @@
+{
+  "Iron Arrow": {
+    "id": "00017829",
+    "weight": 0.1,
+    "value": 1,
+    "damage": 8,
+    "damage_obr": 10,
+    "level": 1,
+    "enchantment": null
+  },
+  "Steel Arrow": {
+    "id": "000229C1",
+    "weight": 0.1,
+    "value": 2,
+    "damage": 9,
+    "damage_obr": 12,
+    "level": 2,
+    "enchantment": null
+  },
+  "Silver Arrow": {
+    "id": "0001EFD4",
+    "weight": 0.1,
+    "value": 3,
+    "damage": 10,
+    "damage_obr": 13,
+    "level": 4,
+    "enchantment": null
+  },
+  "Dwarven Arrow": {
+    "id": "00022BE2",
+    "weight": 0.15,
+    "value": 4,
+    "damage": 11,
+    "damage_obr": 14,
+    "level": 6,
+    "enchantment": null
+  },
+  "Elven Arrow": {
+    "id": "000229C0",
+    "weight": 0.1,
+    "value": 8,
+    "damage": 12,
+    "damage_obr": 16,
+    "level": 9,
+    "enchantment": null
+  },
+  "Glass Arrow": {
+    "id": "00022BE1",
+    "weight": 0.1,
+    "value": 12,
+    "damage": 13,
+    "damage_obr": 17,
+    "level": 12,
+    "enchantment": null
+  },
+  "Ebony Arrow": {
+    "id": "0001EFD5",
+    "weight": 0.2,
+    "value": 20,
+    "damage": 14,
+    "damage_obr": 18,
+    "level": 16,
+    "enchantment": null
+  },
+  "Daedric Arrow": {
+    "id": "0001EFD3",
+    "weight": 0.25,
+    "value": 35,
+    "damage": 15,
+    "damage_obr": 20,
+    "level": 20,
+    "enchantment": null
+  }
+} 

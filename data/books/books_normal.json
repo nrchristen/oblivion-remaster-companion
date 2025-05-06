@@ -1,0 +1,138 @@
+{
+  "2920, First Seed (v3)": {
+    "id": "000243d7",
+    "name": "2920, First Seed (v3)",
+    "value": 10,
+    "type": "Normal",
+    "author": "Carlovac Townway",
+    "description": "Volume 3 of a historical series about Vivec and the Empire"
+  },
+  "2920, Sun's Dusk (v11)": {
+    "id": "000243d3",
+    "name": "2920, Sun's Dusk (v11)",
+    "value": 10,
+    "type": "Normal",
+    "author": "Carlovac Townway",
+    "description": "Volume 11 of a historical series about Vivec and the Empire"
+  },
+  "2920, Evening Star (v12)": {
+    "id": "000243db",
+    "name": "2920, Evening Star (v12)",
+    "value": 10,
+    "type": "Normal",
+    "author": "Carlovac Townway",
+    "description": "Volume 12 of a historical series about Vivec and the Empire"
+  },
+  "The Adabal-a": {
+    "id": "000ed3", 
+    "name": "The Adabal-a",
+    "value": 30,
+    "type": "Normal",
+    "author": "Morihaus",
+    "description": "The memoirs of Morihaus, consort to Alessia and Taker of the Citadel"
+  },
+  "Tamrielic Lore": {
+    "id": "0002457A",
+    "name": "Tamrielic Lore",
+    "value": 15,
+    "type": "Normal",
+    "author": "Yagrum Bagarn",
+    "description": "A list of ancient artifacts, compiled by the last living Dwemer at the behest of Divayth Fyr"
+  },
+  "Ten Commands: Nine Divines": {
+    "id": "00024577",
+    "name": "Ten Commands: Nine Divines",
+    "value": 1,
+    "type": "Normal",
+    "author": null,
+    "description": "The Ten Commands of the Nine Divines"
+  },
+  "Thief of Virtue": {
+    "id": "0001F112",
+    "name": "Thief of Virtue",
+    "value": 10,
+    "type": "Normal",
+    "author": null,
+    "description": "A bawdy tale of one thief's quest for coin, and capture of a lady's virtue"
+  },
+  "The Third Door": {
+    "id": "000243F3",
+    "name": "The Third Door",
+    "value": 10,
+    "type": "Normal",
+    "author": "Annanar Orme",
+    "description": "Tale of a heart-broken, vengeful, axe-wielding woman"
+  },
+  "Tome of Unlife": {
+    "id": "00003AA3",
+    "name": "Tome of Unlife",
+    "value": 350,
+    "type": "Normal",
+    "author": null,
+    "description": "A mysterious, blood-stained lexicon belonging to Lorgren Benirus"
+  },
+  "Traitor's Diary": {
+    "id": "00003968",
+    "name": "Traitor's Diary",
+    "value": 0,
+    "type": "Normal",
+    "author": "Mathieu Bellamont",
+    "description": "The insane ramblings of a traitorous member of the Dark Brotherhood"
+  },
+  "Treatise on Ayleidic Cities": {
+    "id": "0014a2", 
+    "name": "Treatise on Ayleidic Cities",
+    "value": 5,
+    "type": "Normal",
+    "author": null,
+    "description": "The history of Varsa Baalim and Mehrunes' Razor"
+  },
+  "Trials of St. Alessia": {
+    "id": "00024579",
+    "name": "Trials of St. Alessia",
+    "value": 1,
+    "type": "Normal",
+    "author": null,
+    "description": "Excerpt from a greater work detailing the creation of the Amulet of Kings"
+  },
+  "The True Nature of Orcs": {
+    "id": "00024592",
+    "name": "The True Nature of Orcs",
+    "value": 45,
+    "type": "Normal",
+    "author": null,
+    "description": "Book detailing the Orsimer race and their origin"
+  },
+  "Varieties of Daedra": {
+    "id": "0002457C",
+    "name": "Varieties of Daedra",
+    "value": 10,
+    "type": "Normal",
+    "author": "Aranea Drethan",
+    "description": "An analysis of Daedra forms, focusing primarily on the Dremora"
+  },
+  "The Waters of Oblivion": {
+    "id": "00024593",
+    "name": "The Waters of Oblivion",
+    "value": 75,
+    "type": "Normal",
+    "author": null,
+    "description": "A work on the dangers of Daedra and Oblivion"
+  },
+  "The Wild Elves": {
+    "id": "00024594",
+    "name": "The Wild Elves",
+    "value": 80,
+    "type": "Normal",
+    "author": "Kier-Jo Chorvak",
+    "description": "Brief description of the Ayleids, or Wild Elves"
+  },
+  "The Wolf Queen, v 8": {
+    "id": "00024581",
+    "name": "The Wolf Queen, v 8",
+    "value": 25,
+    "type": "Normal",
+    "author": "Waughin Jarth",
+    "description": "Life of Queen Potema, Book Eight"
+  }
+} 

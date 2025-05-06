@@ -1,0 +1,50 @@
+{
+  "Orcish Boots": {
+    "id": "0003635F",
+    "weight": 16.5,
+    "health": 650,
+    "value": 225,
+    "armor": 5.0,
+    "enchantment": null
+  },
+  "Orcish Cuirass": {
+    "id": "00036361",
+    "weight": 41.25,
+    "health": 1350,
+    "value": 900,
+    "armor": 15.0,
+    "enchantment": null
+  },
+  "Orcish Gauntlets": {
+    "id": "0003635E",
+    "weight": 8.25,
+    "health": 650,
+    "value": 225,
+    "armor": 5.0,
+    "enchantment": null
+  },
+  "Orcish Greaves": {
+    "id": "00036360",
+    "weight": 24.75,
+    "health": 1000,
+    "value": 450,
+    "armor": 9.0,
+    "enchantment": null
+  },
+  "Orcish Helmet": {
+    "id": "0003635D",
+    "weight": 8.25,
+    "health": 650,
+    "value": 225,
+    "armor": 5.0,
+    "enchantment": null
+  },
+  "Orcish Shield": {
+    "id": "00036362",
+    "weight": 16.5,
+    "health": 1000,
+    "value": 450,
+    "armor": 12.0,
+    "enchantment": null
+  }
+} 

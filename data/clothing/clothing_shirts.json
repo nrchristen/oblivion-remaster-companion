@@ -1,0 +1,19 @@
+{
+  "Blacksmith's Apron": {"id": "0001C64D", "name": "Blacksmith's Apron", "weight": 1.0, "value": 1},
+  "Blue Collar Shirt": {"id": "0001F881", "name": "Blue Collar Shirt", "weight": 0.5, "value": 2},
+  "Burgundy Linen Shirt": {"id": "000229A3", "name": "Burgundy Linen Shirt", "weight": 1.0, "value": 2},
+  "Dark Green Shirt": {"id": "00036341", "name": "Dark Green Shirt", "weight": 0.5, "value": 3},
+  "Dark Gray Shirt": {"id": "000229A2", "name": "Dark Gray Shirt", "weight": 1.0, "value": 2},
+  "Green Felt Linens": {"id": "000231A0", "name": "Green Felt Linens", "weight": 0.5, "value": 4},
+  "Light Brown Linen Shirt": {"id": "000229A1", "name": "Light Brown Linen Shirt", "weight": 1.0, "value": 1},
+  "Olive Vest": {"id": "0003633E", "name": "Olive Vest", "weight": 0.5, "value": 2},
+  "Plaid Shirt": {"id": "0003633F", "name": "Plaid Shirt", "weight": 0.5, "value": 2},
+  "Quilted Doublet": {"id": "0001C886", "name": "Quilted Doublet", "weight": 1.0, "value": 2},
+  "Red Linen Shirt": {"id": "000229A0", "name": "Red Linen Shirt", "weight": 1.0, "value": 2},
+  "Russet Felt Shirt": {"id": "0001C885", "name": "Russet Felt Shirt", "weight": 0.5, "value": 2},
+  "Shirt With Suspenders": {"id": "00036342", "name": "Shirt With Suspenders", "weight": 1.0, "value": 2},
+  "Striped Shirt": {"id": "00034BD2", "name": "Striped Shirt", "weight": 0.5, "value": 2},
+  "Tattered Shirt": {"id": "000CAAAE", "name": "Tattered Shirt", "weight": 0.5, "value": 1},
+  "Tunic": {"id": "0001F880", "name": "Tunic", "weight": 0.5, "value": 1},
+  "Vest": {"id": "0001F882", "name": "Vest", "weight": 0.5, "value": 1}
+} 

@@ -1,0 +1,47 @@
+{
+  "Arrow of Light": {
+    "id": "00008A4F",
+    "weight": 0.1,
+    "value": 2,
+    "damage": 8,
+    "damage_obr": 10,
+    "level": 3,
+    "enchantment": "Light 10 pts for 20 secs"
+  },
+  "Flare Arrow": {
+    "id": "00008A4E",
+    "weight": 0.1,
+    "value": 7,
+    "damage": 9,
+    "damage_obr": 12,
+    "level": 4,
+    "enchantment": "Fire Damage 5 pts, Light 10 pts for 20 secs"
+  },
+  "Arrow of Illumination": {
+    "id": "00008A4C",
+    "weight": 0.1,
+    "value": 15,
+    "damage": 11,
+    "damage_obr": 14,
+    "level": 8,
+    "enchantment": "Fire Damage 8 pts, Light 10 pts for 30 secs"
+  },
+  "Arrow of Brilliance": {
+    "id": "00008A4D",
+    "weight": 0.1,
+    "value": 25,
+    "damage": 12,
+    "damage_obr": 16,
+    "level": 11,
+    "enchantment": "Fire Damage 12 pts, Light 10 pts for 40 secs"
+  },
+  "Arrow of Sunlight": {
+    "id": "0000BAD9",
+    "weight": 0.1,
+    "value": 35,
+    "damage": 13,
+    "damage_obr": 17,
+    "level": 14,
+    "enchantment": "Fire Damage 15 pts, Light 10 pts for 50 secs"
+  }
+} 

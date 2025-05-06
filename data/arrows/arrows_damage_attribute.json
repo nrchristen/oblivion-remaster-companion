@@ -1,0 +1,11 @@
+{
+  "Arrow of Withering": {
+    "id": "0003CB6C",
+    "weight": 0.1,
+    "value": 92,
+    "damage": 5,
+    "damage_obr": 7,
+    "level": 6,
+    "enchantment": "Damage all Attributes 2 pts"
+  }
+} 

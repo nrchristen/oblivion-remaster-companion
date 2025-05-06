@@ -1,0 +1,34 @@
+{
+  "Agnar's Journal": {
+    "id": "000C55DF",
+    "name": "Agnar's Journal",
+    "value": null, 
+    "type": "Marker",
+    "location_hint": "Adds marker for Fanacas, Kingscrest Cavern, Quickwater Cave, Dive Rock (approaching is enough)",
+    "notes": "Found at Dive Rock."
+  },
+  "Cleansing of the Fane": {
+    "id": "0002C8DD",
+    "name": "Cleansing of the Fane",
+    "value": null, 
+    "type": "Marker",
+    "location_hint": "Adds marker for Malada",
+    "notes": "Found in various bookstores and libraries."
+  },
+  "Knightfall": {
+    "id": "00022E65",
+    "name": "Knightfall",
+    "value": null, 
+    "type": "Marker",
+    "location_hint": "Adds marker for Frostfire Glade",
+    "notes": "Found at The First Edition during 'Tears of the Savior' quest."
+  },
+  "Modern Heretics": {
+    "id": "00026B1D",
+    "name": "Modern Heretics",
+    "value": null, 
+    "type": "Marker",
+    "location_hint": "Adds marker for Azura's Shrine",
+    "notes": "Found in Cloud Ruler Temple or Mystic Archives."
+  }
+} 

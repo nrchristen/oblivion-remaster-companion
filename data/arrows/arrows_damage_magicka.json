@@ -1,0 +1,11 @@
+{
+  "Arrow of Jinxing": {
+    "id": "0004BEFF",
+    "weight": 0.1,
+    "value": 9,
+    "damage": 10,
+    "damage_obr": 13,
+    "level": 6,
+    "enchantment": "Damage Magicka 20 pts"
+  }
+} 

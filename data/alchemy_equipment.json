@@ -1,3 +1,22 @@
 {
-  "PlaceholderEquipment": "00000000"
+  "Apprentice Alembic": "0006E310",
+  "Apprentice Calcinator": "0006E311",
+  "Apprentice Mortar & Pestle": "0006E312",
+  "Apprentice Retort": "0006E313",
+  "Expert Alembic": "0006EE5C",
+  "Expert Calcinator": "0006EE5E",
+  "Expert Mortar & Pestle": "0006EE60",
+  "Expert Retort": "0006EE62",
+  "Journeyman Alembic": "0006EE52",
+  "Journeyman Calcinator": "0006EE55",
+  "Journeyman Mortar & Pestle": "0006EE57",
+  "Journeyman Retort": "0006EE59",
+  "Master Alembic": "0006EE64",
+  "Master Calcinator": "0006EE66",
+  "Master Mortar & Pestle": "0006EE68",
+  "Master Retort": "0006EE6A",
+  "Novice Alembic": "00010604",
+  "Novice Calcinator": "0001057D",
+  "Novice Mortar & Pestle": "000C7968",
+  "Novice Retort": "00000C4F"
 } 

@@ -1,0 +1,6 @@
+{
+  "Flax Seeds": {"id": "0002503A", "name": "Flax Seeds", "weight": 0.1, "value": 1, "effects": ["Feather", "Damage Health", "Restore Magicka", "Burden"]},
+  "Fly Amanita Cap": {"id": "00025039", "name": "Fly Amanita Cap", "weight": 0.1, "value": 1, "effects": ["Restore Fatigue", "Burden", "Restore Health", "Reflect Damage"]},
+  "Imp Gall": {"id": "00025035", "name": "Imp Gall", "weight": 0.1, "value": 15, "effects": ["Restore Health", "Cure Paralysis", "Damage Health", "Resist Shock"]},
+  "Ironwood Nut": {"id": "00033677", "name": "Ironwood Nut", "weight": 0.1, "value": 1, "effects": ["Resist Fire", "Restore Agility", "Damage Magicka", "Cure Poison"]}
+} 

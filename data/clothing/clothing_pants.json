@@ -1,0 +1,19 @@
+{
+  "Black Wide Pants": {"id": "0003633B", "name": "Black Wide Pants", "weight": 0.5, "value": 2},
+  "Breeches": {"id": "0001F87E", "name": "Breeches", "weight": 0.5, "value": 1},
+  "Burgundy Linens": {"id": "000231A1", "name": "Burgundy Linens", "weight": 0.5, "value": 4},
+  "Coarse Linens": {"id": "0002299F", "name": "Coarse Linens", "weight": 1.0, "value": 1},
+  "Dark Shirt": {"id": "0001C883", "name": "Dark Shirt", "weight": 1.0, "value": 2},
+  "Gold Trimmed Shoes": {"id": "0002319F", "name": "Gold Trimmed Shoes", "weight": 1.0, "value": 6},
+  "Green Wool Shirt": {"id": "0001C882", "name": "Green Wool Shirt", "weight": 1.0, "value": 2},
+  "Laced Leather Pants": {"id": "00036345", "name": "Laced Leather Pants", "weight": 1.0, "value": 2},
+  "Light Brown Linens": {"id": "00036344", "name": "Light Brown Linens", "weight": 1.0, "value": 1},
+  "Lower Class Skirt": {"id": "0006B03A", "name": "Lower Class Skirt", "weight": 1.0, "value": 1},
+  "Orange Upper Class Skirt": {"id": "0006B03B", "name": "Orange Upper Class Skirt", "weight": 1.0, "value": 6},
+  "Prisoner's Skirt": {"id": "0006B039", "name": "Prisoner's Skirt", "weight": 1.0, "value": 0},
+  "Red Velvet Blouse": {"id": "0002319B", "name": "Red Velvet Blouse", "weight": 1.0, "value": 6},
+  "Red Velvet Garments": {"id": "0002319A", "name": "Red Velvet Garments", "weight": 1.0, "value": 6},
+  "Sack Cloth Pants": {"id": "0001CBD0", "name": "Sack Cloth Pants", "weight": 1.0, "value": 1},
+  "Tan Linens": {"id": "00036346", "name": "Tan Linens", "weight": 1.0, "value": 1},
+  "Tattered Pants": {"id": "000CAAA3", "name": "Tattered Pants", "weight": 1.0, "value": 1}
+} 

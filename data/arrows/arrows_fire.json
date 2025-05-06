@@ -1,0 +1,83 @@
+{
+  "Arrow of Embers": {
+    "id": "0004BF10",
+    "weight": 0.1,
+    "value": 3,
+    "damage": 8,
+    "damage_obr": 10,
+    "level": 3,
+    "enchantment": "Fire Damage 5 pts"
+  },
+  "Arrow of Burning": {
+    "id": "0004BEFB",
+    "weight": 0.1,
+    "value": 4,
+    "damage": 9,
+    "damage_obr": 12,
+    "level": 4,
+    "enchantment": "Fire Damage 5 pts"
+  },
+  "Arrow of Scorching": {
+    "id": "0004BF01",
+    "weight": 0.1,
+    "value": 12,
+    "damage": 11,
+    "damage_obr": 14,
+    "level": 8,
+    "enchantment": "Fire Damage 10 pts"
+  },
+  "Arrow of Flames": {
+    "id": "0004BF04",
+    "weight": 0.1,
+    "value": 20,
+    "damage": 12,
+    "damage_obr": 16,
+    "level": 11,
+    "enchantment": "Fire Damage 15 pts"
+  },
+  "Arrow of Fire": {
+    "id": "0004BF07",
+    "weight": 0.1,
+    "value": 33,
+    "damage": 13,
+    "damage_obr": 17,
+    "level": 14,
+    "enchantment": "Fire Damage 15 pts"
+  },
+  "Arrow of the Blaze": {
+    "id": "0004BF0A",
+    "weight": 0.2,
+    "value": 36,
+    "damage": 14,
+    "damage_obr": 18,
+    "level": 18,
+    "enchantment": "Fire Damage 20 pts"
+  },
+  "Arrow of the Inferno": {
+    "id": "0004BF0D",
+    "weight": 0.25,
+    "value": 51,
+    "damage": 15,
+    "damage_obr": 20,
+    "level": 22,
+    "enchantment": "Fire Damage 20 pts"
+  },
+  "Arrow of Cleansing": {
+    "id": "000CD53F",
+    "weight": 0.1,
+    "value": 116,
+    "damage": 5,
+    "damage_obr": 7,
+    "level": 6,
+    "enchantment": "Fire Damage 40 pts in 10 ft for 2 secs"
+  },
+  "Arrow of Immolation": {
+    "id": "000CD542",
+    "weight": 0.1,
+    "value": 109,
+    "damage": 8,
+    "damage_obr": 11,
+    "level": 14,
+    "enchantment": "Fire Damage 65 pts in 10 ft"
+  }
+} 

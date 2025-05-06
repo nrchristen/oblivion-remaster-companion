@@ -1,0 +1,50 @@
+{
+  "Leather Boots": {
+    "id": "0000C0DE",
+    "weight": 4.5,
+    "health": 150,
+    "value": 10,
+    "armor": 1.5,
+    "enchantment": null
+  },
+  "Leather Cuirass": {
+    "id": "0000C0E0",
+    "weight": 11.25,
+    "health": 400,
+    "value": 40,
+    "armor": 6.25,
+    "enchantment": null
+  },
+  "Leather Bracers": {
+    "id": "0000C0DD",
+    "weight": 2.25,
+    "health": 150,
+    "value": 10,
+    "armor": 1.5,
+    "enchantment": null
+  },
+  "Leather Greaves": {
+    "id": "0000C0DF",
+    "weight": 6.75,
+    "health": 300,
+    "value": 20,
+    "armor": 3.75,
+    "enchantment": null
+  },
+  "Leather Helmet": {
+    "id": "0000C0DC",
+    "weight": 2.25,
+    "health": 150,
+    "value": 10,
+    "armor": 1.5,
+    "enchantment": null
+  },
+  "Leather Shield": {
+    "id": "0000C0E1",
+    "weight": 4.5,
+    "health": 300,
+    "value": 20,
+    "armor": 3.75,
+    "enchantment": null
+  }
+} 

@@ -1,0 +1,50 @@
+{
+  "Daedric Boots": {
+    "id": "00036359",
+    "weight": 18.0,
+    "health": 1350,
+    "value": 1350,
+    "armor": 7.5,
+    "enchantment": null
+  },
+  "Daedric Cuirass": {
+    "id": "0003635B",
+    "weight": 60.0,
+    "health": 2700,
+    "value": 4800,
+    "armor": 18.75,
+    "enchantment": null
+  },
+  "Daedric Gauntlets": {
+    "id": "00036358",
+    "weight": 12.0,
+    "health": 1350,
+    "value": 1350,
+    "armor": 7.5,
+    "enchantment": null
+  },
+  "Daedric Greaves": {
+    "id": "0003635A",
+    "weight": 36.0,
+    "health": 2025,
+    "value": 2500,
+    "armor": 11.25,
+    "enchantment": null
+  },
+  "Daedric Helmet": {
+    "id": "00036357",
+    "weight": 12.0,
+    "health": 1350,
+    "value": 1350,
+    "armor": 7.5,
+    "enchantment": null
+  },
+  "Daedric Shield": {
+    "id": "0003635C",
+    "weight": 24.0,
+    "health": 2025,
+    "value": 2500,
+    "armor": 22.5,
+    "enchantment": null
+  }
+} 

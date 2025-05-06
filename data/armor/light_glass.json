@@ -1,0 +1,50 @@
+{
+  "Glass Boots": {
+    "id": "00036341",
+    "weight": 4.5,
+    "health": 675,
+    "value": 500,
+    "armor": 5.0,
+    "enchantment": null
+  },
+  "Glass Cuirass": {
+    "id": "00036343",
+    "weight": 15.0,
+    "health": 1350,
+    "value": 1800,
+    "armor": 12.5,
+    "enchantment": null
+  },
+  "Glass Gauntlets": {
+    "id": "00036340",
+    "weight": 3.0,
+    "health": 675,
+    "value": 500,
+    "armor": 5.0,
+    "enchantment": null
+  },
+  "Glass Greaves": {
+    "id": "00036342",
+    "weight": 9.0,
+    "health": 1000,
+    "value": 1000,
+    "armor": 7.5,
+    "enchantment": null
+  },
+  "Glass Helmet": {
+    "id": "0003633F",
+    "weight": 3.0,
+    "health": 675,
+    "value": 500,
+    "armor": 5.0,
+    "enchantment": null
+  },
+  "Glass Shield": {
+    "id": "00036344",
+    "weight": 6.0,
+    "health": 1000,
+    "value": 1000,
+    "armor": 15.0,
+    "enchantment": null
+  }
+} 

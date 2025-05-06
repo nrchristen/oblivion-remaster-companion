@@ -1,0 +1,50 @@
+{
+  "Dwarven Boots": {
+    "id": "0003634D",
+    "weight": 15.0,
+    "health": 450,
+    "value": 75,
+    "armor": 4.0,
+    "enchantment": null
+  },
+  "Dwarven Cuirass": {
+    "id": "0003634F",
+    "weight": 37.5,
+    "health": 1000,
+    "value": 300,
+    "armor": 12.5,
+    "enchantment": null
+  },
+  "Dwarven Gauntlets": {
+    "id": "0003634C",
+    "weight": 7.5,
+    "health": 450,
+    "value": 75,
+    "armor": 4.0,
+    "enchantment": null
+  },
+  "Dwarven Greaves": {
+    "id": "0003634E",
+    "weight": 22.5,
+    "health": 700,
+    "value": 150,
+    "armor": 7.5,
+    "enchantment": null
+  },
+  "Dwarven Helmet": {
+    "id": "0003634B",
+    "weight": 7.5,
+    "health": 450,
+    "value": 75,
+    "armor": 4.0,
+    "enchantment": null
+  },
+  "Dwarven Shield": {
+    "id": "00036350",
+    "weight": 15.0,
+    "health": 700,
+    "value": 150,
+    "armor": 9.0,
+    "enchantment": null
+  }
+} 

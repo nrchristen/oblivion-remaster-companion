@@ -1,0 +1,5 @@
+{
+  "Potion of Sorcery (Weak)": {"id": "0000854D", "name": "Potion of Sorcery (Weak)", "weight": 0.5, "value": 14, "effect": "Restore Magicka 25pts for 10sec"},
+  "Potion of Sorcery (Standard)": {"id": "0000854F", "name": "Potion of Sorcery (Standard)", "weight": 0.5, "value": 42, "effect": "Restore Magicka 50pts for 15sec"},
+  "Potion of Sorcery (Strong)": {"id": "00008551", "name": "Potion of Sorcery (Strong)", "weight": 0.5, "value": 71, "effect": "Restore Magicka 75pts for 20sec"}
+} 

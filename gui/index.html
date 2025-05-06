@@ -31,128 +31,182 @@
     </style>
 </head>
 <body>
+    <div id="status-display"> <!-- Container for sphere and text -->
+        <div id="status-indicator" title="Checking status..."></div>
+        <span id="status-indicator-text">Checking...</span>
+    </div>
     <h1>ES4R Companion</h1>
+    <!-- Favorites Dropdown -->
+    <div id="top-favorites-container">
+        <button id="toggle-favorites-btn">Favorites &#9660;</button>
+        <div id="favorites-dropdown" class="collapsible-content">
+             <!-- Content moved from #favorites-section -->
+             <div class="form-row">
+                <label for="favorite-select">Select:</label> 
+                <select id="favorite-select">
+                    <option value="">-- Loading Favorites --</option>
+                </select>
+             </div>
+             <div class="form-row button-group">
+                 <button id="run-favorite-btn" disabled>Run Favorite</button>
+                 <button id="delete-favorite-btn" disabled>Delete Favorite</button>
+             </div>
+        </div>
+    </div>
 
     <div class="main-container">
         <!-- Column 1 -->
         <div class="column">
-            <h2>General</h2>
-            <div id="status-section">
-                <h2>Game Status</h2>
-                <div class="form-row" id="status">
-                    <span>Status: <span id="status-text">Checking...</span></span> 
-                    <button id="check-status-btn">Check Game Status</button>
-                </div>
+            <div id="add-item-section" class="collapsible-container">
+                <h2>
+                    Add Item
+                    <button id="toggle-add-item-btn" class="toggle-btn">&#9660;</button>
+                </h2>
+                <div id="add-item-content" class="collapsible-content">
+                    <div class="form-row">
+                        <label for="item-type-select">Item Type:</label>
+                        <select id="item-type-select">
+                            <option value="">-- Select Type --</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="item-category-select">Sub-Category:</label>
+                        <select id="item-category-select" disabled>
+                            <option value="">-- Select Type First --</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="item-select">Item:</label>
+                        <select id="item-select" disabled>
+                            <option value="">-- Select Sub-Category --</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="item-quantity-input">Quantity:</label>
+                        <input type="number" id="item-quantity-input" value="1" min="1">
+                    </div>
+                    <!-- Item Details Display Area -->
+                    <div id="item-details-display" class="item-details">
+                        <!-- Item details will be loaded here -->
+                    </div>
+                    <!-- End Item Details Display Area -->
+                    <div class="action-row form-row"> <!-- Added form-row for consistency -->
+                        <button id="add-item-btn" disabled>Add Item</button>
+                        <div class="favorite-action">
+                            <input type="checkbox" id="add-item-save-favorite" class="save-favorite-checkbox">
+                            <label for="add-item-save-favorite">Save as Favorite?</label>
+                            <input type="text" id="add-item-favorite-name" class="favorite-name-input" placeholder="Enter favorite name">
+                        </div>
+                    </div>
+                </div> <!-- End add-item-content -->
             </div>
-
-            <div id="add-item-section">
-                <h2>Add Item</h2>
-                <div class="form-row">
-                    <label for="item-category-select">Category:</label>
-                    <select id="item-category-select">
-                        <option value="">-- Loading Categories --</option>
-                    </select>
-                </div>
-                <div class="form-row">
-                    <label for="item-select">Item:</label>
-                    <select id="item-select">
-                        <option value="">-- Select Category First --</option>
-                    </select>
-                </div>
-                <div class="form-row">
-                    <label for="item-quantity-input">Quantity:</label>
-                    <input type="number" id="item-quantity-input" value="1" min="1">
-                    <button id="add-item-btn">Add Item(s)</button>
-                </div>
-                <div class="form-row favorite-option">
-                     <label for="add-item-save-favorite">Save Fav:</label>
-                     <input type="checkbox" id="add-item-save-favorite">
-                     <input type="text" id="add-item-favorite-name" placeholder="Enter favorite name..." style="display: none;">
-                </div>
-            </div>
-
-             <div id="single-command-section">
-                 <h2>Single Command</h2>
-                 <div class="form-row">
-                     <label for="command-input">Command:</label>
-                     <input type="text" id="command-input" value="ghost">
-                     <button id="run-single-btn">Run Command</button>
-                 </div>
-                 <div class="form-row favorite-option">
-                     <label for="single-cmd-save-favorite">Save Fav:</label>
-                     <input type="checkbox" id="single-cmd-save-favorite">
-                     <input type="text" id="single-cmd-favorite-name" placeholder="Enter favorite name..." style="display: none;">
-                 </div>
-             </div>
-             
-             <div id="favorites-section">
-                 <h2>Favorites</h2>
-                 <div class="form-row">
-                    <label for="favorite-select">Favorite:</label>
-                    <select id="favorite-select">
-                        <option value="">-- Loading Favorites --</option>
-                    </select>
-                 </div>
-                 <div class="form-row button-group">
-                     <button id="run-favorite-btn" disabled>Run Favorite</button>
-                     <button id="delete-favorite-btn" disabled>Delete Favorite</button>
-                 </div>
-             </div>
         </div>
 
         <!-- Column 2 -->
-        <div class="column">
-            <h2>Battle Stage</h2>
-            <div id="presets-section">
-                <h2>Presets</h2>
-                 <div class="form-row">
-                    <label for="preset-select">Preset:</label>
-                    <select id="preset-select">
-                        <option value="">-- Loading Presets --</option>
-                    </select>
-                    <button id="run-preset-btn">Run Preset</button>
-                 </div>
-            </div>
+        <div class="column" id="battle-stage-column">
+            <!-- New container for consistent styling -->
+            <div id="battle-stage-container" class="collapsible-container"> 
+                <h2>
+                    Battle Stage
+                    <button id="toggle-battle-btn" class="toggle-btn">&#9660;</button>
+                </h2>
+                <div id="battle-stage-content" class="collapsible-content">
+                    <div id="presets-section">
+                        <h2>Presets</h2>
+                         <div class="form-row">
+                            <label for="preset-select">Preset:</label>
+                            <select id="preset-select">
+                                <option value="">-- Loading Presets --</option>
+                            </select>
+                            <button id="run-preset-btn">Run Preset</button>
+                         </div>
+                    </div>
+                    
+                    <div id="custom-battle-section">
+                         <h2>Custom Battle Setup</h2>
+                         <div class="form-row">
+                             <label for="npc-select">Select NPC:</label>
+                             <select id="npc-select">
+                                 <option value="">-- Loading NPCs --</option>
+                             </select>
+                         </div>
+                         <div class="form-row">
+                             <label for="npc-quantity-input">Quantity:</label>
+                             <input type="number" id="npc-quantity-input" value="1" min="1">
+                             <button id="add-npc-group-btn">Add NPC Group</button>
+                         </div>
+                         
+                         <h4>Current Battle Commands:</h4>
+                         <div id="current-battle-commands">
+                             (No commands added yet)
+                         </div>
+                         
+                         <div class="form-row">
+                             <label for="preset-name-input">Preset Name:</label>
+                             <input type="text" id="preset-name-input" placeholder="Enter name to save...">
+                         </div>
+                         <div class="form-row button-group"> <!-- Button group row -->
+                             <button id="save-preset-btn" disabled>Save Preset</button>
+                             <button id="run-custom-battle-btn" disabled>Run Current Setup</button> 
+                         </div>
+                    </div>
+                </div> <!-- End battle-stage-content -->
+            </div> <!-- End battle-stage-container -->
             
-            <div id="custom-battle-section">
-                 <h2>Custom Battle Setup</h2>
-                 <div class="form-row">
-                     <label for="npc-select">Select NPC:</label>
-                     <select id="npc-select">
-                         <option value="">-- Loading NPCs --</option>
-                     </select>
-                 </div>
-                 <div class="form-row">
-                     <label for="npc-quantity-input">Quantity:</label>
-                     <input type="number" id="npc-quantity-input" value="1" min="1">
-                     <button id="add-npc-group-btn">Add NPC Group</button>
-                 </div>
-                 
-                 <h4>Current Battle Commands:</h4>
-                 <div id="current-battle-commands">
-                     (No commands added yet)
-                 </div>
-                 
-                 <div class="form-row">
-                     <label for="preset-name-input">Preset Name:</label>
-                     <input type="text" id="preset-name-input" placeholder="Enter name to save...">
-                 </div>
-                 <div class="form-row button-group"> <!-- Button group row -->
-                     <button id="save-preset-btn" disabled>Save Preset</button>
-                     <button id="run-custom-battle-btn" disabled>Run Current Setup</button> 
-                 </div>
-            </div>
-        </div>
-    </div>
+            <!-- Teleport Section -->
+            <div id="teleport-section" class="collapsible-container">
+                <h2>
+                    Teleport
+                    <button id="toggle-teleport-btn" class="toggle-btn">&#9660;</button>
+                </h2>
+                <div id="teleport-content" class="collapsible-content">
+                    <div class="form-row">
+                        <label for="location-category-select">Category:</label>
+                        <select id="location-category-select">
+                            <option value="">-- Select Category --</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="location-select">Location:</label>
+                        <select id="location-select" disabled>
+                            <option value="">-- Select Location --</option>
+                        </select>
+                    </div>
+                    <div class="form-row button-row">
+                        <button id="teleport-button" disabled>
+                             Teleport
+                        </button>
+                    </div>
+                </div> <!-- End teleport-content -->
+            </div> <!-- End teleport-section -->
+            
+        </div> <!-- End Column 2 -->
+    </div> <!-- End Main Container -->
 
     <!-- Log Output -->
     <div id="log-output-container">
-        <h2>Output Log</h2>
+        <h2>
+            Output Log
+            <button id="toggle-log-btn" class="toggle-btn">&#9660;</button> <!-- Down arrow initially -->
+        </h2>
         <div id="log-output">
             --- Log ---
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Single Command Input Area -->
+    <div id="bottom-command-bar">
+        <input type="text" id="command-input" placeholder="Enter command...">
+        <button id="run-single-btn">Run</button>
+         <!-- Maybe add favorite option here later? -->
+    </div>
+
+    <!-- Load JS modules in order -->
+    <script src="js/state.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/handlers.js"></script>
+    <script src="js/main.js"></script> 
+    <!-- <script src="script.js"></script> --> <!-- Old script removed -->
 </body>
 </html> 
