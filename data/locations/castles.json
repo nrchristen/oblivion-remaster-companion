@@ -1,0 +1,25 @@
+{
+  "Castle Kvatch Passageway": "KvatchCastlePassageway",
+  "Castle Varaldo Interior": "CastleVaraldo",
+  "Chamber of the Lost": "SkingradCastleChamberOfTheLost",
+  "Cheydinhal Lords' Private Quarters": "CheydinhalCastleLordsQuarters",
+  "Chorrol Castle Gate Tower": "ChorrolGateBRandBL",
+  "Count's Quarters": "KvatchCastleKingsQuarters",
+  "Dining Hall": [
+    "AnvilCastleDiningHallandServantQuarters",
+    "KvatchCastleDiningHall"
+  ],
+  "Dungeon": "AnvilCastleDungeon",
+  "Elder Council Chambers": "ICPalaceElderCouncilChambers",
+  "Elder Scrolls Library": [
+    "ICPalaceLibrary",
+    "ICPalaceLibraryBackup"
+  ],
+  "Great Hall": "KvatchCastleRooms",
+  "Imperial Battlemage's Chambers": "ICPalaceOcatoChambers",
+  "Imperial Guard Quarters": "ICPalaceGuardQuarters",
+  "Private Quarters": "AnvilCastlePrivateQuarters",
+  "Private Quarters East Wing": "BravilCastlePrivateQuartersEastWing",
+  "Royal Quarters": "AnvilCastleRoyalQuarters",
+  "Sleeping Quarters": "KvatchCastleSleepingQuarters"
+} 

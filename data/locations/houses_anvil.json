@@ -1,5 +1,15 @@
 {
   "Abandoned House": "AnvilAbandonedHouse",
   "Arvena Thelas' Basement": "AnvilArvenaThelasBasement",
-  "Arvena Thelas' House": "AnvilArvenaThelasHouse"
+  "Arvena Thelas' House": "AnvilArvenaThelasHouse",
+  "Clarabella Lower Deck": "AnvilTheSeaTubClarabellaLowerDeck",
+  "Clarabella Mid Deck": "AnvilTheSeaTubClarabellaMidDeck",
+  "City Watch Barracks": "AnvilTownGuardBarracks",
+  "Gogan's House": "AnvilGogansHouse",
+  "Harborside Warehouse": "AnvilHarborsideWarehouse",
+  "Heinrich Oaken-Hull's House": "AnvilHeinrichOakenHallsHouse",
+  "Jesan Sextius' House": "AnvilJesanSextiusHouse",
+  "Pinarus Inventius' House": "AnvilPinarusInventiusHouse",
+  "Silgor Bradus' House": "AnvilSilgorBradusHouse",
+  "Smithy": "AnvilCastleBlacksmithQuarters"
 } 

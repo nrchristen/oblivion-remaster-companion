@@ -1,4 +1,27 @@
 {
   "Abandoned Shack": "ICWaterfrontAbandonedShack",
-  "Armand Christophe's House": "ICWaterfrontArmandChristopheHouse"
+  "Armand Christophe's House": "ICWaterfrontArmandChristopheHouse",
+  "Captain's Cabin": "ICWaterfrontMarieElenaCaptainsCabin",
+  "Damian Magius Quarters": "ICWaterfrontImpTradingCoOfficeUpstairs",
+  "Dareloth's Basement": "ICWaterfrontDarelothsHouseBasement",
+  "Dareloth's House": "ICWaterfrontDarelothsHouse",
+  "Guildmaster's Quarters": "ICWaterfrontDarelothsHouseUpstairs",
+  "Imperial Trading Company Office": "ICWaterfrontImpTradingCoOffice",
+  "Imperial Trading Company Office Basement": "ICWaterfrontImpTradingCoOfficeBasement",
+  "Imperial Trading Company Private Storage (02)": "ICWaterfrontImpTradingCo02WarehouseUpstairs",
+  "Imperial Trading Company Private Storage (03)": "ICWaterfrontImpTradingCo03WarehouseUpstairs",
+  "Imperial Trading Company Warehouse (02)": "ICWaterfrontImpTradingCo02Warehouse",
+  "Imperial Trading Company Warehouse (03)": "ICWaterfrontImpTradingCo03Warehouse",
+  "Imperial Trading Company Warehouse Basement (02)": "ICWaterfrontImpTradingCo02Basement",
+  "Imperial Trading Company Warehouse Basement (03)": "ICWaterfrontImpTradingCo03Basement",
+  "Imperial Watch Barracks (Waterfront)": "ICWaterfrontLighthouseGuardQuarters",
+  "Jair's Shack": "ICWaterfrontJairsShack",
+  "Kvinchal's Shack": "ICWaterfrontKvinchalsShack",
+  "Lighthouse": "ICWaterfrontLighthousePrivateQuarters",
+  "Marie Elena Lower Deck": "ICWaterfrontMarieElenaLowerDeck",
+  "Marie Elena Mid Deck": "ICWaterfrontMarieElenaMidDeck",
+  "Methredhel's House": "ICWaterfrontMethredhelsHouse",
+  "Myvryna Arano's House": "ICWaterfrontMyvrynaAranoHouse",
+  "Ormil's Cabin": "ICWaterfrontTheBloatedFloatCabin",
+  "Shack for Sale": "ICWaterfrontShackForSale"
 } 

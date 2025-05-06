@@ -14,8 +14,12 @@
   "Bruma Fighters Guild": "BrumaFightersGuild",
   "Cheydinhal Mages Guild": "CheydinhalMagesGuild",
   "Cheydinhal Fighters Guild": "CheydinhalFightersGuild",
-  "Chorrol Mages Guild": "ChorrolMagesGuild", 
+  "Cheydinhal Fighter's Guild": "CheydinhalFightersGuild",
+  "Cheydinhal Fighters Guild Basement": "CheydinhalFightersGuildBasement",
+  "Chorrol Mages Guild": "ChorrolMagesGuild",
   "Chorrol Fighters Guild": "ChorrolFightersGuild",
+  "Chorrol Fighters Guild Basement": "ChorrolFightersGuildBasement",
+  "Chorrol Fighters Guild Tower": "ChorrolFightersGuildTower",
   "Leyawiin Mages Guild": "LeyawiinMagesGuild",
   "Leyawiin Fighters Guild": "LeyawiinFightersGuild",
   "Skingrad Mages Guild": "SkingradMagesGuild",
@@ -25,8 +29,27 @@
   "Arcane University Council Chambers": "ICArcaneUniversityArchMagesTowerCouncil",
   "Blackwood Company Hall": "LeyawiinBlackwoodCompanyHall",
   "Blackwood Company Hall Basement": "LeyawiinBlackwoodCompanyHallBasement",
-  "Dark Brotherhood Sanctuary": "CheydinhalDarkSanctuary",
+  "Dark Brotherhood Sanctuary": "CheydinhalSanctuary",
   "Dark Brotherhood Sanctuary Living Quarters": "CheydinhalDarkLivingQuarters",
   "Dark Brotherhood Sanctuary Training Room": "CheydinhalDarkTrainingRoom",
-  "Thieves Guild Headquarters": "ICWaterfrontThievesGuild"
+  "Thieves Guild Headquarters": "ICWaterfrontThievesGuild",
+  "Fighters Guild": [
+    "AnvilFightersGuild",
+    "BravilFightersGuild",
+    "ChorrolFightersGuild"
+  ],
+  "Fighter's Guild": "LeyawiinFightersGuild",
+  "Fighter's Guild 2nd Floor East": "LeyawiinFightersGuildTraining",
+  "Fighter's Guild 2nd Floor West": "LeyawiinFightersGuildRoom01",
+  "Fighter's Guild 3rd Floor West": "LeyawiinFightersGuildRoom02",
+  "Fighters Guild Basement": [
+    "BrumaFightersGuildBasement",
+    "SkingradFightersGuildBasement"
+  ],
+  "Fighter's Guild Basement": "LeyawiinFightersGuildBasement",
+  "Fighters Guild Company Offices": "AnvilFightersGuildCompanyOffices",
+  "Fighters Guild Dining Hall": "AnvilFightersGuildDinningHall",
+  "Fighters Guild Upstairs": "SkingradFightersGuildUpstairs",
+  "Dark Brotherhood Living Quarters": "CheydinhalSanctuaryQuarters",
+  "Dark Brotherhood Training Room": "CheydinhalSanctuaryTrainingRoom"
 } 

@@ -1,5 +1,21 @@
 {
   "Aengvir's House": "HarlunsWatchAengvirsHouse",
   "Arvin Dalvilu's House": "BleakersWayArvinDalvilusHouse",
-  "Astante's Home": "BrindleHome02"
+  "Astante's Home": "BrindleHome02",
+  "Philip Franc's House": "BlankenMarchHouse03",
+  "Quill-Weave's House": "AnvilQuillWeavesHouse",
+  "Ra'Jahirr's House": "LeyawiinRaJahirrsHouse",
+  "Redas Dalvilu's House": "BleakersWayRedasDalvilusHouse",
+  "Ri'bassa's House": "BorderWatchRibassasHouse",
+  "Sakeepa's House": "AleswellSakeepasHouse",
+  "Satha Dalvilu's House": "BleakersWaySathaDalvilusHouse",
+  "Savlian Matius's Tent": "KvatchTentSavlianMatius",
+  "Serpents Wake Cargo Hold": "AnvilTheSerpentsWakeLowerDeck",
+  "Serpents Wake Mid Deck": "AnvilTheSerpentsWakeMidDeck",
+  "Servant's Quarters": "LordRugdumphServants",
+  "Shagol gro-Bumph's House": "AleswellShagolgroBumphsHouse",
+  "Slave Quarters": [
+    "LordDradsSlaveQuarters01",
+    "LordDradsSlaveQuarters02"
+  ]
 } 

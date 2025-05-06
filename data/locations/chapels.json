@@ -1,3 +1,32 @@
 {
-  "Bravil Chapel Undercroft": "BravilChapelUndercroft"
+  "Chapel Hall": [
+    "AnvilChapelHall",
+    "BravilChapelGreatHall",
+    "BrumaChapelHall",
+    "CheydinhalChapelHall",
+    "ChorrolChapelHall",
+    "KvatchChapelHall",
+    "LeyawiinChapelHall",
+    "SkingradChapelHall"
+  ],
+  "Chapel of Akatosh": "KvatchChapelofAkatosh",
+  "Chapel of Dibella": "AnvilChapelofDibella",
+  "Chapel of Stendarr": "ChorrolChapelOfStendarr",
+  "Chapel of the Brethren": "HackdirtChapel",
+  "Chapel Undercroft": [
+    "AnvilChapelUndercroft",
+    "BrumaChapelUndercroft",
+    "CheydinhalChapelUndercroft",
+    "ChorrolChapelUndercroft",
+    "KvatchChapelUndercroft",
+    "LeyawiinChapelUndercroft",
+    "SkingradChapelUndercroft"
+  ],
+  "Great Chapel of Mara": "BravilChapelofMara",
+  "Great Chapel of Talos": "BrumaChapel",
+  "The Great Chapel of Arkay": "CheydinhalChapelOfArkay",
+  "The Great Chapel of Julianos": "SkingradChapelofJulianos",
+  "The Great Chapel of Zenithar": "LeyawiinChapelOfZenithar",
+  "The Temple of the One": "ICTempleDistrictTempleOfTheOne",
+  "The Temple of the One": "ICTempleDistrictTempleOfTheOneMQ16"
 } 
