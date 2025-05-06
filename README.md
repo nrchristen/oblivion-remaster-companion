@@ -16,8 +16,8 @@
 
 #### From Release
 
-1. Go to the [Releases](https://github.com/yourusername/oblivion-remaster-companion/releases) tab
-2. Download the latest `ES4RCompanion.exe` from the assets
+1. Go to the [Releases]([https://github.com/yourusername/oblivion-remaster-companion/releases](https://github.com/nrchristen/oblivion-remaster-companion/releases/tag/v0.1.2)) tab
+2. Download the latest `ES4RCompanion.zip` from the assets
 3. Run the executable (requires Windows 10/11)
 
 #### From Source
